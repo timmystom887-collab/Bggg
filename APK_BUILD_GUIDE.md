@@ -44,6 +44,9 @@ GitHub Actions will automatically:
 | **8** | **Artifact Upload Glob Failures** | Hardcoded file paths fail when Gradle outputs files with different names (`app-release-unsigned.apk`, etc.). | Workflow discovers all generated `.apk` files, copies them to `build-artifacts/Briggade-v1.0.5-*.apk`, and validates presence before upload. |
 | **9** | **Tamper Verification** | End users need cryptographic verification that APKs have not been corrupted during download. | Automatically computes SHA-256 hashes (`sha256sum *.apk > checksums.sha256.txt`) and packages them alongside the APKs. |
 | **10** | **Release Publishing Overhead** | Developers must manually create GitHub releases and drag-and-drop APK files. | Integrated `softprops/action-gh-release@v2` to publish tagged releases and attach APKs with automated changelogs. |
+| **11** | **JVM Option Quoting / ClassNotFoundException** | Embedded quotes in `DEFAULT_JVM_OPTS='"-Xmx1024m"...'` caused Java to treat `"-Xmx1024m"` as the main class name. | Corrected `DEFAULT_JVM_OPTS` to `-Xmx1024m -Dfile.encoding=UTF-8` and updated invocation to `-classpath "$WRAPPER_JAR" org.gradle.wrapper.GradleWrapperMain`. |
+| **12** | **AGP 8.4 Minimum Gradle Version Mismatch** | Android Gradle Plugin 8.4.0 requires **Gradle 8.6+**; wrapper previously pointed to 8.4. | Upgraded `gradle-wrapper.properties` to **Gradle 8.7** with verified v8.7.0 wrapper JAR. |
+| **13** | **Gemini Token Quota Exceeded (429 / 25M Tokens)** | `gemini-3.8-flash` quota limits can throw `resource_exhausted` during peak usage. | Prioritized `gemini-flash-latest` and `gemini-3.1-flash-lite` in the model cascade with sub-second fallback to offline forensic profiles. |
 
 ---
 

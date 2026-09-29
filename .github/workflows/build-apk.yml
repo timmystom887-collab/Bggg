@@ -29,7 +29,7 @@ permissions:
 
 env:
   ANDROID_PROJECT_DIR: Briggade-android-project-v1.0/aegis_pulse/android_project
-  GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx2048m -XX:MaxMetaspaceSize=512m -Dfile.encoding=UTF-8' -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false"
 
 jobs:
   build-apk:
@@ -95,11 +95,12 @@ jobs:
       # Step 7: Setup Android SDK
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        continue-on-error: true
 
       # Step 8: Auto-Accept Android SDK Licenses
       - name: Accept Android SDK Licenses
         run: |
-          yes | sdkmanager --licenses || true
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses 2>/dev/null || yes | sdkmanager --licenses 2>/dev/null || true
 
       # Step 9: Fix Executable Permissions on gradlew
       - name: Grant Executable Permissions to Gradle Wrapper
@@ -128,7 +129,8 @@ jobs:
       - name: Build Android APK with Gradle
         working-directory: ${{ env.ANDROID_PROJECT_DIR }}
         run: |
-          BUILD_TYPE="${{ github.event.inputs.build_type || 'both' }}"
+          BUILD_TYPE="${{ github.event.inputs.build_type }}"
+          BUILD_TYPE="${BUILD_TYPE:-both}"
           echo "Executing Gradle build target: $BUILD_TYPE"
           
           if [ "$BUILD_TYPE" = "debug" ]; then
@@ -147,24 +149,32 @@ jobs:
           find "$ANDROID_PROJECT_DIR/app/build/outputs/apk" -name "*.apk" -type f
           
           # Find and copy release APK
-          RELEASE_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk/release" -name "*.apk" -type f | head -n 1 || true)
+          RELEASE_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk" -path "*/release/*" -name "*.apk" -type f | head -n 1 || true)
           if [ -n "$RELEASE_APK" ] && [ -f "$RELEASE_APK" ]; then
             cp "$RELEASE_APK" "build-artifacts/Briggade-v1.0.5-release.apk"
             echo "Copied: build-artifacts/Briggade-v1.0.5-release.apk"
           fi
           
           # Find and copy debug APK
-          DEBUG_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk/debug" -name "*.apk" -type f | head -n 1 || true)
+          DEBUG_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk" -path "*/debug/*" -name "*.apk" -type f | head -n 1 || true)
           if [ -n "$DEBUG_APK" ] && [ -f "$DEBUG_APK" ]; then
             cp "$DEBUG_APK" "build-artifacts/Briggade-v1.0.5-debug.apk"
             echo "Copied: build-artifacts/Briggade-v1.0.5-debug.apk"
           fi
+
+          if [ -z "$RELEASE_APK" ] && [ -z "$DEBUG_APK" ]; then
+            find "$ANDROID_PROJECT_DIR/app/build/outputs/apk" -name "*.apk" -type f -exec cp {} build-artifacts/ \;
+          fi
           
           # Generate Cryptographic Checksums
           cd build-artifacts
-          sha256sum *.apk > checksums.sha256.txt || true
-          echo "=== APK CHECKSUMS (SHA-256) ==="
-          cat checksums.sha256.txt || true
+          if ls *.apk 1> /dev/null 2>&1; then
+            sha256sum *.apk > checksums.sha256.txt
+            echo "=== APK CHECKSUMS (SHA-256) ==="
+            cat checksums.sha256.txt
+          else
+            echo "No APKs in build-artifacts directory."
+          fi
           ls -lh
 
       # Step 13: Upload Artifacts to GitHub Actions

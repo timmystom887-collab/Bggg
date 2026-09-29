@@ -35,10 +35,10 @@ set WRAPPER_JAR=%APP_HOME%\gradle\wrapper\gradle-wrapper.jar
 if exist "%WRAPPER_JAR%" goto runWrapper
 
 echo gradle-wrapper.jar not found. Attempting download...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar', '%WRAPPER_JAR%')"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar', '%WRAPPER_JAR%')"
 
 :runWrapper
-"%JAVACMD%" "-Xmx1024m" "-Dfile.encoding=UTF-8" -jar "%WRAPPER_JAR%" %*
+"%JAVACMD%" -Xmx1024m -Dfile.encoding=UTF-8 -classpath "%WRAPPER_JAR%" org.gradle.wrapper.GradleWrapperMain %*
 if %ERRORLEVEL% equ 0 goto mainEnd
 
 :fail

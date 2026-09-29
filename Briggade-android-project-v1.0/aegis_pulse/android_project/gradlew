@@ -22,7 +22,7 @@ else
 fi
 
 # Increase maximum perm size for DAEMON
-DEFAULT_JVM_OPTS='"-Xmx1024m" "-Dfile.encoding=UTF-8"'
+DEFAULT_JVM_OPTS="-Xmx1024m -Dfile.encoding=UTF-8"
 
 WRAPPER_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 
@@ -30,7 +30,7 @@ WRAPPER_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
 if [ ! -f "$WRAPPER_JAR" ] || [ ! -s "$WRAPPER_JAR" ]; then
     echo "[!] gradle-wrapper.jar missing. Attempting self-healing download..." >&2
     mkdir -p "$APP_HOME/gradle/wrapper"
-    WRAPPER_URL="https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar"
+    WRAPPER_URL="https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar"
     if command -v curl >/dev/null 2>&1; then
         curl -fsSL "$WRAPPER_URL" -o "$WRAPPER_JAR" || true
     elif command -v wget >/dev/null 2>&1; then
@@ -49,4 +49,4 @@ if [ ! -f "$WRAPPER_JAR" ] || [ ! -s "$WRAPPER_JAR" ]; then
 fi
 
 # Execute Gradle Wrapper
-exec "$JAVACMD" $DEFAULT_JVM_OPTS -jar "$WRAPPER_JAR" "$@"
+exec "$JAVACMD" $DEFAULT_JVM_OPTS -classpath "$WRAPPER_JAR" org.gradle.wrapper.GradleWrapperMain "$@"

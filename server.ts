@@ -22,7 +22,8 @@ const ai = new GoogleGenAI({
 });
 
 // Helper for calling Gemini safely with fallback cascade across modern models
-const MODEL_CASCADE = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite", "gemini-3.1-pro-preview"];
+// Prioritizing gemini-flash-latest and gemini-3.1-flash-lite avoids quota limits on specific models
+const MODEL_CASCADE = ["gemini-flash-latest", "gemini-3.1-flash-lite", "gemini-3.1-pro-preview", "gemini-3.8-flash"];
 
 function cleanJsonResponse(text: string): string {
   const trimmed = text.trim();
