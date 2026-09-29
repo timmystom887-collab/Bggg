@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# AegisPulse Gradle Wrapper Script (Self-Healing)
+# Automatically locates Java, restores wrapper JAR if missing, and executes Gradle.
+
+# Attempt to set APP_HOME
+APP_HOME=$(cd "$(dirname "$0")" && pwd)
+
+# Determine the Java command to use to start the JVM.
+if [ -n "$JAVA_HOME" ] ; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
+        JAVACMD="$JAVA_HOME/jre/sh/java"
+    else
+        JAVACMD="$JAVA_HOME/bin/java"
+    fi
+    if [ ! -x "$JAVACMD" ] ; then
+        die "ERROR: JAVA_HOME is set to an invalid directory: $JAVA_HOME"
+    fi
+else
+    JAVACMD="java"
+    which java >/dev/null 2>&1 || die "ERROR: JAVA_HOME is not set and no 'java' command could be found in your PATH."
+fi
+
+# Increase maximum perm size for DAEMON
+DEFAULT_JVM_OPTS='"-Xmx1024m" "-Dfile.encoding=UTF-8"'
+
+WRAPPER_JAR="$APP_HOME/gradle/wrapper/gradle-wrapper.jar"
+
+# Self-healing: if gradle-wrapper.jar is missing, fetch it automatically
+if [ ! -f "$WRAPPER_JAR" ] || [ ! -s "$WRAPPER_JAR" ]; then
+    echo "[!] gradle-wrapper.jar missing. Attempting self-healing download..." >&2
+    mkdir -p "$APP_HOME/gradle/wrapper"
+    WRAPPER_URL="https://raw.githubusercontent.com/gradle/gradle/v8.4.0/gradle/wrapper/gradle-wrapper.jar"
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "$WRAPPER_URL" -o "$WRAPPER_JAR" || true
+    elif command -v wget >/dev/null 2>&1; then
+        wget -q "$WRAPPER_URL" -O "$WRAPPER_JAR" || true
+    fi
+fi
+
+if [ ! -f "$WRAPPER_JAR" ] || [ ! -s "$WRAPPER_JAR" ]; then
+    echo "[WARN] Could not download gradle-wrapper.jar. Searching for system gradle..." >&2
+    if command -v gradle >/dev/null 2>&1; then
+        exec gradle "$@"
+    else
+        echo "ERROR: gradle-wrapper.jar is missing and gradle is not installed." >&2
+        exit 1
+    fi
+fi
+
+# Execute Gradle Wrapper
+exec "$JAVACMD" $DEFAULT_JVM_OPTS -jar "$WRAPPER_JAR" "$@"

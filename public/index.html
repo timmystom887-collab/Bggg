@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRIGGADE | Street &amp; Constitutional Shield (OG &amp; Sheba)</title>
+  <meta name="description" content="BRIGGADE — Street &amp; Constitutional Shield, guarded by OG &amp; Sheba. Tactical privacy, anti-surveillance radar, and constitutional legal defense suite.">
+  <meta property="og:title" content="BRIGGADE | Street &amp; Constitutional Shield (OG &amp; Sheba)">
+  <meta property="og:description" content="BRIGGADE — Street &amp; Constitutional Shield, guarded by OG &amp; Sheba. Tactical privacy, anti-surveillance radar, and constitutional legal defense suite.">
+  <meta property="og:image" content="/ic_launcher.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="/ic_launcher.png">
+  <link rel="apple-touch-icon" href="/ic_launcher.png">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top System Header -->
+    <header class="top-nav">
+      <div class="brand">
+        <img src="img/briggade-badge.jpg" class="briggade-brand-badge" alt="Briggade Unit: Sheba &amp; Briggs">
+        <div class="brand-text">
+          <h1>BRIG<span>GADE</span></h1>
+          <p class="tagline">Street &amp; Constitutional Shield • Guarded by OG &amp; Sheba</p>
+        </div>
+      </div>
+
+      <div class="header-status">
+
+        <a href="/download/Briggade.apk" class="btn btn-emerald btn-sm download-apk-btn" download="Briggade.apk">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <span>Download Briggade APK (v3.8.0)</span>
+        </a>
+
+        <a href="manual.html" target="_blank" class="btn btn-outline btn-sm manual-link-btn" style="border-color:var(--border-gold); color:var(--gold-light);" title="Open Comprehensive Field Operational Manual">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span>Field Manual</span>
+        </a>
+
+        <div class="status-pill gemini-active" id="geminiStatusPill">
+          <span class="pulsing-dot"></span>
+          <span>Gemini Intelligence: <strong>Online</strong></span>
+        </div>
+        <div class="status-pill alert-counter" id="activeAlertsPill">
+          <span id="activeAlertText">Scanning Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="main-tabs">
+      <button class="tab-btn active" data-tab="tab-trackers">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+        </svg>
+        <span>AirTag Radar & BLE Tracker</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-android">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+          <line x1="12" y1="18" x2="12.01" y2="18"/>
+        </svg>
+        <span>Android Security & APK Audit</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-scam">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <span>AI Scam & Smishing Shield</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-copilot">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <span>Gemini Incident Copilot</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-simulator">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+        <span>Live Threat Simulator</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-meetings">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+        <span>Bluetooth Meeting Recorder</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-police-rights">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+        <span>Police Rights & Encounter Informer</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-police-scanner">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5M12 12h.01M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/>
+        </svg>
+        <span>Live Police Scanner & Tracker</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-counter-surveillance">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+        <span>Physical Counter-Surveillance</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-tail-detector">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
+          <circle cx="7" cy="17" r="2"/>
+          <circle cx="17" cy="17" r="2"/>
+        </svg>
+        <span>Rear Camera Tail Detector</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-farm-sentinel">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <span>Farm Sentinel & Machinery</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-magnifier">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        <span>Bluetooth Audio Magnifier</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-private-investigator">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span>Private Investigator AI</span>
+      </button>
+    </nav>
+
+    <!-- BRIGGADE VANGUARD: FULL RESOLUTION MASCOT HERO DISPLAY -->
+    <div class="mascot-hero-card" id="mascotHeroCard">
+      <img src="/ic_launcher.png" alt="Briggade Vanguard Icon" class="mascot-hero-avatar" onclick="openMascotModal()" title="Click to view Full Resolution Artwork" style="cursor:pointer;">
+      <div class="mascot-hero-content">
+        <div class="mascot-hero-title">
+          <h2>BRIGGADE VANGUARD: OG &amp; SHEBA</h2>
+          <span class="badge badge-amber">4K ULTRA-HD SENSORY PERIMETER</span>
+        </div>
+        <div class="mascot-hero-quote">
+          "Out here in the streets and in the courtroom, you never fold. Sheba's ears sniff out illegal surveillance and covert tracking beacons before they even cross the perimeter. Stand on your constitutional rights, keep calm, and let <strong>BRIGGADE</strong> run interference."
+        </div>
+        <div class="mascot-chips" style="margin-top:10px;">
+          <span class="mascot-chip mascot-chip-gold">🛡️ OG Street Strategist</span>
+          <span class="mascot-chip mascot-chip-cyan">🐕‍🦺 Sheba Black Shepherd Vanguard</span>
+          <button class="btn btn-sm btn-outline" style="border-color:#eab308; color:#fef08a; padding:3px 10px; font-size:11px;" onclick="openMascotModal()">🔍 Open 4K Full Resolution Viewer</button> <a href="manual.html" target="_blank" class="btn btn-sm btn-outline" style="border-color:#ca8a04; color:#fef08a; padding:3px 10px; font-size:11px; text-decoration:none;">📖 Tactical Field Manual</a>
+          <a href="mascot_4k.png" target="_blank" download="Briggade_Mascot_4K.png" class="btn btn-sm btn-outline" style="padding:3px 10px; font-size:11px; text-decoration:none;">⬇️ 4K UHD (4096px)</a>
+          <a href="mascot.svg" target="_blank" download="Briggade_Mascot.svg" class="btn btn-sm btn-outline" style="padding:3px 10px; font-size:11px; text-decoration:none;">⬇️ Vector SVG</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: AIRTAG RADAR & ANTI-TRACKING -->
+    <section id="tab-trackers" class="tab-content active">
+      <!-- Stalking Warning Banner (visible if alert triggered) -->
+      <div class="critical-warning-banner" id="stalkingBanner" style="display: none;">
+        <div class="warning-icon-box">⚠️</div>
+        <div class="warning-info">
+          <h3>CRITICAL UNWANTED TRACKER ALERT (DULT SPEC DETECTED)</h3>
+          <p id="stalkingBannerDesc">An unregistered tracker separated from its owner is moving with you across multiple locations.</p>
+        </div>
+        <button class="btn btn-crimson" id="bannerGeminiBtn">Gemini Stalking Analysis</button>
+      </div>
+
+      
+      <!-- Background Scanning Policy Bar -->
+      <div class="glass-card mb-4 bg-scan-card">
+        <div class="bg-scan-flex">
+          <div class="bg-scan-info">
+            <span class="pulsing-dot-blue"></span>
+            <div>
+              <strong>Continuous Background BLE Anti-Tracking Service:</strong>
+              <span id="bgScanStatusText" class="text-muted">Active (Balanced Mode: 3 min cycle | Motion-Triggered Escalation)</span>
+            </div>
+          </div>
+          <div class="bg-scan-modes">
+            <button class="chip-btn bg-mode-btn" data-bg-mode="LOW_POWER">Low Power (15m)</button>
+            <button class="chip-btn bg-mode-btn active" data-bg-mode="BALANCED">Balanced (3m)</button>
+            <button class="chip-btn bg-mode-btn" data-bg-mode="AGGRESSIVE">Aggressive (30s)</button>
+            <button class="chip-btn" id="webBleScanBtn" onclick="scanRealWebBluetoothDevices()" style="border-color:#38bdf8;color:#7dd3fc;" title="Scan real hardware Bluetooth devices via Web Bluetooth API">📡 Real Web BLE Scan</button>
+            <button class="chip-btn" id="nativeBleStartBtn" style="border-color:#10b981;color:#6ee7b7;">Start Native Scan</button>
+            <button class="chip-btn" id="nativeBleStopBtn" style="border-color:#ef4444;color:#fca5a5;">Stop Native Scan</button>
+          </div>
+        </div>
+      </div>
+
+<div class="grid-2-col">
+        <!-- Radar Visualization Card -->
+        <div class="glass-card radar-card">
+          <div class="card-header">
+            <h3>BLE Anti-Tracking Proximity Radar</h3>
+            <span class="badge badge-emerald">DULT v1.2 Protocol</span>
+          </div>
+          <div class="radar-viewport">
+            <div class="radar-sweep"></div>
+            <div class="radar-ring ring-1"><span class="ring-label">1m</span></div>
+            <div class="radar-ring ring-2"><span class="ring-label">5m</span></div>
+            <div class="radar-ring ring-3"><span class="ring-label">15m</span></div>
+            <div class="radar-ring ring-4"><span class="ring-label">30m</span></div>
+            <div class="radar-crosshair-h"></div>
+            <div class="radar-crosshair-v"></div>
+            <div class="radar-center-blip" title="Your Android Device (Self)"></div>
+            <div id="radarBlipsContainer"></div>
+          </div>
+          <div class="radar-legend">
+            <span class="legend-item"><span class="dot dot-red"></span> Stalker AirTag (Owner Absent)</span>
+            <span class="legend-item"><span class="dot dot-emerald"></span> Paired / Safe Tracker</span>
+            <span class="legend-item"><span class="dot dot-blue"></span> Active Search Pulse</span>
+          </div>
+        </div>
+
+        <!-- Tracker Feed & Inspector -->
+        <div class="glass-card">
+          <div class="card-header">
+            <div>
+              <h3>Nearby Bluetooth Location Trackers (<span id="trackerCountBadge">0</span>)</h3>
+              <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Apple AirTag, Samsung Galaxy SmartTag, Tile &amp; DULT v1.2 BLE Beacons</p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm btn-outline" id="refreshTrackersBtn">🔄 Rescan BLE</button>
+            </div>
+          </div>
+
+          <!-- AirTag Finder Quick Tools & Filter Bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin:10px 0 14px 0; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08);">
+            <!-- Filter Chips -->
+            <div class="tracker-filter-chips" style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="chip-btn active tracker-filter-btn" data-filter="ALL" onclick="setTrackerFilter('ALL')">All Trackers</button>
+              <button class="chip-btn tracker-filter-btn" data-filter="THREAT" onclick="setTrackerFilter('THREAT')" style="color:#ef4444; border-color:#ef4444;">🚨 Stalkers Only</button>
+              <button class="chip-btn tracker-filter-btn" data-filter="AIRTAG" onclick="setTrackerFilter('AIRTAG')">Apple AirTags</button>
+              <button class="chip-btn tracker-filter-btn" data-filter="SMARTTAG" onclick="setTrackerFilter('SMARTTAG')">Samsung SmartTags</button>
+              <button class="chip-btn tracker-filter-btn" data-filter="TILE" onclick="setTrackerFilter('TILE')">Tile / Other</button>
+            </div>
+
+            <!-- Quick Action Helpers -->
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn btn-xs btn-primary" onclick="launchAirTagFinder()">🎯 Launch AirTag Finder</button>
+              <button class="btn btn-xs btn-outline" onclick="openManualTrackerModal()">➕ Register MAC</button>
+              <button class="btn btn-xs btn-outline" onclick="simulateVehicleStalkerAirTag()">🧪 Test Stalker</button>
+              <button class="btn btn-xs btn-outline" onclick="openNeutralizeModal('airtag')">🛑 Disabling Guide</button>
+            </div>
+          </div>
+
+          <div class="tracker-list-container" id="trackersContainer">
+            <!-- Dynamic Tracker Cards inserted here -->
+            <div class="loading-spinner">Scanning BLE frequencies...</div>
+          </div>
+        </div>
+      </div>
+
+      
+      <!-- Acoustic Tracker Magnifier & Audio Privacy Card -->
+      <div class="glass-card mt-4 acoustic-card">
+        <div class="card-header">
+          <div class="acoustic-header-title">
+            <span class="acoustic-head-icon">🎧</span>
+            <div>
+              <h3>Acoustic Tracker Magnifier & Anti-Eavesdropping Guard</h3>
+              <p class="card-desc" style="margin-bottom:0;">Amplify faint 3.8 kHz piezo chirps into Bluetooth headphones & audit microphone privacy.</p>
+            </div>
+          </div>
+          <div class="acoustic-header-badges">
+            <span class="badge badge-emerald" id="audioPrivacyBadge">MIC PRIVACY: SECURE</span>
+            <button class="btn btn-sm btn-outline" id="auditAudioPrivacyBtn" onclick="runAudioPrivacyAudit()">Audit Mic Routing</button>
+          </div>
+        </div>
+
+        <div class="grid-2-col mt-2">
+          <!-- Audio DSP Bandpass Controls -->
+          <div class="acoustic-sub-panel">
+            <div class="dsp-control-row">
+              <div>
+                <strong>Acoustic Bandpass Magnifier (3.2 kHz - 4.4 kHz)</strong>
+                <p class="text-muted" style="font-size:0.8rem;">Filters ambient traffic/voice rumble, boosting piezo chime harmonics (+18 dB).</p>
+              </div>
+              <button class="btn btn-primary btn-sm" id="toggleAcousticMagnifierBtn" onclick="toggleAcousticMagnifier()">
+                <span>🎧 Start Audio Magnifier</span>
+              </button>
+            </div>
+
+            <!-- Real-Time Audio Spectrum Canvas -->
+            <div class="spectrum-container mt-3">
+              <canvas id="audioSpectrumCanvas" width="450" height="90"></canvas>
+              <div class="spectrum-labels">
+                <span>0 Hz (Sub)</span>
+                <span style="color:#10b981; font-weight:700;">▲ 3.8 kHz Tracker Chime Band</span>
+                <span>10 kHz (High)</span>
+              </div>
+            </div>
+            <div class="chime-detection-indicator mt-2" id="chimeDetectionAlert" style="display:none;">
+              <span class="pulsing-dot-red"></span>
+              <strong style="color:#ef4444;">AirTag / SmartTag Acoustic Signature Detected in Vicinity!</strong>
+            </div>
+          </div>
+
+          <!-- Audio Privacy & Eavesdropping Guard -->
+          <div class="acoustic-sub-panel">
+            <div class="dsp-control-row">
+              <div>
+                <strong>Host Audio Privacy & Eavesdropping Guard</strong>
+                <p class="text-muted" style="font-size:0.8rem;">Detects unauthorized background apps streaming microphone audio to Bluetooth.</p>
+              </div>
+              <button class="btn btn-ai btn-sm" onclick="runGeminiAudioTriage()">
+                <span>✨ Gemini Audio Triage</span>
+              </button>
+            </div>
+
+            <div class="privacy-status-list mt-3" id="audioPrivacyReportList">
+              <div class="privacy-item">
+                <span>Hardware Microphone:</span>
+                <strong id="hwMicState">Idle (Zero Active Recordings)</strong>
+              </div>
+              <div class="privacy-item">
+                <span>Bluetooth Audio Output Routing:</span>
+                <strong id="btRoutingState">A2DP Stereo Connected</strong>
+              </div>
+              <div class="privacy-item">
+                <span>Stalkerware Eavesdropping Risk:</span>
+                <strong style="color:#10b981;" id="eavesdropRiskState">LOW (No Covert Streams)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="geminiAudioTriageBox" class="mt-3" style="display:none; background:rgba(0,0,0,0.3); border-radius:10px; padding:1rem; border-left:3px solid #8b5cf6;">
+          <!-- Populated by Gemini -->
+        </div>
+      </div>
+
+      <!-- Gemini Stalking Deep Briefing Modal/Container -->
+      <div class="glass-card mt-4" id="geminiStalkingCard" style="display: none;">
+        <div class="card-header ai-header">
+          <div class="ai-title">
+            <span class="sparkle-icon">✨</span>
+            <h3>Gemini AI Stalking Threat Briefing & Evidence Preservation</h3>
+          </div>
+          <span class="badge badge-ai" id="stalkingThreatBadge">HIGH THREAT</span>
+        </div>
+        <div class="ai-content-body" id="geminiStalkingBody">
+          <!-- Dynamic AI Output -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: ANDROID SECURITY & APK AUDITOR -->
+    <section id="tab-android" class="tab-content">
+      <div class="grid-3-col">
+        <!-- Posture Card -->
+        <div class="glass-card col-span-1">
+          <div class="card-header">
+            <h3>Android Security Posture</h3>
+            <span class="badge" id="postureRatingBadge">SECURE</span>
+          </div>
+          <div class="posture-score-box">
+            <div class="score-circle" id="postureScoreValue">85</div>
+            <div class="score-subtext">Integrity & Hardening Score</div>
+          </div>
+          <div class="posture-check-list" id="postureDetailsList">
+            <!-- Dynamic checks -->
+          </div>
+        </div>
+
+        <!-- APK Manifest Analyzer -->
+        <div class="glass-card col-span-2">
+          <div class="card-header">
+            <h3>APK Manifest & Toxic Permission Synergy Analyzer</h3>
+            <button class="btn btn-sm btn-ai" id="runGeminiApkBtn">✨ Gemini Deep Audit</button>
+          </div>
+          <div class="apk-quick-presets">
+            <span>Sample Payloads:</span>
+            <button class="chip-btn" data-apk-preset="bankbot">🔴 Banking Trojan (BankBot)</button>
+            <button class="chip-btn" data-apk-preset="stalker">🟠 Background Stalkerware</button>
+            <button class="chip-btn" data-apk-preset="clean">🟢 Standard Media Player</button>
+          </div>
+          <div class="apk-form-grid">
+            <div class="form-group">
+              <label>Package Name</label>
+              <input type="text" id="apkPackageName" value="com.quickreader.pdf.viewer" class="text-input">
+            </div>
+            <div class="form-group">
+              <label>Application Label</label>
+              <input type="text" id="apkAppName" value="Ultra Fast PDF Pro" class="text-input">
+            </div>
+            <div class="form-group full-width">
+              <label>Requested Android Permissions (one per line)</label>
+              <textarea id="apkPermissionsInput" rows="5" class="code-textarea">android.permission.INTERNET
+android.permission.BIND_ACCESSIBILITY_SERVICE
+android.permission.SYSTEM_ALERT_WINDOW
+android.permission.RECEIVE_SMS
+android.permission.READ_SMS</textarea>
+            </div>
+          </div>
+          <div class="apk-actions">
+            <label class="checkbox-label">
+              <input type="checkbox" id="apkSideloadedCheck" checked> Sideloaded / Sourced outside Google Play Store
+            </label>
+            <button class="btn btn-primary" id="analyzeManifestBtn">Analyze Permissions Matrix</button>
+          </div>
+
+          <div id="apkScanResultsArea" class="mt-3">
+            <!-- Results populated here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Installed Apps Table -->
+      <div class="glass-card mt-4">
+        <div class="card-header">
+          <h3>Installed Android Packages Audit</h3>
+          <span class="sub-header-count">4 Applications Evaluated</span>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>App Name & Package</th>
+                <th>Source</th>
+                <th>Dangerous Permissions</th>
+                <th>Toxic Synergies</th>
+                <th>Threat Score</th>
+                <th>Classification</th>
+              </tr>
+            </thead>
+            <tbody id="installedAppsTbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Gemini Android AI Report -->
+      <div class="glass-card mt-4" id="geminiApkReportCard" style="display: none;">
+        <div class="card-header ai-header">
+          <div class="ai-title">
+            <span class="sparkle-icon">✨</span>
+            <h3>Gemini AI Mobile Malware Investigation</h3>
+          </div>
+          <span class="badge badge-crimson" id="apkAiClassification">MALWARE_TROJAN</span>
+        </div>
+        <div class="ai-content-body" id="geminiApkReportContent">
+          <!-- Populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: AI SCAM & SMISHING SHIELD -->
+    <section id="tab-scam" class="tab-content">
+      
+      <!-- Background Scanning Policy Bar -->
+      <div class="glass-card mb-4 bg-scan-card">
+        <div class="bg-scan-flex">
+          <div class="bg-scan-info">
+            <span class="pulsing-dot-blue"></span>
+            <div>
+              <strong>Continuous Background BLE Anti-Tracking Service:</strong>
+              <span id="bgScanStatusText" class="text-muted">Active (Balanced Mode: 3 min cycle | Motion-Triggered Escalation)</span>
+            </div>
+          </div>
+          <div class="bg-scan-modes">
+            <button class="chip-btn bg-mode-btn" data-bg-mode="LOW_POWER">Low Power (15m)</button>
+            <button class="chip-btn bg-mode-btn active" data-bg-mode="BALANCED">Balanced (3m)</button>
+            <button class="chip-btn bg-mode-btn" data-bg-mode="AGGRESSIVE">Aggressive (30s)</button>
+          </div>
+        </div>
+      </div>
+
+<div class="grid-2-col">
+        <!-- Input & Channels Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Scam & Social Engineering Triage Console</h3>
+          </div>
+          <div class="channel-selector">
+            <button class="channel-btn active" data-channel="sms">📱 SMS Smishing</button>
+            <button class="channel-btn" data-channel="call">📞 Phone Vishing Transcript</button>
+            <button class="channel-btn" data-channel="url">🔗 Phishing URL</button>
+            <button class="channel-btn" data-channel="qr">🏁 QR Code / Quishing</button>
+          </div>
+
+          <div class="preset-scams-row">
+            <span>Real-World Attack Lures:</span>
+            <button class="chip-btn" data-scam-preset="usps">USPS Warehouse Smish</button>
+            <button class="chip-btn" data-scam-preset="sunpass">SunPass Toll Scam</button>
+            <button class="chip-btn" data-scam-preset="chase">Chase Wire Freeze</button>
+            <button class="chip-btn" data-scam-preset="techsupport">Windows Tech Support</button>
+          </div>
+
+          <div class="form-group mt-2">
+            <label>Suspicious Message Content / Transcript / URL</label>
+            <textarea id="scamTextInput" rows="6" class="text-area-input" placeholder="Paste SMS message, phone call transcript, email text, or suspicious link here..."></textarea>
+          </div>
+
+          <div class="action-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="scamGeminiToggle" checked> Enable Deep Gemini Cognitive Deconstruction
+            </label>
+            <button class="btn btn-primary" id="analyzeScamBtn">
+              <span class="sparkle-icon">✨</span> Run Scam Investigation
+            </button>
+          </div>
+        </div>
+
+        <!-- Real-Time Verdict & Gauge Card -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Threat Verdict & Analysis</h3>
+            <span class="badge badge-gray" id="scamVerdictBadge">AWAITING INPUT</span>
+          </div>
+
+          <div class="threat-meter-container">
+            <div class="meter-bar-outer">
+              <div class="meter-bar-fill" id="scamMeterFill" style="width: 0%;"></div>
+            </div>
+            <div class="meter-labels">
+              <span>0 (Legitimate)</span>
+              <span id="scamScoreNumber">Score: 0 / 100</span>
+              <span>100 (Definite Fraud)</span>
+            </div>
+          </div>
+
+          <div class="heuristic-breakdown-box" id="scamHeuristicsBox">
+            <p class="empty-state-text">Paste a suspicious text, toll alert, or phishing link on the left to initiate multi-layered AI triage.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemini Deep Cognitive Investigation Card -->
+      <div class="glass-card mt-4" id="geminiScamCard" style="display: none;">
+        <div class="card-header ai-header">
+          <div class="ai-title">
+            <span class="sparkle-icon">✨</span>
+            <h3>Gemini AI Cognitive Manipulation & Fraud Pipeline Deconstruction</h3>
+          </div>
+          <span class="badge badge-ai" id="scamAiCategoryBadge">PACKAGE DELIVERY SMISHING</span>
+        </div>
+        <div class="ai-content-body" id="geminiScamBody">
+          <!-- Dynamic Gemini Output -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: GEMINI INCIDENT COPILOT -->
+    <section id="tab-copilot" class="tab-content">
+      <div class="glass-card copilot-container">
+        <div class="card-header ai-header">
+          <div class="ai-title">
+            <span class="sparkle-icon">✨</span>
+            <h3>Gemini Incident Response Copilot</h3>
+          </div>
+          <span class="badge badge-emerald">Real-Time Tactical Advisor</span>
+        </div>
+
+        <div class="copilot-prompt-chips">
+          <span>Suggested Inquiries:</span>
+          <button class="chip-btn copilot-chip">How do I safely disable an AirTag without losing evidence for police?</button>
+          <button class="chip-btn copilot-chip">Where are the top 5 places to inspect my car for hidden GPS trackers?</button>
+          <button class="chip-btn copilot-chip">Can an Android app steal my banking 2FA codes without asking?</button>
+          <button class="chip-btn copilot-chip">I clicked a fake toll scam link and entered my debit card. What are my immediate steps?</button>
+        </div>
+
+        <div class="copilot-chat-box" id="copilotChatBox">
+          <div class="chat-msg msg-ai">
+            <div class="msg-avatar">🤖</div>
+            <div class="msg-bubble">
+              <p><strong>AegisPulse Incident Copilot Active.</strong></p>
+              <p>I am your digital forensics, anti-stalking, and fraud mitigation advisor. If you suspect an unauthorized AirTag is following you, your Android device is acting erratically, or you received a deceptive communication, ask me anything below.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="copilot-input-bar">
+          <input type="text" id="copilotInput" placeholder="Ask a cybersecurity, stalking, or scam prevention question..." class="text-input">
+          <button class="btn btn-primary" id="copilotSendBtn">Send to Gemini</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: LIVE THREAT SIMULATOR -->
+    <section id="tab-simulator" class="tab-content">
+      
+      <!-- Background Scanning Policy Bar -->
+      <div class="glass-card mb-4 bg-scan-card">
+        <div class="bg-scan-flex">
+          <div class="bg-scan-info">
+            <span class="pulsing-dot-blue"></span>
+            <div>
+              <strong>Continuous Background BLE Anti-Tracking Service:</strong>
+              <span id="bgScanStatusText" class="text-muted">Active (Balanced Mode: 3 min cycle | Motion-Triggered Escalation)</span>
+            </div>
+          </div>
+          <div class="bg-scan-modes">
+            <button class="chip-btn bg-mode-btn" data-bg-mode="LOW_POWER">Low Power (15m)</button>
+            <button class="chip-btn bg-mode-btn active" data-bg-mode="BALANCED">Balanced (3m)</button>
+            <button class="chip-btn bg-mode-btn" data-bg-mode="AGGRESSIVE">Aggressive (30s)</button>
+          </div>
+        </div>
+      </div>
+
+<div class="grid-2-col">
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>BLE Anti-Tracking Threat Simulator</h3>
+          </div>
+          <p class="card-desc">Inject realistic Bluetooth Low Energy tracker advertisements conforming to Apple Find My (OpenHaystack / DULT) and Samsung SmartTag specifications.</p>
+          
+          <div class="scenario-actions-grid">
+            <div class="scenario-card">
+              <h4>🚨 Stalker AirTag (Multi-Waypoint)</h4>
+              <p>Simulates an Apple AirTag separated from its owner traveling across 3 locations (Office &rarr; Highway &rarr; Home).</p>
+              <button class="btn btn-crimson btn-sm mt-2" onclick="injectTrackerScenario('stalker_airtag')">Inject Stalker AirTag</button>
+            </div>
+
+            <div class="scenario-card">
+              <h4>🏷️ Samsung Galaxy SmartTag</h4>
+              <p>Simulates an unknown SmartTag broadcasting in proximity at a gym or public area.</p>
+              <button class="btn btn-outline btn-sm mt-2" onclick="injectTrackerScenario('samsung_smarttag')">Inject SmartTag</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Android Malware & APK Simulation</h3>
+          </div>
+          <p class="card-desc">Test real-world malware permission profiles against the detection engine and Gemini auditor.</p>
+
+          <div class="scenario-actions-grid">
+            <div class="scenario-card">
+              <h4>🏦 SharkBot / Anatsa Banking Trojan</h4>
+              <p>Injects an overlay dropper request with Accessibility, Overlay phish, and SMS interception.</p>
+              <button class="btn btn-crimson btn-sm mt-2" onclick="loadApkPreset('bankbot')">Load BankBot Manifest</button>
+            </div>
+
+            <div class="scenario-card">
+              <h4>👁️ Stealth Stalkerware System APK</h4>
+              <p>Injects background microphone eavesdropping + 24/7 background location tracking.</p>
+              <button class="btn btn-amber btn-sm mt-2" onclick="loadApkPreset('stalker')">Load Stalkerware Manifest</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+    
+    <!-- TAB 6: BLUETOOTH MEETING RECORDER & GEMINI SCRIBE -->
+    <section id="tab-meetings" class="tab-content">
+      <div class="grid-2-col">
+        <!-- Live Recording Console -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Bluetooth Headphone Meeting Recorder</h3>
+            <span class="badge badge-emerald" id="btHeadsetMicBadge">MIC: BLUETOOTH SCO READY</span>
+          </div>
+
+          <p class="card-desc">Routes audio directly from your connected Bluetooth headset microphone (HFP/SCO 16 kHz Wideband speech) for high-clarity meeting notes and transcriptions.</p>
+
+          <div class="form-group mt-2">
+            <label>Meeting Title / Topic</label>
+            <input type="text" id="meetingTitleInput" class="text-input" value="Q3 Product & Security Architecture Review" placeholder="Enter meeting title...">
+          </div>
+
+          <!-- Strict Bluetooth Headphone Microphone Enforcement Banner -->
+          <div class="glass-card mb-3" style="background:rgba(0,0,0,0.3); border:1px solid rgba(16,185,129,0.3); padding:0.75rem 1rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+              <div style="display:flex; align-items:center; gap:0.6rem;">
+                <span class="pulsing-dot" id="meetingBtMicDot"></span>
+                <div>
+                  <strong id="meetingBtMicStatusText" style="color:#34d399; font-size:0.85rem;">Input Device: Bluetooth Headphone Physical Mic</strong>
+                  <div style="font-size:0.75rem; color:#f87171; font-family:var(--font-mono); margin-top:2px;">
+                    🛡️ Phone Internal Mic: <strong>BLOCKED &amp; MUTED</strong>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-sm btn-outline" id="toggleMeetingBtMicSimBtn" onclick="toggleMeetingBtMicSimulation()">Simulate Disconnect</button>
+            </div>
+          </div>
+
+          <div class="recording-hero-box mt-3" id="recordingHeroBox">
+            <div class="recording-timer" id="recordingTimerDisplay">00:00</div>
+            <div class="recording-source-tag" id="activeMicLabelDisplay">Mic Source: <strong>Bluetooth Headset Physical Mic (16 kHz mSBC)</strong></div>
+            <div class="audio-vu-meter-bar mt-2">
+              <div class="audio-vu-meter-fill" id="recordingVuFill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div class="meeting-actions-row mt-3">
+            <button class="btn btn-crimson" id="toggleMeetingRecordBtn" onclick="toggleMeetingRecording()">
+              <span id="recordBtnIcon">🔴</span> <span id="recordBtnText">Start Meeting Recording</span>
+            </button>
+            <span class="text-muted" style="font-size:0.8rem;" id="recordingStatusSubtext">Ready to capture audio stream.</span>
+          </div>
+        </div>
+
+        <!-- Recorded Sessions & AI Scribe -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Meeting Sessions & Notes Archive</h3>
+            <button class="btn btn-sm btn-outline" onclick="loadMeetingSessions()">Refresh</button>
+          </div>
+
+          <div class="meetings-list-container" id="meetingsListContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemini AI Meeting Summary & Action Items Card -->
+      <div class="glass-card mt-4" id="geminiMeetingSummaryCard" style="display: none;">
+        <div class="card-header ai-header">
+          <div class="ai-title">
+            <span class="sparkle-icon">✨</span>
+            <h3 id="geminiMeetingTitle">Gemini AI Executive Summary & Action Items</h3>
+          </div>
+          <span class="badge badge-ai" id="meetingSentimentBadge">PRODUCTIVE</span>
+        </div>
+        <div class="ai-content-body" id="geminiMeetingContent">
+          <!-- Populated -->
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- TAB 7: BLUETOOTH AUDIO MAGNIFIER & HEARING ASSISTANT -->
+    <section id="tab-magnifier" class="tab-content">
+      <!-- Bluetooth Headphone Requirement Banner -->
+      <div class="glass-card mb-4" id="btHeadphoneRequirementBanner">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <span class="pulsing-dot" id="btMagnifierDot"></span>
+            <div>
+              <strong id="btMagnifierHeadphoneText">Bluetooth Headphone Connected: Sony WH-1000XM5 (A2DP Stereo)</strong>
+              <p class="text-muted" style="font-size:0.8rem; margin:0;">Strict Requirement: Bluetooth headphones prevent acoustic feedback squeals (Larsen effect).</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn btn-sm btn-outline" id="toggleBtSimulationBtn" onclick="toggleBluetoothHeadphoneSimulation()">Simulate Disconnect</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2-col">
+        <!-- Live Magnification Controls -->
+        <div class="glass-card">
+          <div class="card-header">
+            <h3>Live Audio Magnification & Hearing DSP</h3>
+            <span class="badge badge-emerald" id="magnifierStatusBadge">IDLE</span>
+          </div>
+
+          <p class="card-desc">Captures ambient sound via phone/device microphone, applies low-latency frequency shaping, and streams amplified speech into your Bluetooth headphones.</p>
+
+          <!-- Master Gain Slider -->
+          <div class="magnifier-gain-box mt-2">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <label style="font-weight:600; font-size:0.9rem;">Master Magnification Gain</label>
+              <span id="gainValueDisplay" style="font-family:var(--font-mono); font-weight:800; color:#10b981; font-size:1.15rem;">+12 dB (4.0x)</span>
+            </div>
+            <input type="range" id="magnifierGainSlider" min="0" max="24" step="1" value="12" style="width:100%; accent-color:#10b981;" oninput="onGainSliderChange(this.value)">
+            <div style="display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-dim); margin-top:0.25rem; font-family:var(--font-mono);">
+              <span>0 dB (Unity)</span>
+              <span>+12 dB (Moderate Boost)</span>
+              <span>+24 dB (Maximum Magnification)</span>
+            </div>
+          </div>
+
+          <!-- DSP Presets -->
+          <div class="mt-3">
+            <label style="font-size:0.75rem; text-transform:uppercase; color:var(--text-dim); font-weight:600;">DSP Acoustic Preset</label>
+            <div class="dsp-preset-grid mt-2">
+              <button class="preset-btn active" data-dsp-preset="SPEECH_CLARITY" onclick="selectDspPreset('SPEECH_CLARITY')">
+                <strong>🗣️ Speech Clarity Booster</strong>
+                <span>Cuts traffic/rumble &lt;150Hz, boosts vocal formants at 2.4 kHz</span>
+              </button>
+              <button class="preset-btn" data-dsp-preset="LECTURE_DISTANCE" onclick="selectDspPreset('LECTURE_DISTANCE')">
+                <strong>🏛️ Lecture & Distance</strong>
+                <span>High-gain boost (+18 dB) for distant speakers in large halls</span>
+              </button>
+              <button class="preset-btn" data-dsp-preset="ACOUSTIC_PINPOINTER" onclick="selectDspPreset('ACOUSTIC_PINPOINTER')">
+                <strong>📍 Tracker Acoustic Pinpointer</strong>
+                <span>Narrow 3.8 kHz passband isolating AirTag/SmartTag chimes</span>
+              </button>
+              <button class="preset-btn" data-dsp-preset="NATURAL_AMBIENT" onclick="selectDspPreset('NATURAL_AMBIENT')">
+                <strong>🌿 Natural Ambient</strong>
+                <span>Gentle balanced transparency with spatial preservation</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hearing Protection Limiter -->
+          <div class="hearing-protection-bar mt-3">
+            <label class="checkbox-label">
+              <input type="checkbox" id="hearingLimiterCheck" checked>
+              <strong>Hearing Protection Peak Limiter Active (-1 dBFS threshold)</strong>
+            </label>
+            <p class="text-muted" style="font-size:0.78rem; margin-left:1.5rem; margin-top:2px;">
+              Hard-caps sudden loud clatters (dropped keys, slammed doors) to protect your ears from acoustic shock.
+            </p>
+          </div>
+
+          <!-- Action Button -->
+          <div class="mt-3">
+            <button class="btn btn-primary btn-lg" id="toggleMainMagnifierBtn" style="width:100%; padding:0.85rem;" onclick="toggleAudioMagnifierExecution()">
+              <span>🎧 Start Audio Magnification</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Gemini Acoustic Environment Tuner & Live Output Visualizer -->
+        <div class="glass-card">
+          <div class="card-header ai-header">
+            <div class="ai-title">
+              <span class="sparkle-icon">✨</span>
+              <h3>Gemini Acoustic Environment Auto-Tuner</h3>
+            </div>
+            <span class="badge badge-ai">DSP AI CO-PILOT</span>
+          </div>
+
+          <p class="card-desc">Describe your current listening environment, and Gemini will automatically compute tailored cutoff frequencies, speech formant gain, and compression ratio.</p>
+
+          <div class="form-group">
+            <label>Ambient Noise Profile</label>
+            <input type="text" id="noiseProfileInput" class="text-input" value="Noisy restaurant with clattering plates and background chatter" placeholder="e.g. Busy airport terminal, lecture hall with echo...">
+          </div>
+
+          <div style="display:flex; gap:0.4rem; flex-wrap:wrap;" class="mt-2">
+            <button class="chip-btn" onclick="setNoiseScenario('Noisy restaurant with clattering plates and background chatter')">🍽️ Restaurant Chatter</button>
+            <button class="chip-btn" onclick="setNoiseScenario('Large university lecture hall with echo and distant speaker')">🎓 Echoey Lecture Hall</button>
+            <button class="chip-btn" onclick="setNoiseScenario('Searching for a faint muffled AirTag chime inside a car seat')">🚗 Muffled AirTag in Car</button>
+            <button class="chip-btn" onclick="setNoiseScenario('Quiet outdoor park with faint distant birds and whispers')">🌳 Quiet Outdoor Ambient</button>
+          </div>
+
+          <div class="mt-3">
+            <button class="btn btn-ai" style="width:100%;" onclick="runGeminiDspTuning()">
+              <span>✨ Gemini Auto-Tune DSP</span>
+            </button>
+          </div>
+
+          <!-- Gemini Tuning Results Card -->
+          <div id="geminiDspTuningResults" class="mt-3" style="display:none; background:rgba(0,0,0,0.3); border-radius:10px; padding:1rem; border-left:3px solid #8b5cf6;">
+            <!-- Populated by Gemini -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TAB: POLICE RIGHTS INFORMER & ENCOUNTER RECORDER -->
+    <section id="tab-police-rights" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>Constitutional Police Interaction Rights Informer</h2>
+          <p class="subtitle">Live legal rights prompter, 1st/4th/5th Amendment scripts, officer logging, and cryptographic chain-of-custody recording.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-crimson" id="startEncounterBtn" onclick="togglePoliceEncounter()">
+            <span>🔴 Start Live Encounter Mode</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Encounter HUD -->
+      <div class="encounter-hud-card" id="encounterHud" style="display:none; background:rgba(239,68,68,0.1); border:1px solid #ef4444; border-radius:12px; padding:1.5rem; margin-bottom:1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="pulsing-dot-red"></span>
+              <h3 style="color:#ef4444; margin:0;" id="hudIncidentId">INCIDENT ACTIVE: RECORDING</h3>
+            </div>
+            <p style="color:#94a3b8; font-size:13px; margin:4px 0 0 0;" id="hudGpsInfo">GPS: 37.7749 N, -122.4194 W (Market & 4th, San Francisco, CA)</p>
+          </div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div style="font-size:20px; font-weight:700; font-family:monospace; color:#ef4444;" id="hudTimer">00:42</div>
+            <button class="btn btn-sm btn-outline" onclick="refuseSearchConsent()">⚠️ Refuse Search (4th Amend)</button>
+            <button class="btn btn-sm btn-outline" onclick="showLogOfficerModal()">👮 Log Officer</button>
+            <button class="btn btn-sm btn-crimson" onclick="stopPoliceEncounter()">⏹️ Stop & Save Dossier</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Constitutional Prompter Cards Grid -->
+      <div class="grid grid-2">
+        <div class="card" style="border-left:4px solid #3b82f6;">
+          <div class="card-header">
+            <h3>📹 1st Amendment: Right to Record</h3>
+            <span class="badge badge-indigo">Federal Rule</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">You have an established First Amendment right to openly film police performing public duties without obstruction.</p>
+          <div style="background:#0f172a; padding:12px; border-radius:8px; margin:10px 0; border:1px dashed #3b82f6; font-size:14px; color:#93c5fd;">
+            "Officer, I am lawfully exercising my First Amendment right to record this interaction from a safe, non-interfering vantage point."
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="copyPromptText('Officer, I am lawfully exercising my First Amendment right to record this interaction from a safe, non-interfering vantage point.')">📋 Copy Verbal Script</button>
+        </div>
+
+        <div class="card" style="border-left:4px solid #ef4444;">
+          <div class="card-header">
+            <h3>🛑 4th Amendment: Search Refusal</h3>
+            <span class="badge badge-crimson">No Consent</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">Officers cannot search vehicle trunk, glovebox, or personal belongings without a warrant, exigent probable cause, or consent.</p>
+          <div style="background:#0f172a; padding:12px; border-radius:8px; margin:10px 0; border:1px dashed #ef4444; font-size:14px; color:#fca5a5;">
+            "Officer, I do not consent to any searches of my person, my vehicle, or my personal belongings."
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="copyPromptText('Officer, I do not consent to any searches of my person, my vehicle, or my personal belongings.')">📋 Copy Verbal Script</button>
+        </div>
+
+        <div class="card" style="border-left:4px solid #10b981;">
+          <div class="card-header">
+            <h3>🤐 5th Amendment: Right to Silence</h3>
+            <span class="badge badge-emerald">Invocable</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">You do not have to answer interrogation questions ('Where are you going?', 'Have you had drinks?'). Silence must be affirmatively stated.</p>
+          <div style="background:#0f172a; padding:12px; border-radius:8px; margin:10px 0; border:1px dashed #10b981; font-size:14px; color:#a7f3d0;">
+            "I am invoking my Fifth Amendment right to remain silent. I will not answer questions without my attorney present."
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="copyPromptText('I am invoking my Fifth Amendment right to remain silent. I will not answer questions without my attorney present.')">📋 Copy Verbal Script</button>
+        </div>
+
+        <div class="card" style="border-left:4px solid #f59e0b;">
+          <div class="card-header">
+            <h3>🪪 Stop & Identify Checklist</h3>
+            <span class="badge badge-amber">Statutory</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">If driving, you must produce driver's license, registration, and insurance. If walking/passenger, ask if you are free to go.</p>
+          <div style="background:#0f172a; padding:12px; border-radius:8px; margin:10px 0; border:1px dashed #f59e0b; font-size:14px; color:#fde68a;">
+            "Officer, am I free to leave, or am I currently being detained?"
+          </div>
+          <button class="btn btn-sm btn-outline" onclick="copyPromptText('Officer, am I free to leave, or am I currently being detained?')">📋 Copy Verbal Script</button>
+        </div>
+      </div>
+
+
+      <!-- REAL-TIME COMMUNITY WITNESS MAP & GEOFENCE RADAR -->
+      <div class="card mt-4" style="border-left:4px solid #06b6d4;">
+        <div class="card-header">
+          <div>
+            <h3>🗺️ Community Witness Radar & Incident Geofence Map</h3>
+            <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Real-time geofenced community defense: Visualizing live legal observer nodes, bystander video relays, and constitutional recording buffer zones.</p>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span class="badge badge-cyan" id="witnessGeofenceBadge">1.0 km Geofence Active</span>
+            <span class="badge badge-emerald" id="activeNodesCountBadge">5 Observers In Range</span>
+          </div>
+        </div>
+
+        <!-- Map Tactical Controls Bar -->
+        <div style="display:flex; gap:8px; margin:12px 0; flex-wrap:wrap; justify-content:space-between; align-items:center;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" onclick="broadcastWitnessCall()">📢 Broadcast 1.0 km Witness Call</button>
+            <button class="btn btn-sm btn-outline" onclick="locateUserOnWitnessMap()">📍 Center On My GPS</button>
+            <button class="btn btn-sm btn-outline" onclick="deployVolunteerObserverNode()">⚡ Deploy Nearby Observer</button>
+            <button class="btn btn-sm btn-outline" onclick="toggleGeofenceRange()">🎯 Toggle 500m / 1km Range</button>
+          </div>
+          <div style="font-size:12px; color:#38bdf8; font-family:monospace;" id="witnessMapStatusText">
+            GPS Lock: 37.7749° N, 122.4194° W
+          </div>
+        </div>
+
+        <!-- Tactical Leaflet Map Container -->
+        <div id="witnessMap" style="height:380px; width:100%; border-radius:10px; border:1px solid #334155; position:relative; overflow:hidden; background:#020617;">
+          <div style="display:flex; align-items:center; justify-content:center; height:100%; color:#94a3b8;">
+            Initializing Tactical Witness Geofence Map...
+          </div>
+        </div>
+
+        <!-- Map Legend & Zone Status -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:10px; padding:10px 14px; background:rgba(15,23,42,0.7); border-radius:8px; border:1px solid #1e293b; font-size:12px;">
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#ef4444; display:inline-block; box-shadow:0 0 8px #ef4444;"></span> <strong>Encounter Scene</strong> (Your GPS)</span>
+            <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#10b981; display:inline-block; box-shadow:0 0 8px #10b981;"></span> <strong>5m 1st Amend. Buffer</strong></span>
+            <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#06b6d4; display:inline-block; box-shadow:0 0 8px #06b6d4;"></span> <strong>Legal Observer (NLG/ACLU)</strong></span>
+            <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#a855f7; display:inline-block; box-shadow:0 0 8px #a855f7;"></span> <strong>Copwatch Streamer</strong></span>
+            <span style="display:flex; align-items:center; gap:6px;"><span style="width:10px; height:10px; border-radius:50%; background:#f59e0b; display:inline-block; box-shadow:0 0 8px #f59e0b;"></span> <strong>BLE Mesh Node</strong></span>
+          </div>
+          <div id="witnessGeofenceSummary" style="color:#38bdf8; font-family:monospace; font-weight:600;">
+            1.0 km Geofence • 150m Proximity Alert • 5m Safe Recording Zone
+          </div>
+        </div>
+
+        <!-- Real-Time Nearby Observer Nodes Cards Grid -->
+        <div class="mt-3">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <h4 style="margin:0; font-size:14px; color:#f8fafc;">📡 Active Responding Observers in Geofence:</h4>
+            <button class="btn btn-xs btn-outline" onclick="loadWitnessBeacons()">🔄 Refresh Observer Telemetry</button>
+          </div>
+          <div id="witnessBeaconsList" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:10px; font-size:13px; color:#cbd5e1;">
+            Loading community observer beacons...
+          </div>
+        </div>
+      </div>
+
+      <!-- Stealth Disguise HUD -->
+      <div class="card mt-4" style="border-left:4px solid #64748b;">
+        <div class="card-header">
+          <h3>🧮 Stealth Calculator Disguise HUD</h3>
+          <span class="badge badge-outline">Duress Safety</span>
+        </div>
+        <p style="font-size:13px; color:#cbd5e1;">Disguises AegisPulse as a working calculator. Entering PIN 1337= unveils dashboard; entering Duress PIN 9999= locks evidence and sends silent SOS.</p>
+        <div style="margin:15px 0; display:flex; gap:10px;">
+          <button class="btn btn-sm btn-crimson" onclick="openStealthCalculator()">🎭 Launch Calculator Disguise</button>
+        </div>
+        <div style="font-size:12px; color:#94a3b8;">
+          Master PIN: <strong>1337=</strong> | Duress PIN: <strong>9999=</strong>
+        </div>
+      </div>
+
+
+      <!-- AI Lawyer / Tech Operator Listening Mode & FOIA Discovery Bot -->
+      <div class="grid grid-2 mt-4">
+        <!-- AI Lawyer & Tech Operator Dual Listening Mode -->
+        <div class="card" style="border-left:4px solid #6366f1;">
+          <div class="card-header">
+            <h3>⚖️ AI Lawyer & Tech Operator Dual Listening Mode</h3>
+            <span class="badge badge-indigo" id="lawyerOpStatusBadge">Standby</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">Real-time dual engine: AI Lawyer detects constitutional traps (Rodriguez delays, coerced consent) and whispers statutory counters into your earbud, while Tech Operator cleans audio via DSP noise gating and live transcription.</p>
+          <div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" id="toggleLawyerOpBtn" onclick="toggleLawyerListeningMode()">🎙️ Start Real Live Speech Recognition Ear</button>
+            <button class="btn btn-sm btn-outline" onclick="simulateOfficerUtterance('Mind if I open your trunk and look inside?')">Test Search Coercion</button>
+            <button class="btn btn-sm btn-outline" onclick="simulateOfficerUtterance('We are waiting 20 minutes for a drug dog.')">Test Rodriguez Delay</button>
+          </div>
+          <div id="lawyerOpLiveBox" style="padding:12px; border-radius:8px; background:rgba(15,23,42,0.6); border:1px solid #334155; font-size:13px; color:#cbd5e1;">
+            Listening mode standby. Cleaned transcription and earbud legal whisper cues will appear here.
+          </div>
+        </div>
+
+        <!-- Automated Legal Discovery & FOIA Bot -->
+        <div class="card" style="border-left:4px solid #10b981;">
+          <div class="card-header">
+            <h3>📜 Automated Legal Discovery & FOIA Bot</h3>
+            <span class="badge badge-emerald">Statutory Enforcement</span>
+          </div>
+          <p style="font-size:13px; color:#cbd5e1;">Generates legally binding Spoliation Preservation Demands and Public Records Petitions (CPRA, TPIA, FOIL, Sunshine, Federal FOIA) to prevent routine 30-day bodycam/dashcam overwrite.</p>
+          <div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" onclick="generateSpoliationNotice('CALIFORNIA')">Generate CPRA Preservation Notice</button>
+            <button class="btn btn-sm btn-outline" onclick="generatePublicRecordsPetition('CALIFORNIA')">Draft Formal FOIA Petition</button>
+          </div>
+          <div id="foiaDocResults" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:12px; color:#cbd5e1; max-height:160px; overflow-y:auto; font-family:monospace;">
+            Select a legal discovery document above to generate statutory notice.
+          </div>
+        </div>
+      </div>
+
+      <!-- Gemini Post-Encounter Debrief & Dossier Card -->
+      <div class="card mt-4" id="encounterDossierCard" style="display:none;">
+        <div class="card-header">
+          <h3>⚖️ Gemini Civil Rights Debriefing & Cryptographic Dossier</h3>
+          <span class="badge badge-indigo">SHA-256 Verified</span>
+        </div>
+        <div id="dossierContent" style="padding:10px 0;">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: LIVE POLICE SCANNER & TRACKER -->
+    <section id="tab-police-scanner" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>Live Emergency Police Scanner & Radar Tracker</h2>
+          <p class="subtitle">Public safety radio talkgroup monitor, automatic 10-code interpreter, and geofenced CAD incident map.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline" id="toggleRadioAudioBtn" onclick="toggleRadioAudioSpeaker()">
+            <span>🔇 Radio Speaker: MUTED</span>
+          </button>
+          <button class="btn btn-primary" onclick="broadcastLiveRadioDispatch()">
+            <span>⚡ Broadcast Tactical Radio Dispatch</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Real Live Tactical Radio Dispatch Broadcaster & 10-Code Decoder -->
+      <div class="card mb-4" style="background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:4px solid #38bdf8;">
+        <div class="card-header">
+          <h3>🎙️ Live Tactical Radio Dispatcher & 10-Code Synthesizer</h3>
+          <span class="badge badge-cyan">MDC-1200 FSK + Squelch</span>
+        </div>
+        <p style="font-size:13px; color:#94a3b8;">Transmit any live transmission or 10-code CAD announcement. Synthesizes authentic tactical radio squelch chirps, decodes 10-codes via Gemini, and broadcasts across geofenced talkgroups.</p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+          <input type="text" id="customRadioInput" style="flex:1; min-width:260px; padding:10px 14px; background:#020617; border:1px solid #334155; border-radius:8px; color:#fff; font-family:monospace; font-size:13px;" placeholder="e.g. Unit 4-B-12 on scene 10-20 5th & Mission, Code 4, citizen asserting 4th Amendment...">
+          <button class="btn btn-primary" onclick="broadcastLiveRadioDispatch()">
+            <span>📻 Transmit Over Radio</span>
+          </button>
+          <button class="btn btn-outline" onclick="simulateIncomingScannerCall()">
+            <span>⚡ Rapid Dispatch Test</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Talkgroups Channel Selector -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3>📻 Emergency Radio Talkgroup Selector</h3>
+          <span class="badge badge-emerald">Online Feeds</span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;" id="scannerChannels">
+          <!-- Filled dynamically -->
+        </div>
+      </div>
+
+      <!-- Active CAD Incidents Radar -->
+      <div class="card">
+        <div class="card-header">
+          <h3>🚨 Active Geofenced Emergency Incidents</h3>
+          <span class="badge badge-indigo" id="incidentCountBadge">5 Tracked</span>
+        </div>
+        <div id="incidentsList" class="mt-3">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: PHYSICAL COUNTER-SURVEILLANCE -->
+    <section id="tab-counter-surveillance" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>Physical Counter-Surveillance Sweeper</h2>
+          <p class="subtitle">Multi-sensor hardware suite: Magnetometer GPS tracker detector, Optical lens glint & IR scanner, Wi-Fi RTSP surveillance sweeper, and 2G downgrade IMSI-catcher alerts.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <!-- Magnetometer GPS Sweeper -->
+        <div class="card">
+          <div class="card-header">
+            <h3>🧲 Magnetometer Vehicle GPS Sweeper</h3>
+            <span class="badge badge-emerald">Flux Sensor</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Detects high-strength neodymium magnets used to attach covert GPS trackers (Spytec, LandAirSea) to vehicle chassis or wheel wells.</p>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin:15px 0; flex-wrap:wrap; gap:10px;">
+            <div>
+              <div style="font-size:28px; font-weight:800; color:#38bdf8;" id="magFluxReadout">45.0 <span style="font-size:14px; color:#94a3b8;">uT</span></div>
+              <div style="font-size:12px; color:#64748b;">Earth Baseline: 45.0 uT</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-sm btn-primary" id="toggleHardwareMagBtn" onclick="toggleHardwareMagnetometer()">🧲 Start Real Hardware Flux Sweeper</button>
+              <button class="btn btn-sm btn-outline" onclick="runMagnetometerTest(245.0)">Simulate Magnet (245 uT)</button>
+            </div>
+          </div>
+          <div id="magAlertBox" style="padding:10px; border-radius:8px; background:rgba(16,185,129,0.1); border:1px solid #10b981; font-size:13px; color:#a7f3d0;">
+            Normal ambient Earth magnetic field. No covert magnetic GPS tracker detected.
+          </div>
+        </div>
+
+        <!-- Optical Lens & Night Vision IR Detector -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📷 Optical Hidden Camera & IR Lens Sweeper</h3>
+            <span class="badge badge-indigo">Optical Glint</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Identifies retro-reflective specular glints from glass pinhole lenses and active 850/940nm night-vision infrared emitters.</p>
+          <div style="margin:15px 0; display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-emerald" id="toggleCameraOpticalBtn" onclick="toggleLiveCameraOpticalSweeper()">📷 Launch Live Camera Glint Viewfinder</button>
+            <button class="btn btn-sm btn-outline" onclick="runOpticalSweepTest()">🔍 Execute Frame Analysis</button>
+          </div>
+          <div id="opticalCameraContainer" style="display:none; position:relative; margin-bottom:12px; border-radius:8px; overflow:hidden; border:2px solid #10b981;">
+            <video id="opticalVideoFeed" autoplay playsinline muted style="width:100%; display:block; max-height:240px; object-fit:cover; background:#000;"></video>
+            <canvas id="opticalCanvasOverlay" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
+          </div>
+          <div id="opticalAlertBox" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Ready to analyze optical retro-reflection from pinhole apertures.
+          </div>
+        </div>
+
+        <!-- Wi-Fi RTSP Camera Sweeper -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📡 Local Wi-Fi RTSP Surveillance Sweeper</h3>
+            <span class="badge badge-emerald">Subnet Scan</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Scans local subnet for RTSP video streams (port 554), ONVIF discovery (8899), and camera vendor OUIs (Hikvision, Dahua, Wyze).</p>
+          <div style="margin:15px 0;">
+            <button class="btn btn-sm btn-outline" onclick="runWifiSurveillanceScan()">🌐 Scan Subnet for Video Cameras</button>
+          </div>
+          <div id="wifiCameraResults" style="font-size:13px; color:#cbd5e1;">
+            Click scan to inspect local subnet.
+          </div>
+        </div>
+
+        <!-- Cellular 2G IMSI-Catcher Alert -->
+        <div class="card">
+          <div class="card-header">
+            <h3>📶 Cellular 2G Downgrade & IMSI-Catcher Alert</h3>
+            <span class="badge badge-crimson">Stingray Guard</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Detects rogue base transceiver stations (IMSI Catchers) forcing phones onto unencrypted 2G GSM bands with ciphering disabled (A5/0).</p>
+          <div style="margin:15px 0;">
+            <button class="btn btn-sm btn-crimson" onclick="runImsiCatcherAudit()">⚠️ Audit Cellular Radio Environment</button>
+          </div>
+          <div id="cellularAuditResults" style="font-size:13px; color:#cbd5e1;">
+            Cellular link: LTE / 5G Mutual Authentication active.
+          </div>
+        </div>
+
+        <!-- Haven Physical Room Intrusion Sentinel -->
+        <div class="card" style="border-left:4px solid #8b5cf6;">
+          <div class="card-header">
+            <h3>🛡️ Haven Room & Evil Maid Intrusion Sentinel</h3>
+            <span class="badge badge-purple" id="sentinelStatusBadge">Disarmed</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Protects hotel rooms, offices, and laptops against unauthorized physical entry and covert searches using ambient light (lux), accelerometer vibration, and audio SPL dB.</p>
+          <div style="display:flex; gap:10px; margin:15px 0;">
+            <button class="btn btn-sm btn-primary" id="armSentinelBtn" onclick="toggleSentinelArm()">🔒 Arm Room Sentinel</button>
+            <button class="btn btn-sm btn-outline" onclick="testIntrusionEvent()">⚠️ Test Door Entry Spike</button>
+          </div>
+          <div id="sentinelAlertBox" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Sentinel idle. Arm sensor to monitor room while away.
+          </div>
+        </div>
+
+        <!-- Optical Strobe Glint Cadence Finder -->
+        <div class="card" style="border-left:4px solid #ec4899;">
+          <div class="card-header">
+            <h3>✨ Optical Strobe Glint Cadence Finder</h3>
+            <span class="badge badge-pink">8 Hz Strobe</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Pulses LED flashlight at 8 Hz with high-contrast red filter to differentiate true optical retro-reflection from ambient metallic reflection.</p>
+          <div style="margin:15px 0;">
+            <button class="btn btn-sm btn-outline" onclick="runStrobeCadenceTest()">🔬 Analyze Strobe Glint Cadence</button>
+          </div>
+          <div id="strobeCadenceResults" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Ready to pulse 8 Hz strobe cadence.
+          </div>
+        </div>
+
+        <!-- Ultrasonic Cross-Device Beacon Firewall & Jammer -->
+        <div class="card" style="border-left:4px solid #f97316;">
+          <div class="card-header">
+            <h3>🔇 Ultrasonic Beacon Firewall & Jammer</h3>
+            <span class="badge badge-amber" id="ultrasoundStatusBadge">18-22 kHz Guard</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Detects covert inaudible ultrasonic ad-tracking beacons (SilverPush, Signal360) and emits phase-inverted white-noise jamming pulses to corrupt tracking payloads.</p>
+          <div style="display:flex; gap:10px; margin:15px 0;">
+            <button class="btn btn-sm btn-outline" onclick="detectUltrasonicBeacon(18500)">🔍 Scan for Ultrasonic Beacons (18.5 kHz)</button>
+            <button class="btn btn-sm btn-crimson" id="toggleJammerBtn" onclick="toggleUltrasonicJammer()">⚡ Activate Ultrasonic Jammer</button>
+          </div>
+          <div id="ultrasoundAlertBox" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Ultrasonic firewall active. Ready to jam cross-device tracking audio.
+          </div>
+        </div>
+
+        <!-- Wi-Fi CSI Through-Wall Sighting & Respiration Radar -->
+        <div class="card" style="border-left:4px solid #14b8a6;">
+          <div class="card-header">
+            <h3>📡 Wi-Fi CSI Through-Wall Sighting Radar</h3>
+            <span class="badge badge-cyan">52 Subcarriers</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Leverages 802.11 multi-path RF subcarrier distortion to detect human motion and stationary chest respiration (breathing) through interior walls without cameras.</p>
+          <div style="display:flex; gap:10px; margin:15px 0; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-outline" onclick="runWifiCsiScan('BREATHING_THROUGH_WALL')">Detect Through-Wall Respiration</button>
+            <button class="btn btn-sm btn-outline" onclick="runWifiCsiScan('WALKING')">Detect Active Intruder Movement</button>
+            <button class="btn btn-sm btn-outline" onclick="runWifiCsiScan('EMPTY')">Calibrate Empty Room</button>
+          </div>
+          <div id="csiRadarResults" style="padding:10px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Click a scan mode to analyze 5 GHz multi-path RF subcarrier variance.
+          </div>
+        </div>
+
+        <!-- Rear-Facing Camera Vehicular Tail Detector Link Card -->
+        <div class="card" style="border-left:4px solid #ef4444;">
+          <div class="card-header">
+            <h3>🚗 Rear-Facing Camera Tail &amp; Follow Detector</h3>
+            <span class="badge badge-crimson">Backwards Lens</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Mount device pointing rearwards out the back windshield to detect persistent trailing vehicles, match consecutive turns, and compute evasive counter-measures.</p>
+          <div style="margin:15px 0;">
+            <button class="btn btn-sm btn-crimson" onclick="switchTabToTailDetector()">👁️ Open Rear Camera Tail Detector</button>
+          </div>
+          <div style="font-size:12px; color:#38bdf8;">
+            Hardware: Device Back/Telephoto Camera • Angle: Rear View • Turn Correlation: Active
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: REAR CAMERA VEHICULAR & PEDESTRIAN TAIL DETECTOR -->
+    <section id="tab-tail-detector" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>Rear-Facing Camera Vehicular &amp; Pedestrian Tail Detector</h2>
+          <p class="subtitle">Optical counter-surveillance AI: Mount device pointing backwards to detect trailing vehicles, correlate turns, log license plates, and generate tactical evasion routes.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-crimson" id="toggleTailDetectorBtn" onclick="toggleRearCameraTailDetector()">
+            <span>🔴 Start Rear Camera Tail Detector</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mount Placement Notice Banner -->
+      <div class="glass-card mb-4" style="background:rgba(2,132,199,0.1); border-left:4px solid #0284c7; padding:1rem 1.25rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="font-size:24px;">🚗</span>
+            <div>
+              <strong style="color:#38bdf8;">Optimal Counter-Surveillance Mount Orientation:</strong>
+              <div style="font-size:12px; color:#cbd5e1; margin-top:2px;">
+                Position your phone on the vehicle rear dashboard / headrest or backpack mesh pointing directly out the rear window. The AI continuously analyzes following vehicles across consecutive maneuvers.
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-sm btn-outline" onclick="switchTailCameraLens()">🔄 Flip Camera Lens</button>
+            <button class="btn btn-sm btn-outline" onclick="simulateVehicularTail()">🧪 Test Active Tail Scenario</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <!-- Live Rear Camera Viewport & Tactical HUD Overlay -->
+        <div class="card" style="border-left:4px solid #ef4444;">
+          <div class="card-header">
+            <div>
+              <h3>👁️ Rear-Facing Optical Viewfinder &amp; Target Lock</h3>
+              <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Computer vision optical flow, vehicle bounding boxes &amp; headlight/plate tracking</p>
+            </div>
+            <span class="badge badge-crimson" id="tailThreatStatusBadge">STANDBY</span>
+          </div>
+
+          <!-- Video Container with Dynamic HUD Canvas -->
+          <div id="tailCameraContainer" style="position:relative; width:100%; height:320px; background:#000; border-radius:10px; overflow:hidden; border:2px solid #334155; margin:12px 0;">
+            <video id="tailCameraVideo" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover; display:block;"></video>
+            <canvas id="tailCameraCanvas" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;"></canvas>
+            
+            <!-- Standby Overlay -->
+            <div id="tailStandbyOverlay" style="position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:rgba(2,6,23,0.85); color:#94a3b8; padding:20px; text-align:center;">
+              <span style="font-size:42px; margin-bottom:10px;">📹</span>
+              <strong style="color:#f8fafc; font-size:16px;">Rear Camera Feed Disengaged</strong>
+              <p style="font-size:13px; max-width:340px; margin:6px 0 16px 0;">Click below to initialize your device's backward-facing camera and engage optical follow tracking.</p>
+              <button class="btn btn-primary" onclick="startRearCameraTailDetector()">Activate Backwards Camera View</button>
+            </div>
+
+            <!-- In-HUD Status Pill -->
+            <div id="tailHudPill" style="display:none; position:absolute; top:12px; left:12px; background:rgba(15,23,42,0.85); backdrop-filter:blur(6px); border:1px solid #ef4444; border-radius:20px; padding:4px 12px; font-size:11px; font-family:var(--font-mono); color:#fca5a5; align-items:center; gap:6px;">
+              <span class="pulsing-dot-red" style="width:8px; height:8px;"></span>
+              <span>REAR OPTICAL HUD: TRACKING</span>
+            </div>
+
+            <!-- In-HUD Horizon & Grid Guideline Toggle -->
+            <div style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.6); padding:4px 8px; border-radius:6px; font-size:11px; color:#38bdf8; font-family:var(--font-mono);">
+              FOV: 78° Wide • Rear Aspect
+            </div>
+          </div>
+
+          <!-- Quick Controls Bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:8px;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-sm btn-primary" onclick="captureTailEvidenceSnapshot()">📸 Capture Forensic Evidence</button>
+              <button class="btn btn-sm btn-outline" onclick="triggerTurnCorrelation('Right Turn 90°')">↩️ Log Right Turn</button>
+              <button class="btn btn-sm btn-outline" onclick="triggerTurnCorrelation('Left Turn 90°')">↪️ Log Left Turn</button>
+            </div>
+            <button class="btn btn-sm btn-ai" onclick="runGeminiTailEvasion()">✨ Gemini Evasion Route</button>
+          </div>
+        </div>
+
+        <!-- Correlated Tail Targets & Threat Assessment Matrix -->
+        <div class="card" style="border-left:4px solid #f59e0b;">
+          <div class="card-header">
+            <div>
+              <h3>🎯 Detected Trailing Vehicles &amp; Turn Correlation</h3>
+              <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Statistical multi-maneuver tracking &amp; license plate records</p>
+            </div>
+            <button class="btn btn-xs btn-outline" onclick="loadTailTargets()">🔄 Refresh Telemetry</button>
+          </div>
+
+          <!-- Active Target Card -->
+          <div id="activeTailTargetBox" style="margin:12px 0; background:rgba(239,68,68,0.08); border:1px solid #ef4444; border-radius:10px; padding:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span class="pulsing-dot-red"></span>
+                <strong style="color:#ef4444; font-size:15px;" id="tailTargetName">Silver Sedan (Toyota Camry)</strong>
+              </div>
+              <span class="badge badge-crimson" id="tailTargetThreatScore">THREAT: 92/100</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-top:12px; font-size:12px;">
+              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+                <div style="color:#94a3b8; font-size:11px;">EST. DISTANCE</div>
+                <div style="color:#38bdf8; font-weight:700; font-size:14px;" id="tailDistanceValue">18.5 meters</div>
+              </div>
+              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+                <div style="color:#94a3b8; font-size:11px;">TRAILING DURATION</div>
+                <div style="color:#f59e0b; font-weight:700; font-size:14px;" id="tailDurationValue">02m:45s</div>
+              </div>
+              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+                <div style="color:#94a3b8; font-size:11px;">CORRELATED TURNS</div>
+                <div style="color:#ef4444; font-weight:700; font-size:14px;" id="tailTurnsValue">3 of 3 Turns</div>
+              </div>
+              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+                <div style="color:#94a3b8; font-size:11px;">LICENSE PLATE OCR</div>
+                <div style="color:#a7f3d0; font-weight:700; font-size:14px;" id="tailPlateValue">CA 7XYZ890</div>
+              </div>
+            </div>
+
+            <!-- Consecutive Maneuvers Log -->
+            <div style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:6px; padding:10px;">
+              <div style="font-size:11px; color:#94a3b8; font-weight:700; text-transform:uppercase;">Correlation Maneuvers Log:</div>
+              <div id="tailTurnsLogList" style="margin-top:6px; font-size:12px; color:#cbd5e1; display:flex; flex-direction:column; gap:4px;">
+                <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
+                  <span>Right on Market St</span> <span style="color:#94a3b8; font-family:monospace;">2m ago</span>
+                </div>
+                <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
+                  <span>Right on 10th St</span> <span style="color:#94a3b8; font-family:monospace;">1m ago</span>
+                </div>
+                <div style="padding:4px 8px; background:rgba(239,68,68,0.2); border-radius:4px; display:flex; justify-content:space-between; color:#fca5a5;">
+                  <strong>Right on Mission St (Box Loop Confirmed)</strong> <span style="font-family:monospace;">Just now</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Counter-Surveillance Tactical Advice Box -->
+          <div id="tailEvasionBox" style="background:rgba(15,23,42,0.6); border:1px solid #334155; border-radius:8px; padding:12px; font-size:12px; color:#cbd5e1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="color:#38bdf8;">🛡️ Defensive Evasion Protocol:</strong>
+              <span class="badge badge-emerald">Standard Box Loop Rule</span>
+            </div>
+            <p style="margin:4px 0 0 0; line-height:1.4;" id="tailEvasionText">
+              If you suspect you are being followed: make <strong>four consecutive right turns</strong> around a standard city block. A regular commuter will never make four rights in a circle. If the vehicle makes all four turns, the tail is confirmed. Never drive to your residence; navigate to a crowded 24/7 public station or police station.
+            </p>
+          </div>
+
+          <!-- Captured Evidence Log -->
+          <div style="margin-top:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <strong style="font-size:13px; color:#f8fafc;">📑 Forensic Evidence Dossiers (<span id="tailEvidenceCount">0</span>)</strong>
+            </div>
+            <div id="tailEvidenceList" style="display:flex; flex-direction:column; gap:6px; max-height:160px; overflow-y:auto;">
+              <div style="font-size:12px; color:#64748b;">No evidence snapshots captured yet. Click "Capture Forensic Evidence" above.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: FARM SENTINEL & MACHINERY -->
+    <section id="tab-farm-sentinel" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>Agricultural Farm Sentinel & Machinery Stethoscope</h2>
+          <p class="subtitle">Livestock BLE ear-tag headcount roll-call, pasture geofencing, and acoustic machinery bearing diagnostics.</p>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" onclick="conductHerdRollCall()">
+            <span>🐄 Run Herd Roll-Call</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <!-- Herd Roll Call -->
+        <div class="card">
+          <div class="card-header">
+            <h3>🏷️ Livestock Herd Headcount & Pasture Radar</h3>
+            <span class="badge badge-emerald" id="herdReconBadge">Reconciling...</span>
+          </div>
+          <div style="display:flex; justify-content:space-around; margin:15px 0; text-align:center;">
+            <div>
+              <div style="font-size:24px; font-weight:700;" id="herdTotalCount">7</div>
+              <div style="font-size:12px; color:#94a3b8;">Registered Total</div>
+            </div>
+            <div>
+              <div style="font-size:24px; font-weight:700; color:#10b981;" id="herdPresentCount">6</div>
+              <div style="font-size:12px; color:#94a3b8;">Present on Farm</div>
+            </div>
+            <div>
+              <div style="font-size:24px; font-weight:700; color:#ef4444;" id="herdMissingCount">1</div>
+              <div style="font-size:12px; color:#94a3b8;">Missing / Strayed</div>
+            </div>
+          </div>
+          <div id="missingHerdAlerts">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Machinery Acoustic Stethoscope -->
+        <div class="card">
+          <div class="card-header">
+            <h3>⚙️ Machinery Acoustic Bearing Stethoscope</h3>
+            <span class="badge badge-indigo">Acoustic DSP</span>
+          </div>
+          <p style="font-size:13px; color:#94a3b8;">Monitors high-frequency bearing friction (3 kHz - 7 kHz) in combines, tractors, PTO shafts, and irrigation pumps to prevent catastrophic mechanical failure.</p>
+          <div style="display:flex; gap:10px; margin:15px 0;">
+            <button class="btn btn-sm btn-outline" onclick="runMachineryDiagnostic(false)">Normal Tractor Idle</button>
+            <button class="btn btn-sm btn-crimson" onclick="runMachineryDiagnostic(true)">Test Combine Bearing Fault</button>
+          </div>
+          <div id="machineryDiagResults" style="padding:12px; border-radius:8px; background:rgba(0,0,0,0.3); font-size:13px; color:#cbd5e1;">
+            Select machinery profile to analyze acoustic spectrum.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: AI PRIVATE INVESTIGATOR & OSINT SKIP TRACER -->
+    <section id="tab-private-investigator" class="tab-content">
+      <div class="view-header">
+        <div>
+          <h2>🕵️ AI Private Investigator &amp; OSINT Skip Tracer</h2>
+          <p class="subtitle">Autonomous multi-agent research engine: 15 parallel research threads across Public Records, Social Media, Reverse Telecom, and Asset Registries.</p>
+        </div>
+        <div class="header-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-sm btn-outline" onclick="openDossierArchiveModal()">📁 Dossier Archive (<span id="piDossierCountBadge">2</span>)</button>
+          <button class="btn btn-sm btn-primary" onclick="loadPiQuickCase('PI-2026-9812')">🧪 Load Sample Case: Sarah Jenkins</button>
+        </div>
+      </div>
+
+      <!-- Ethical Protocol & OSINT Standard Notice -->
+      <div class="glass-card mb-4" style="background:rgba(2,132,199,0.08); border-left:4px solid #0284c7; padding:12px 16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:22px;">⚖️</span>
+            <div>
+              <strong style="color:#38bdf8; font-size:13px;">Evidentiary Standard &amp; Ethical OSINT Protocol:</strong>
+              <div style="font-size:12px; color:#cbd5e1; margin-top:2px;">
+                Multi-identifier triangulation requires 2+ independent public matches (DOB, address timeline, relative associations, county deeds). Public domain records only &mdash; zero illegal pretexting or login bypasses.
+              </div>
+            </div>
+          </div>
+          <span class="badge badge-emerald">15 Parallel Agents Active</span>
+        </div>
+      </div>
+
+      <!-- Investigation Parameters & Query Console -->
+      <div class="card mb-4" style="border-left:4px solid #38bdf8;">
+        <div class="card-header">
+          <div>
+            <h3>🔎 Launch New Investigation</h3>
+            <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Specify subject coordinates, phone number, vehicle plate, or digital handle</p>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;" id="piModeSelector">
+            <button class="chip-btn active" id="btnPiModePerson" onclick="setPiMode('PERSON_SKIP_TRACE')">👤 Person Skip Trace</button>
+            <button class="chip-btn" id="btnPiModePhone" onclick="setPiMode('REVERSE_PHONE')">📞 Reverse Phone</button>
+            <button class="chip-btn" id="btnPiModePlate" onclick="setPiMode('VEHICLE_PLATE')">🚗 Vehicle Plate</button>
+            <button class="chip-btn" id="btnPiModeUsername" onclick="setPiMode('USERNAME_OSINT')">🌐 Username OSINT</button>
+          </div>
+        </div>
+
+        <form id="piSearchForm" onsubmit="event.preventDefault(); launchPiInvestigation();" style="margin-top:12px;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+            <div id="piFieldFullName">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Full Legal Name / Subject:</label>
+              <input type="text" id="piInputFullName" class="text-input" placeholder="e.g. Sarah Marie Jenkins" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Sarah Marie Jenkins">
+            </div>
+
+            <div id="piFieldCityState">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Last Known City, State or County:</label>
+              <input type="text" id="piInputCityState" class="text-input" placeholder="e.g. Austin, TX or Travis County" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Austin, TX">
+            </div>
+
+            <div id="piFieldPhone">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Phone Number (Optional / Reverse):</label>
+              <input type="text" id="piInputPhone" class="text-input" placeholder="e.g. +1 (512) 555-0184" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="+1 (512) 555-0184">
+            </div>
+
+            <div id="piFieldUsername">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Social Handle / Username / Email:</label>
+              <input type="text" id="piInputUsername" class="text-input" placeholder="e.g. sarah.jenkins88@gmail.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="sarah.jenkins88@gmail.com">
+            </div>
+
+            <div id="piFieldPlate" style="display:none;">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">License Plate &amp; State:</label>
+              <input type="text" id="piInputPlate" class="text-input" placeholder="e.g. CA 7XYZ890" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+            </div>
+          </div>
+
+          <div style="margin-top:10px;">
+            <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Investigative Objective / Witness Context:</label>
+            <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Locating witness for traffic encounter deposition / verifying suspect vehicle owner" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Civil witness location / skip trace verification">
+          </div>
+
+          <!-- Quick Case Scenarios & Submit -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+              <span style="font-size:11px; color:#94a3b8; font-weight:700;">PRESETS:</span>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-9812')">Sarah Jenkins (Austin, TX)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-4402')">🚗 CA Plate 7XYZ890 (Tail Suspect)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiPhonePreset('+1 (415) 555-0192')">📞 +1-415-555-0192 (VoIP Line)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiUsernamePreset('dev_recon_99')">🌐 dev_recon_99 (Handle)</button>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="btnLaunchPiSearch" style="background:#0284c7; font-weight:700;">
+              <span>🔎 Execute 15-Agent Parallel Investigation</span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Parallel Research Agents Visualizer (Live Threads) -->
+      <div id="piAgentVisualizer" class="card mb-4" style="display:none; background:rgba(15,23,42,0.85); border:1px solid #0284c7;">
+        <div class="card-header">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="loading-spinner" style="width:18px; height:18px; margin:0;"></div>
+            <div>
+              <strong style="color:#38bdf8; font-size:14px;">Autonomous Parallel Agents Executing (15 Threads / 45 Queries)</strong>
+              <div style="font-size:11px; color:#94a3b8;" id="piTelemetryStatusText">Deploying threads across county assessors, court dockets, CNAM registers, and social networks...</div>
+            </div>
+          </div>
+          <span class="badge badge-indigo" id="piProgressPercentBadge">0% COMPLETE</span>
+        </div>
+
+        <div style="width:100%; height:6px; background:#1e293b; border-radius:4px; overflow:hidden; margin:10px 0;">
+          <div id="piProgressBar" style="width:0%; height:100%; background:linear-gradient(90deg, #0284c7, #10b981); transition:width 0.2s ease;"></div>
+        </div>
+
+        <!-- 15 Agent Threads Live Status Grid -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(190px, 1fr)); gap:8px; margin-top:8px;" id="piThreadsGrid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- Compiled Evidentiary Dossier Output Container -->
+      <div id="piDossierContainer">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
+    <div class="modal-backdrop" id="observeModal" style="display: none;">
+      <div class="modal-dialog modal-observe">
+        <div class="modal-header">
+          <div class="observe-head-title">
+            <span class="pulsing-dot-red"></span>
+            <h3>Live Proximity Distance Tracker & Observe Mode</h3>
+          </div>
+          <button class="modal-close" onclick="closeObserveModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="observeModalBody">
+          <div class="observe-device-badge">
+            <span id="observeDeviceName">Apple AirTag (6C:29:95:4F:A1:B8)</span>
+            <span class="badge badge-crimson" id="observeTransportMode">Automotive (Vehicle Tracking)</span>
+          </div>
+
+          <!-- Hot/Cold Meter Display -->
+          <div class="hot-cold-display" id="hotColdContainer">
+            <div class="hot-cold-label" id="hotColdLabel">BURNING HOT (Immediate Contact)</div>
+            <div class="distance-number-hero">
+              <span id="observeDistanceMeters">0.8</span> <span class="dist-unit">meters</span>
+            </div>
+            <div class="rssi-sub-readout">
+              Raw RSSI: <span id="observeRawRssi">-49</span> dBm | Kalman Filtered: <span id="observeFilteredRssi">-49.2</span> dBm
+            </div>
+          </div>
+
+          <!-- UWB Precision Direction Vector Compass & Arrow -->
+          <div class="precision-compass-container" style="display:flex; flex-direction:column; align-items:center; justify-content:center; margin:12px 0 16px 0; padding:16px; background:rgba(0,0,0,0.45); border-radius:12px; border:1px solid #334155;">
+            <div style="font-size:12px; color:#94a3b8; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; font-weight:700;">
+              🧭 Ultra-Wideband (UWB) Spatial Direction Pointer
+            </div>
+            <div style="position:relative; width:140px; height:140px; display:flex; align-items:center; justify-content:center;">
+              <div style="position:absolute; width:130px; height:130px; border-radius:50%; border:2px dashed #0284c7; opacity:0.6; animation:spinClockwise 25s linear infinite;"></div>
+              <div style="position:absolute; width:95px; height:95px; border-radius:50%; border:1px solid #38bdf8; opacity:0.4;"></div>
+              <!-- Rotating Tactical Arrow -->
+              <div id="precisionPointerArrow" style="transition:transform 0.2s cubic-bezier(0.4, 0, 0.2, 1); transform:rotate(45deg); width:80px; height:80px; display:flex; align-items:center; justify-content:center;">
+                <svg viewBox="0 0 24 24" width="60" height="60" fill="none">
+                  <path d="M12 2L4 21l8-4 8 4L12 2z" fill="#38bdf8" stroke="#ffffff" stroke-width="1.5" style="filter:drop-shadow(0 0 10px #38bdf8);"/>
+                </svg>
+              </div>
+              <div style="position:absolute; width:12px; height:12px; border-radius:50%; background:#ffffff; box-shadow:0 0 12px #38bdf8;"></div>
+            </div>
+            <div style="display:flex; gap:14px; margin-top:10px; font-family:var(--font-mono); font-size:12px;">
+              <span style="color:#38bdf8;">Azimuth: <strong id="precisionBearingText">045° NE</strong></span>
+              <span style="color:#94a3b8;">•</span>
+              <span style="color:#10b981;">Direction Lock: <strong id="precisionSignalArcText">Strong (+/-6°)</strong></span>
+            </div>
+            <div style="font-size:11px; color:#94a3b8; margin-top:4px;">
+              Rotate device slowly in horizontal plane. The pointer tracks the relative RF transmitter angle.
+            </div>
+          </div>
+
+          <!-- Proximity Zone Visualizer Bar -->
+          <div class="proximity-gradient-bar">
+            <div class="zone-marker zm-freezing">Freezing (&gt;15m)</div>
+            <div class="zone-marker zm-cold">Cold (8-15m)</div>
+            <div class="zone-marker zm-warm">Warm (3-8m)</div>
+            <div class="zone-marker zm-hot">Hot (1-3m)</div>
+            <div class="zone-marker zm-burning active">Immediate (&lt;1m)</div>
+          </div>
+
+          <!-- Interactive Sweep Simulation & Compass Stepper -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin:12px 0; padding:10px 12px; background:rgba(2,132,199,0.1); border:1px solid #0284c7; border-radius:8px;">
+            <div style="font-size:12px; color:#38bdf8; font-weight:700;">🚶 Live Search Walk Simulation:</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn btn-xs btn-outline" onclick="stepObserveDistance(-0.6)">🚶 Step Closer (-0.6m)</button>
+              <button class="btn btn-xs btn-outline" onclick="stepObserveDistance(+1.2)">🚶 Step Away (+1.2m)</button>
+              <button class="btn btn-xs btn-outline" onclick="rotateUwbPointer(-30)">↺ Bearing -30°</button>
+              <button class="btn btn-xs btn-outline" onclick="rotateUwbPointer(+30)">↻ Bearing +30°</button>
+            </div>
+          </div>
+
+          <!-- Acoustic Geiger Clicker Simulator -->
+          <div class="geiger-controls-box">
+            <div class="geiger-info">
+              <span class="geiger-icon">🔊</span>
+              <div>
+                <strong>Acoustic Geiger Proximity Clicker</strong>
+                <p id="geigerRateDesc" class="text-muted">Repetition Rate: 16 Hz (Fast pulsating clicks)</p>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline" id="toggleGeigerBtn" onclick="toggleGeigerAudio()">
+              <span>Start Audio Geiger</span>
+            </button>
+          </div>
+
+          <!-- Physical Concealment Checklist -->
+          <div class="concealment-checklist mt-3">
+            <h4>🔍 Physical Vehicle & Gear Inspection Checklist:</h4>
+            <div class="checklist-grid">
+              <label class="check-item"><input type="checkbox"> Wheel well / splash guard plastic lip</label>
+              <label class="check-item"><input type="checkbox"> Rear license plate bracket / bumper gap</label>
+              <label class="check-item"><input type="checkbox"> Front radiator grille or air intake</label>
+              <label class="check-item"><input type="checkbox"> Vehicle undercarriage / steel frame rails</label>
+              <label class="check-item"><input type="checkbox"> Backpack / briefcase bottom lining or zipper</label>
+              <label class="check-item"><input type="checkbox"> Car seat cushion crease or spare tire well</label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" onclick="triggerTrackerSound(activeObserveDeviceId)">🔊 Play 3.8 kHz Piezo Chime</button>
+            <button class="btn btn-sm btn-crimson" onclick="openNeutralizeModal('airtag')">🛑 Disabling &amp; Battery Removal</button>
+            <button class="btn btn-sm btn-outline" style="border-color:#38bdf8; color:#38bdf8;" onclick="closeObserveModal(); switchTabToTailDetector();">🚗 Rear Camera Tail Detector</button>
+          </div>
+          <button class="btn btn-outline" onclick="closeObserveModal()">Close Observe Mode</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Forensic Disablement & Battery Removal Guide -->
+    <div class="modal-backdrop" id="neutralizeModal" style="display: none;">
+      <div class="modal-dialog" style="max-width:620px;">
+        <div class="modal-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:22px;">🛑</span>
+            <h3 style="margin:0;">Tracker Neutralization &amp; Battery Removal Guide</h3>
+          </div>
+          <button class="modal-close" onclick="closeNeutralizeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div style="display:flex; gap:8px; margin-bottom:12px;">
+            <button class="chip-btn active" id="btnGuideAirtag" onclick="switchNeutralizeGuide('airtag')">Apple AirTag</button>
+            <button class="chip-btn" id="btnGuideSmarttag" onclick="switchNeutralizeGuide('smarttag')">Samsung Galaxy SmartTag</button>
+            <button class="chip-btn" id="btnGuideTile" onclick="switchNeutralizeGuide('tile')">Tile Pro / Mate</button>
+          </div>
+          <div id="neutralizeGuideContent" style="background:rgba(0,0,0,0.3); border-radius:8px; padding:16px; border:1px solid #334155;">
+            Loading neutralization forensic steps...
+          </div>
+          <div style="margin-top:14px; background:rgba(239,68,68,0.1); border:1px solid #ef4444; border-radius:8px; padding:12px; font-size:12px; color:#fca5a5;">
+            <strong>⚖️ Evidence Preservation Rule:</strong> Do not destroy or submerge the tracker in water. Removing the battery safely depowers the beacon, halts all location tracking, and preserves physical fingerprints and internal serial numbers for law enforcement.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="closeNeutralizeModal()">Dismiss</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal for Manual Tracker MAC Registration -->
+    <div class="modal-backdrop" id="manualTrackerModal" style="display: none;">
+      <div class="modal-dialog" style="max-width:480px;">
+        <div class="modal-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:22px;">➕</span>
+            <h3 style="margin:0;">Register Known / Suspect BLE Tracker</h3>
+          </div>
+          <button class="modal-close" onclick="closeManualTrackerModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p style="font-size:13px; color:#94a3b8; margin:0 0 14px 0;">Add a specific Bluetooth MAC address or custom suspect beacon to your active surveillance watch roster.</p>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <div>
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px;">Device Type / Model:</label>
+              <select id="manualTrackerType" class="text-input" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px; border-radius:6px;">
+                <option value="Apple AirTag (Find My)">Apple AirTag (Find My Network)</option>
+                <option value="Samsung Galaxy SmartTag2">Samsung Galaxy SmartTag2</option>
+                <option value="Tile Pro (BLE)">Tile Pro / Mate</option>
+                <option value="Chipolo ONE Spot">Chipolo ONE Spot</option>
+                <option value="Generic Covert BLE Tracker">Generic Covert BLE Tracker</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px;">Bluetooth MAC Address (e.g. 5C:F7:C2:78:A2:14):</label>
+              <input type="text" id="manualTrackerMac" class="text-input" placeholder="AA:BB:CC:DD:EE:FF" style="width:100%; font-family:var(--font-mono); background:#0f172a; color:#fff; border:1px solid #334155; padding:8px; border-radius:6px;">
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px;">Custom Label / Placement Note:</label>
+              <input type="text" id="manualTrackerLabel" class="text-input" placeholder="e.g. Suspect device behind rear license plate" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px; border-radius:6px;">
+            </div>
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:8px; font-size:13px; color:#cbd5e1;">
+              <input type="checkbox" id="manualTrackerTriggerAlert" checked> Immediately Flag as Critical Stalking Alert
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="closeManualTrackerModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="submitManualTracker()">Add to Surveillance Radar</button>
+        </div>
+      </div>
+    </div>
+
+<!-- Modal for NFC Forensics / Chime Sound -->
+    <div class="modal-backdrop" id="genericModal" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h3 id="modalTitle">Device Action</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Content -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>AegisPulse v3.8.0 • Powered by Google Gemini Multi-Turn Reasoning & Apple/Google DULT Anti-Tracking Standard</p>
+    </footer>
+  </div>
+
+
+    <!-- Stealth Calculator Modal -->
+    <div class="modal-backdrop" id="calculatorModal" style="display: none;">
+      <div class="modal-dialog" style="max-width:320px; background:#18181b; border:1px solid #3f3f46; border-radius:16px;">
+        <div class="modal-header" style="border-bottom:none; padding-bottom:0;">
+          <h4 style="margin:0; font-size:14px; color:#a1a1aa;">Calculator</h4>
+          <button class="modal-close" onclick="closeCalculator()">&times;</button>
+        </div>
+        <div class="modal-body" style="padding:15px;">
+          <div style="background:#09090b; color:#fff; font-size:32px; font-family:monospace; text-align:right; padding:15px; border-radius:10px; margin-bottom:15px;" id="calcDisplay">0</div>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:8px;">
+            <button class="btn btn-outline" onclick="calcPress('C')">C</button>
+            <button class="btn btn-outline" onclick="calcPress('(')">(</button>
+            <button class="btn btn-outline" onclick="calcPress(')')">)</button>
+            <button class="btn btn-primary" onclick="calcPress('/')">÷</button>
+            <button class="btn btn-outline" onclick="calcPress('7')">7</button>
+            <button class="btn btn-outline" onclick="calcPress('8')">8</button>
+            <button class="btn btn-outline" onclick="calcPress('9')">9</button>
+            <button class="btn btn-primary" onclick="calcPress('*')">×</button>
+            <button class="btn btn-outline" onclick="calcPress('4')">4</button>
+            <button class="btn btn-outline" onclick="calcPress('5')">5</button>
+            <button class="btn btn-outline" onclick="calcPress('6')">6</button>
+            <button class="btn btn-primary" onclick="calcPress('-')">-</button>
+            <button class="btn btn-outline" onclick="calcPress('1')">1</button>
+            <button class="btn btn-outline" onclick="calcPress('2')">2</button>
+            <button class="btn btn-outline" onclick="calcPress('3')">3</button>
+            <button class="btn btn-primary" onclick="calcPress('+')">+</button>
+            <button class="btn btn-outline" onclick="calcPress('0')">0</button>
+            <button class="btn btn-outline" onclick="calcPress('.')">.</button>
+            <button class="btn btn-crimson" style="grid-column: span 2;" onclick="calcEqual()">=</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/native_bridge.js"></script>
+  <script src="/app.js"></script>
+
+  <!-- FULL RESOLUTION 4K MASCOT MODAL -->
+  <div id="mascotModal" class="modal-backdrop" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(2,6,23,0.94); z-index:99999; overflow-y:auto; padding:20px; align-items:center; justify-content:center;">
+    <div style="max-width:960px; width:100%; background:linear-gradient(135deg, #0f172a, #020617); border:2px solid #eab308; border-radius:18px; padding:24px; box-shadow:0 0 60px rgba(234,179,8,0.35); position:relative; margin:auto;">
+      <button onclick="closeMascotModal()" style="position:absolute; top:16px; right:16px; background:#1e293b; border:1px solid #475569; color:#f8fafc; font-size:18px; width:36px; height:36px; border-radius:50%; cursor:pointer;">✕</button>
+      <div style="text-align:center; margin-bottom:16px;">
+        <h2 style="color:#fef08a; font-size:1.8rem; font-weight:900; letter-spacing:3px; margin:0 0 6px 0;">BRIGGADE: THE VANGUARD</h2>
+        <p style="color:#38bdf8; font-family:'JetBrains Mono', monospace; font-size:13px; margin:0;">OG MALIK &amp; SHEBA (BLACK GERMAN SHEPHERD) • 4K ULTRA-HD MASTERPIECE</p>
+      </div>
+      <div style="display:flex; justify-content:center; margin:16px 0; background:#000000; border-radius:14px; padding:16px; border:1px solid #1e293b;">
+        <img src="/ic_launcher.png" alt="Briggade Vanguard Official Artwork" style="max-width:100%; max-height:65vh; border-radius:10px; box-shadow:0 0 40px rgba(0,0,0,0.9); object-fit:contain;">
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-top:16px;">
+        <div style="color:#cbd5e1; font-size:12px; line-height:1.5;">
+          <div>Master Icon: <strong>512 x 512 px (Official Launcher Asset)</strong> • Ultra Crisp</div>
+          <div style="color:#94a3b8;">High-definition tactical shield artwork &amp; vector master files</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="/ic_launcher.png" download="ic_launcher.png" class="btn btn-sm btn-primary" style="background:#eab308; color:#0f172a; font-weight:800; text-decoration:none;">Download Official Icon</a>
+          <a href="/mascot_4k.png" download="Briggade_Mascot_4K.png" class="btn btn-sm btn-outline" style="text-decoration:none;">Download 4K UHD</a>
+          <a href="/mascot.svg" download="Briggade_Mascot.svg" class="btn btn-sm btn-outline" style="text-decoration:none;">Download Vector SVG</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

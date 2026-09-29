@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1800" width="1200" height="1800">
+  <defs>
+    <!-- Heavy Industrial Steel Frame Border -->
+    <linearGradient id="frameSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="30%" stop-color="#1e293b"/>
+      <stop offset="70%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <!-- Rust Patina Accents -->
+    <linearGradient id="rustPatina" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#1e293b" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Bolt Head -->
+    <radialGradient id="bolt3d" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="45%" stop-color="#64748b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Heavy Steel Outer Frame with Bolted Industrial Edges -->
+  <rect x="0" y="0" width="1200" height="1800" fill="url(#frameSteel)"/>
+  
+  <!-- Corner and Edge Heavy Rivets (16 Total) -->
+  <g id="outerRivets">
+    <!-- Top Row -->
+    <circle cx="40" cy="40" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="400" cy="40" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="800" cy="40" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="1160" cy="40" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <!-- Center Row -->
+    <circle cx="40" cy="900" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="1160" cy="900" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <!-- Bottom Row -->
+    <circle cx="40" cy="1760" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="400" cy="1760" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="800" cy="1760" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="1160" cy="1760" r="16" fill="url(#bolt3d)" stroke="#0f172a" stroke-width="3"/>
+  </g>
+
+  <!-- White Frame Dividers (Creating 4 Distinct Panels) -->
+  <rect x="25" y="25" width="1150" height="1750" fill="none" stroke="#000000" stroke-width="6"/>
+
+  <!-- ==================== PANEL 1 (TOP LEFT): BRIGGADE STAMPED BADGE ==================== -->
+  <g id="panelTopLeft" transform="translate(30, 30)">
+    <rect x="0" y="0" width="560" height="850" fill="#0f172a"/>
+    <!-- Nested Content from Icon SVG -->
+    <image href="briggade_icon.svg" x="0" y="0" width="560" height="850"/>
+  </g>
+
+  <!-- ==================== PANEL 2 (TOP RIGHT): UNIT STATUS OPERATIONAL ==================== -->
+  <g id="panelTopRight" transform="translate(610, 30)">
+    <rect x="0" y="0" width="560" height="850" fill="#020617"/>
+    <image href="sheba_briggs_operational.svg" x="0" y="0" width="560" height="850"/>
+  </g>
+
+  <!-- Central Vertical Divider (White/Steel Line) -->
+  <line x1="600" y1="25" x2="600" y2="1775" stroke="#f8fafc" stroke-width="6"/>
+
+  <!-- ==================== PANEL 3 (BOTTOM LEFT): OPERATOR LOADOUT ==================== -->
+  <g id="panelBottomLeft" transform="translate(30, 915)">
+    <rect x="0" y="0" width="560" height="850" fill="#0f172a"/>
+    <image href="operator_loadout.svg" x="0" y="0" width="560" height="850"/>
+  </g>
+
+  <!-- Central Horizontal Divider (White/Steel Line) -->
+  <line x1="25" y1="895" x2="1175" y2="895" stroke="#f8fafc" stroke-width="6"/>
+
+  <!-- ==================== PANEL 4 (BOTTOM RIGHT): NIGHT OPTICS ACQUIRING TARGET ==================== -->
+  <g id="panelBottomRight" transform="translate(610, 915)">
+    <rect x="0" y="0" width="560" height="850" fill="#020617"/>
+    <image href="night_optics_radar.svg" x="0" y="0" width="560" height="850"/>
+  </g>
+</svg>

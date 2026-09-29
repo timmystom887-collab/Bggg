@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <defs>
+    <linearGradient id="warehouseBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="50%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <linearGradient id="spearSteel" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+
+    <linearGradient id="shaftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dark Industrial Warehouse Background -->
+  <rect x="0" y="0" width="600" height="900" fill="url(#warehouseBg)"/>
+
+  <!-- Warehouse Architecture (Girders, Skylight, Chains) -->
+  <g stroke="#334155" stroke-width="3" opacity="0.4">
+    <!-- Skylight Window High Above -->
+    <polygon points="200,80 250,70 270,100 220,110" fill="#94a3b8" opacity="0.3"/>
+    <!-- Steel Roof Trusses -->
+    <line x1="0" y1="120" x2="600" y2="120"/>
+    <line x1="50" y1="120" x2="120" y2="20"/>
+    <line x1="120" y1="20" x2="190" y2="120"/>
+    <line x1="190" y1="120" x2="260" y2="20"/>
+    <line x1="340" y1="20" x2="410" y2="120"/>
+    <line x1="410" y1="120" x2="480" y2="20"/>
+    <line x1="480" y1="20" x2="550" y2="120"/>
+    <!-- Distant Pallets & Hazardous Barrels -->
+    <rect x="30" y="300" width="80" height="90" fill="#090d16"/>
+    <rect x="380" y="320" width="120" height="70" fill="#090d16"/>
+  </g>
+
+  <!-- Wet Concrete Floor with Reflections -->
+  <path d="M0,620 L600,620 L600,900 L0,900 Z" fill="#090d16"/>
+  <ellipse cx="280" cy="740" rx="240" ry="60" fill="#1e293b" opacity="0.25"/>
+
+  <!-- Military Stencil Header: UNIT STATUS: OPERATIONAL. SHEBA & BRIGGS -->
+  <g id="headerText">
+    <text x="560" y="55" font-family="'JetBrains Mono', monospace" font-weight="900" font-size="20" fill="#4ade80" text-anchor="end" letter-spacing="2">
+      UNIT STATUS: OPERATIONAL.
+    </text>
+    <text x="560" y="85" font-family="'JetBrains Mono', monospace" font-weight="900" font-size="22" fill="#4ade80" text-anchor="end" letter-spacing="3">
+      SHEBA &amp; BRIGGS
+    </text>
+  </g>
+
+  <!-- ==================== BRIGGS WITH HALYARD-SPEAR ==================== -->
+  <g id="briggsOperational">
+    <!-- Tactical Jeans & Combat Boots -->
+    <path d="M180,520 L160,780 L140,820 L195,820 L210,750 L240,750 L255,820 L310,820 L290,750 L270,520 Z" fill="#0f172a"/>
+    <!-- Heavy Combat Boots -->
+    <path d="M135,790 L130,830 L195,830 L195,800 Z" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+    <path d="M255,790 L250,830 L315,830 L315,800 Z" fill="#020617" stroke="#1e293b" stroke-width="2"/>
+    <!-- Thigh Tactical Holster -->
+    <rect x="260" y="560" width="30" height="55" rx="4" fill="#020617" stroke="#334155" stroke-width="1.5"/>
+
+    <!-- Studded Leather Biker Jacket & Hoodie -->
+    <path d="M130,420 L170,280 Q250,260 320,280 L350,420 L310,540 L160,540 Z" fill="#0b0e14"/>
+    <path d="M190,280 L235,370 L280,280 Z" fill="#1e293b"/> <!-- Hoodie inner -->
+
+    <!-- Silver Pyramid & Round Studs on Jacket -->
+    <g fill="#cbd5e1">
+      <circle cx="180" cy="290" r="3.5"/><circle cx="195" cy="285" r="3.5"/><circle cx="210" cy="280" r="3.5"/>
+      <circle cx="265" cy="280" r="3.5"/><circle cx="280" cy="285" r="3.5"/><circle cx="295" cy="290" r="3.5"/>
+      <polygon points="190,320 196,326 190,332 184,326"/>
+      <polygon points="285,320 291,326 285,332 279,326"/>
+    </g>
+
+    <!-- Head & Cap (Briggs) -->
+    <ellipse cx="240" cy="210" rx="30" ry="38" fill="#3d2110"/>
+    <!-- True Cap -->
+    <path d="M205,190 Q240,145 275,190 L285,200 Q240,185 195,200 Z" fill="#090c10"/>
+    <path d="M230,175 C230,165 250,165 250,175" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+
+    <!-- Intense Eyes & Beard -->
+    <ellipse cx="228" cy="205" rx="4" ry="2.5" fill="#ffffff"/>
+    <circle cx="228" cy="205" r="1.5" fill="#000000"/>
+    <ellipse cx="252" cy="205" rx="4" ry="2.5" fill="#ffffff"/>
+    <circle cx="252" cy="205" r="1.5" fill="#000000"/>
+    <!-- Sharp Groomed Beard -->
+    <path d="M225,230 Q240,248 255,230 L250,245 Q240,250 230,245 Z" fill="#090a0f"/>
+
+    <!-- Strong Arms Gripping the Halyard-Spear -->
+    <!-- Left Arm -->
+    <path d="M150,330 L110,430 L160,430 Z" fill="#0b0e14"/>
+    <circle cx="150" cy="430" r="12" fill="#3d2110"/> <!-- Hand gripping shaft -->
+
+    <!-- Right Arm Extended Forward with Spear -->
+    <path d="M305,330 L365,410 L385,395 Z" fill="#0b0e14"/>
+    <circle cx="370" cy="405" r="12" fill="#3d2110"/>
+
+    <!-- THE HALYARD-SPEAR (Two-Handed Combat Weapon) -->
+    <!-- Spear Shaft running diagonally -->
+    <line x1="10" y1="190" x2="480" y2="620" stroke="url(#shaftGrad)" stroke-width="12" stroke-linecap="round"/>
+    <!-- Steel Collar & Cross-Bar -->
+    <rect x="375" y="500" width="14" height="24" rx="2" fill="#cbd5e1" transform="rotate(45 375 500)"/>
+    <!-- Razor-Sharp Spear Leaf Blade -->
+    <polygon points="415,550 495,635 440,575 425,560" fill="url(#spearSteel)" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="415" y1="550" x2="495" y2="635" stroke="#ffffff" stroke-width="2"/>
+  </g>
+
+  <!-- ==================== SHEBA (VANGUARD COMPANION) ==================== -->
+  <g id="shebaOperational">
+    <!-- Sitting Upright Vigilant Posture -->
+    <path d="M390,780 Q430,480 470,440 Q530,450 560,560 L570,820 L480,820 Z" fill="url(#shebaCoat)"/>
+    <!-- Paws Planted Solidly -->
+    <ellipse cx="440" cy="815" rx="20" ry="12" fill="#090c10"/>
+    <ellipse cx="490" cy="815" rx="20" ry="12" fill="#090c10"/>
+
+    <!-- Spiked Tactical Collar -->
+    <path d="M435,520 Q485,500 535,530 L525,550 Q480,520 425,540 Z" fill="#020617" stroke="#475569" stroke-width="1.5"/>
+    <!-- Spikes -->
+    <polygon points="440,520 435,500 450,518" fill="#e2e8f0"/>
+    <polygon points="465,515 465,492 478,512" fill="#e2e8f0"/>
+    <polygon points="495,515 500,495 508,518" fill="#e2e8f0"/>
+
+    <!-- Alert Head & Tall Pointed Ears -->
+    <polygon points="450,420 440,270 495,360" fill="#090c10"/>
+    <polygon points="452,400 445,300 482,365" fill="#581c1c" opacity="0.5"/>
+
+    <polygon points="515,410 545,290 540,380" fill="#090c10"/>
+    <polygon points="518,395 538,315 535,375" fill="#581c1c" opacity="0.5"/>
+
+    <ellipse cx="485,390" rx="42" ry="40" fill="url(#shebaCoat)"/>
+    <!-- Snout & Nose -->
+    <path d="M465,390 L425,435 Q445,460 480,440 Z" fill="#090c10"/>
+    <ellipse cx="428" cy="435" rx="8" ry="6" fill="#000000"/>
+
+    <!-- Intelligent Golden Eye -->
+    <ellipse cx="475,375" rx="7" ry="5" fill="#fbbf24"/>
+    <circle cx="475" cy="375" r="2.5" fill="#000000"/>
+    <circle cx="477" cy="373" r="1" fill="#ffffff"/>
+  </g>
+</svg>

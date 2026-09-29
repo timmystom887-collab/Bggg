@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" width="600" height="900">
+  <defs>
+    <radialGradient id="slateFloor" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="70%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </radialGradient>
+
+    <linearGradient id="goldCallout" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Slate Tactical Surface Background -->
+  <rect x="0" y="0" width="600" height="900" fill="url(#slateFloor)"/>
+
+  <!-- Tactical Grid Marks -->
+  <g stroke="#334155" stroke-width="1" stroke-dasharray="6,6" opacity="0.3">
+    <line x1="50" y1="0" x2="50" y2="900"/>
+    <line x1="300" y1="0" x2="300" y2="900"/>
+    <line x1="550" y1="0" x2="550" y2="900"/>
+    <line x1="0" y1="150" x2="600" y2="150"/>
+    <line x1="0" y1="450" x2="600" y2="450"/>
+    <line x1="0" y1="750" x2="600" y2="750"/>
+  </g>
+
+  <!-- Header: OPERATOR LOADOUT -->
+  <text x="300" y="60" font-family="'JetBrains Mono', 'Impact', monospace" font-weight="900" font-size="28" letter-spacing="6" fill="#fef08a" text-anchor="middle">
+    OPERATOR LOADOUT
+  </text>
+
+  <!-- ==================== GEAR FLAT-LAY ITEMS ==================== -->
+
+  <!-- 1. TRUE CAP (Top Left) -->
+  <g id="itemTrueCap" transform="translate(60, 90)">
+    <ellipse cx="60" cy="60" rx="45" ry="30" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+    <path d="M20,65 Q60,40 100,65 L108,78 Q60,60 12,78 Z" fill="#020617"/>
+    <path d="M48,52 C48,42 72,42 72,52" fill="none" stroke="#f8fafc" stroke-width="3"/>
+    <text x="60" y="115" font-family="'JetBrains Mono', monospace" font-size="12" fill="#cbd5e1" font-weight="700" text-anchor="middle">TRUE CAP</text>
+  </g>
+
+  <!-- 2. SPIKED COLLAR (DOG ALLISNT / BRIGGADE UNIT) (Top Right) -->
+  <g id="itemSpikedCollar" transform="translate(400, 110)">
+    <circle cx="60" cy="50" r="42" fill="none" stroke="#020617" stroke-width="16"/>
+    <circle cx="60" cy="50" r="42" fill="none" stroke="#475569" stroke-width="2"/>
+    <!-- Spikes radiating outward -->
+    <g fill="#e2e8f0" stroke="#334155" stroke-width="1">
+      <polygon points="60,0 54,16 66,16"/>
+      <polygon points="102,18 89,28 98,38"/>
+      <polygon points="120,60 104,54 104,66"/>
+      <polygon points="102,102 98,89 88,98"/>
+      <polygon points="60,120 66,104 54,104"/>
+      <polygon points="18,102 28,98 18,88"/>
+      <polygon points="0,60 16,66 16,54"/>
+      <polygon points="18,18 28,28 38,18"/>
+    </g>
+    <text x="60" y="135" font-family="'JetBrains Mono', monospace" font-size="11" fill="#cbd5e1" font-weight="800" text-anchor="middle">DOG ALLISNT</text>
+    <text x="60" y="152" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fef08a" font-weight="800" text-anchor="middle">BRIGGADE UNIT</text>
+  </g>
+
+  <!-- 3. STUDDED LEATHER BIKER JACKET (Center) -->
+  <g id="itemJacket" transform="translate(160, 130)">
+    <!-- Jacket Silhouette -->
+    <path d="M40,240 L10,60 L75,20 L135,50 L200,20 L260,60 L230,240 Z" fill="#090d16" stroke="#334155" stroke-width="3"/>
+    <path d="M75,20 L135,130 L200,20 Z" fill="#1e293b"/> <!-- Inner lining & label -->
+    <rect x="115" y="45" width="40" height="24" fill="#7f1d1d" stroke="#fef08a" stroke-width="1"/>
+    <!-- Silver Pyramid & Round Studs -->
+    <g fill="#cbd5e1">
+      <circle cx="50" cy="50" r="4"/><circle cx="65" cy="40" r="4"/><circle cx="80" cy="35" r="4"/>
+      <circle cx="190" cy="35" r="4"/><circle cx="205" cy="40" r="4"/><circle cx="220" cy="50" r="4"/>
+      <polygon points="85,80 91,86 85,92 79,86"/>
+      <polygon points="95,100 101,106 95,112 89,106"/>
+      <polygon points="175,80 181,86 175,92 169,86"/>
+      <polygon points="165,100 171,106 165,112 159,106"/>
+    </g>
+    <!-- Tactical Patches on Torso -->
+    <circle cx="65" cy="120" r="14" fill="#991b1b" stroke="#ca8a04" stroke-width="1.5"/>
+    <circle cx="65" cy="180" r="12" fill="#1e3a8a" stroke="#ca8a04" stroke-width="1.5"/>
+    <rect x="180" y="125" width="36" height="18" fill="#1e293b" stroke="#ca8a04" stroke-width="1"/>
+    <text x="198" y="138" font-family="'JetBrains Mono', monospace" font-size="7" fill="#fef08a" text-anchor="middle">BRIGGADE</text>
+  </g>
+
+  <!-- 4. BRIGGADE SATCHEL / OPERATOR PACK (Bottom Left) -->
+  <g id="itemSatchel" transform="translate(30, 480)">
+    <!-- Weathered Leather Bag Body -->
+    <path d="M20,130 Q100,160 180,130 L195,60 Q100,40 10,60 Z" fill="#1c1917" stroke="#44403c" stroke-width="3"/>
+    <!-- Flap with Straps & Brass Buckles -->
+    <path d="M15,60 Q100,85 185,60 L180,105 Q100,120 20,105 Z" fill="#292524" stroke="#78716c" stroke-width="2"/>
+    <line x1="55" y1="40" x2="55" y2="135" stroke="#44403c" stroke-width="5"/>
+    <rect x="49" y="95" width="12" height="18" fill="#ca8a04"/>
+    <line x1="145" y1="40" x2="145" y2="135" stroke="#44403c" stroke-width="5"/>
+    <rect x="139" y="95" width="12" height="18" fill="#ca8a04"/>
+    <!-- Gear Inside Open Pocket (Map, Radio Antenna, Flashlight) -->
+    <rect x="70" y="30" width="60" height="35" fill="#fef9c3" opacity="0.8"/> <!-- Folded Map -->
+    <line x1="60" y1="10" x2="70" y2="45" stroke="#000000" stroke-width="4"/> <!-- Radio antenna -->
+
+    <text x="100" y="175" font-family="'JetBrains Mono', monospace" font-size="12" fill="#cbd5e1" font-weight="800" text-anchor="middle">OPERATOR PACK</text>
+    <text x="100" y="195" font-family="'JetBrains Mono', monospace" font-size="12" fill="#fef08a" font-weight="800" text-anchor="middle">BRIGGADE SATCHEL</text>
+  </g>
+
+  <!-- 5. HALYARD-SPEAR (Diagonal Center-Right) -->
+  <g id="itemSpear">
+    <line x1="120" y1="840" x2="440" y2="420" stroke="#475569" stroke-width="10" stroke-linecap="round"/>
+    <line x1="120" y1="840" x2="440" y2="420" stroke="#0f172a" stroke-width="4" stroke-dasharray="16,8"/>
+    <!-- Leaf Blade Spearhead -->
+    <polygon points="440,420 480,360 450,405" fill="#cbd5e1" stroke="#f8fafc" stroke-width="2"/>
+    <line x1="440" y1="420" x2="480" y2="360" stroke="#ffffff" stroke-width="2"/>
+    <text x="290" y="550" font-family="'JetBrains Mono', monospace" font-size="13" fill="#cbd5e1" font-weight="800">HALYARD-SPEAR</text>
+  </g>
+
+  <!-- 6. TARGET TREAT & DOG TREAT TIN (Middle Right) -->
+  <g id="itemTreats" transform="translate(400, 520)">
+    <!-- Bone Treat -->
+    <path d="M40,25 C30,10 5,20 15,35 C5,50 30,60 40,45 L90,45 C100,60 125,50 115,35 C125,20 100,10 90,25 Z" fill="#d6d3d1" stroke="#78716c" stroke-width="2"/>
+    <text x="75" y="85" font-family="'JetBrains Mono', monospace" font-size="12" fill="#cbd5e1" font-weight="800" text-anchor="middle">TARGET TREAT</text>
+
+    <!-- Tin of Treats -->
+    <rect x="30" y="100" width="60" height="40" rx="6" fill="#1e293b" stroke="#ca8a04" stroke-width="2"/>
+    <circle cx="60" cy="120" r="10" fill="#fef08a"/>
+  </g>
+
+  <!-- 7. NIGHT OPTICS GOGGLES (Bottom Right) -->
+  <g id="itemNightOptics" transform="translate(320, 720)">
+    <!-- Goggles Frame & Green Lenses -->
+    <rect x="40" y="30" width="130" height="50" rx="16" fill="#020617" stroke="#334155" stroke-width="3"/>
+    <!-- Dual Green NVG Lenses -->
+    <ellipse cx="75" cy="55" rx="24" ry="18" fill="#15803d" stroke="#4ade80" stroke-width="2"/>
+    <ellipse cx="135" cy="55" rx="24" ry="18" fill="#15803d" stroke="#4ade80" stroke-width="2"/>
+    <!-- Glint -->
+    <line x1="65" y1="45" x2="85" y2="65" stroke="#86efac" stroke-width="2"/>
+    <line x1="125" y1="45" x2="145" y2="65" stroke="#86efac" stroke-width="2"/>
+    <!-- Heavy Elastic Headstrap -->
+    <path d="M40,55 L10,50 L40,65 Z" fill="#1e293b"/>
+    <path d="M170,55 L200,50 L170,65 Z" fill="#1e293b"/>
+
+    <text x="105" y="115" font-family="'JetBrains Mono', monospace" font-size="13" fill="#4ade80" font-weight="800" text-anchor="middle">NIGHT OPTICS</text>
+  </g>
+</svg>

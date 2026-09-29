@@ -1,0 +1,6 @@
+{
+  "name": "briggade",
+  "description": "BRIGGADE — Street & Constitutional Shield (OG & Sheba). Tactical privacy, anti-surveillance radar, and constitutional legal defense suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
