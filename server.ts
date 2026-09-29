@@ -2635,7 +2635,7 @@ All 23 tactical utilities are live and guarded by Gemini Intelligence.`);
     }
   }
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = 3000;
   app.listen(PORT, () => {
     console.log(`[BRIGGADE Server] Street & Constitutional Shield online. Listening on port ${PORT}`);
   });

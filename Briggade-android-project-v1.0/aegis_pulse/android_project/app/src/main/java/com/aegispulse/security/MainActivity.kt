@@ -4,26 +4,69 @@ import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.view.View
+import android.view.WindowManager
+import android.webkit.ConsoleMessage
+import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
 import android.widget.TextView
 
-/** Stable launcher: native features attach only after the dashboard is visible. */
+/** Production Android launcher: full responsive WebView with native hardware bridges. */
 class MainActivity : Activity() {
     private var webView: WebView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // Immersive dark tactical UI colors
+        window.apply {
+            statusBarColor = Color.parseColor("#0a0d14")
+            navigationBarColor = Color.parseColor("#0a0d14")
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                decorView.systemUiVisibility = decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+            }
+        }
+
         val dashboard = try {
             WebView(this).apply {
-                settings.javaScriptEnabled = true
-                settings.domStorageEnabled = true
-                settings.allowFileAccess = true
-                settings.allowContentAccess = false
-                settings.cacheMode = WebSettings.LOAD_DEFAULT
-                webViewClient = WebViewClient()
+                setBackgroundColor(Color.parseColor("#0a0d14"))
+                settings.apply {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    databaseEnabled = true
+                    allowFileAccess = true
+                    allowContentAccess = true
+                    useWideViewPort = true
+                    loadWithOverviewMode = true
+                    builtInZoomControls = false
+                    displayZoomControls = false
+                    setSupportZoom(false)
+                    cacheMode = WebSettings.LOAD_DEFAULT
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                        mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+                    }
+                }
+                
+                webViewClient = object : WebViewClient() {
+                    override fun onPageFinished(view: WebView?, url: String?) {
+                        super.onPageFinished(view, url)
+                        // Trigger native status refresh
+                        view?.evaluateJavascript("if (window.initPrivateInvestigatorModule) window.initPrivateInvestigatorModule();", null)
+                    }
+                }
+                
+                webChromeClient = object : WebChromeClient() {
+                    override fun onPermissionRequest(request: PermissionRequest?) {
+                        request?.grant(request.resources)
+                    }
+                    override fun onConsoleMessage(consoleMessage: ConsoleMessage?): Boolean {
+                        return super.onConsoleMessage(consoleMessage)
+                    }
+                }
             }
         } catch (error: Throwable) {
             showFallback("WebView startup failed: ${error.javaClass.simpleName}")
@@ -33,11 +76,8 @@ class MainActivity : Activity() {
         webView = dashboard
         setContentView(dashboard)
         try {
-            // The Activity is already visible, but index.html has not run yet.
-            // This makes every dashboard feature see AndroidBridge on first load.
             dashboard.addJavascriptInterface(NativeFeatureBridge(this), "AndroidBridge")
         } catch (_: Throwable) {
-            // Keep the dashboard open if an optional native dependency fails.
         }
         dashboard.loadUrl("file:///android_asset/www/index.html")
     }
@@ -47,7 +87,7 @@ class MainActivity : Activity() {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER
             setPadding(48, 48, 48, 48)
-            setBackgroundColor(Color.rgb(15, 23, 42))
+            setBackgroundColor(Color.rgb(10, 13, 20))
         }
         fallback.addView(TextView(this).apply {
             text = "BRIGGADE\n$message"

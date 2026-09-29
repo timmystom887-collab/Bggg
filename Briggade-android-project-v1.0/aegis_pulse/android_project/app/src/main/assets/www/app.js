@@ -1025,11 +1025,68 @@ function openObserveModal(deviceId) {
   const modal = document.getElementById("observeModal");
   if (modal) modal.style.display = "flex";
 
+  // Instant local lookup to remove any flash of mock/stale data
+  const list = (typeof globalTrackers !== "undefined" && Array.isArray(globalTrackers)) ? globalTrackers : [];
+  const t = list.find(x => x.device_id === deviceId);
+  if (t) {
+    const devName = document.getElementById("observeDeviceName");
+    if (devName) devName.textContent = `${t.device_type} (${t.mac_address})`;
+    const modeBadge = document.getElementById("observeTransportMode");
+    if (modeBadge) {
+      modeBadge.textContent = t.transport_mode || "In Transit";
+      modeBadge.className = `badge ${t.transport_mode && t.transport_mode.toLowerCase().includes("vehic") ? 'badge-crimson' : 'badge-amber'}`;
+    }
+    const distText = document.getElementById("observeDistanceMeters");
+    if (distText) distText.textContent = t.estimated_distance_m;
+    const rssiText = document.getElementById("observeRawRssi");
+    if (rssiText) rssiText.textContent = t.current_rssi;
+  }
+
+  // Populate target dropdown with all scanned trackers
+  const selector = document.getElementById("observeTargetSelector");
+  if (selector) {
+    selector.innerHTML = list.map(x => {
+      const name = x.custom_label ? `${x.device_type} - ${x.custom_label}` : `${x.device_type} (${x.mac_address})`;
+      const selected = x.device_id === deviceId ? "selected" : "";
+      return `<option value="${x.device_id}" ${selected}>${escapeHtml(name)} [Dist: ${x.estimated_distance_m}m]</option>`;
+    }).join("");
+    
+    if (list.length === 0) {
+      selector.innerHTML = `<option value="${deviceId}">Active Target (${deviceId})</option>`;
+    }
+  }
+
   // Initial fetch and start interval
   pollObserveData();
   if (observeInterval) clearInterval(observeInterval);
   observeInterval = setInterval(pollObserveData, 800);
 }
+
+function changeObserveTarget(deviceId) {
+  if (!deviceId) return;
+  activeObserveDeviceId = deviceId;
+  manualBearingOffset = 0;
+  
+  // Instantly apply local values for immediate visual response
+  const list = (typeof globalTrackers !== "undefined" && Array.isArray(globalTrackers)) ? globalTrackers : [];
+  const t = list.find(x => x.device_id === deviceId);
+  if (t) {
+    const devName = document.getElementById("observeDeviceName");
+    if (devName) devName.textContent = `${t.device_type} (${t.mac_address})`;
+    const modeBadge = document.getElementById("observeTransportMode");
+    if (modeBadge) {
+      modeBadge.textContent = t.transport_mode || "In Transit";
+      modeBadge.className = `badge ${t.transport_mode && t.transport_mode.toLowerCase().includes("vehic") ? 'badge-crimson' : 'badge-amber'}`;
+    }
+    const distText = document.getElementById("observeDistanceMeters");
+    if (distText) distText.textContent = t.estimated_distance_m;
+    const rssiText = document.getElementById("observeRawRssi");
+    if (rssiText) rssiText.textContent = t.current_rssi;
+  }
+  
+  pollObserveData();
+}
+window.changeObserveTarget = changeObserveTarget;
 
 function closeObserveModal() {
   const modal = document.getElementById("observeModal");
@@ -4367,8 +4424,23 @@ async function initPrivateInvestigatorModule() {
     const countBadge = document.getElementById("piDossierCountBadge");
     if (countBadge) countBadge.textContent = piDossiersList.length;
 
-    if (!currentPiDossier && piDossiersList.length > 0) {
-      renderPiDossier(piDossiersList[0]);
+    if (piDossiersList.length > 0) {
+      if (!currentPiDossier) {
+        renderPiDossier(piDossiersList[0]);
+      }
+    } else {
+      const container = document.getElementById("piDossierContainer");
+      if (container) {
+        container.innerHTML = `
+          <div class="glass-card" style="text-align:center; padding:3rem 2rem; border:1px dashed rgba(255,255,255,0.12); margin-top:20px; border-radius:12px;">
+            <div style="font-size:3rem; margin-bottom:1rem; filter:grayscale(0.3);">🔍</div>
+            <h3 style="color:#f8fafc; font-size:18px; font-weight:700; margin-bottom:8px;">Awaiting Target Intelligence</h3>
+            <p style="color:#94a3b8; font-size:13px; max-width:440px; margin:0 auto 1.5rem auto; line-height:1.5;">
+              Enter a subject's name, phone, email, username, or vehicle license plate above to initiate a live, search-grounded OSINT skip trace investigation.
+            </p>
+          </div>
+        `;
+      }
     }
   } catch (err) {
     console.error("Failed to load investigator dossiers:", err);

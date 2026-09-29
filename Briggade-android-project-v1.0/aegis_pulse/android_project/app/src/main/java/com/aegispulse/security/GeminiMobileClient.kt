@@ -7,7 +7,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class GeminiMobileClient(private val apiKey: String) {
-    private val models = listOf("gemini-1.5-flash", "gemini-1.5-flash-8b")
+    private val models = listOf("gemini-2.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite", "gemini-3.8-flash")
 
     fun queryGemini(prompt: String, systemInstruction: String? = null): String {
         if (apiKey.isBlank()) return "Gemini is not configured. Add a Gemini API key in the app settings before using network AI features."
