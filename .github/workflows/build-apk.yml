@@ -1,0 +1,188 @@
+name: Build Android APK (Release & Debug)
+
+on:
+  push:
+    branches: [ main, master ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build Target'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - 'both'
+          - 'release'
+          - 'debug'
+      create_release:
+        description: 'Publish GitHub Release with APK assets'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  actions: read
+
+env:
+  ANDROID_PROJECT_DIR: Briggade-android-project-v1.0/aegis_pulse/android_project
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs='-Xmx2048m -XX:MaxMetaspaceSize=512m -Dfile.encoding=UTF-8' -Dorg.gradle.daemon=false -Dorg.gradle.parallel=false"
+
+jobs:
+  build-apk:
+    name: Build & Package Android APK
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Step 2: Setup Node.js for Web Application build
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Step 3: Install Node dependencies
+      - name: Install Web Dependencies
+        run: |
+          npm ci || npm install
+
+      # Step 4: Compile Production Web Assets
+      - name: Build Web Application Bundle
+        run: |
+          npm run build
+          # Sync modern assets to server static and android directories
+          cp public/app.js dist/app.js 2>/dev/null || true
+          cp public/style.css dist/style.css 2>/dev/null || true
+
+      # Step 5: Synchronize Web Assets to Android WebView Assets
+      - name: Sync Web Assets to Android Assets (www)
+        run: |
+          echo "Synchronizing web assets into Android WebView www folder..."
+          TARGET_DIR="$ANDROID_PROJECT_DIR/app/src/main/assets/www"
+          mkdir -p "$TARGET_DIR"
+          
+          # Copy compiled html, js, css and static assets
+          cp index.html "$TARGET_DIR/index.html"
+          cp public/app.js "$TARGET_DIR/app.js"
+          cp public/style.css "$TARGET_DIR/style.css" 2>/dev/null || true
+          cp public/native_bridge.js "$TARGET_DIR/native_bridge.js" 2>/dev/null || true
+          cp -r public/img "$TARGET_DIR/" 2>/dev/null || true
+          cp public/ic_launcher.png "$TARGET_DIR/" 2>/dev/null || true
+          cp public/mascot*.png "$TARGET_DIR/" 2>/dev/null || true
+          cp public/mascot.svg "$TARGET_DIR/" 2>/dev/null || true
+          
+          echo "Assets verified in $TARGET_DIR:"
+          ls -la "$TARGET_DIR"
+
+      # Step 6: Setup Java Development Kit (JDK 17 required by AGP 8.4)
+      - name: Setup Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      # Step 7: Setup Android SDK
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # Step 8: Auto-Accept Android SDK Licenses
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
+
+      # Step 9: Fix Executable Permissions on gradlew
+      - name: Grant Executable Permissions to Gradle Wrapper
+        run: |
+          chmod +x "$ANDROID_PROJECT_DIR/gradlew"
+          ls -l "$ANDROID_PROJECT_DIR/gradlew"
+
+      # Step 10: Setup Optional Release Signing Keystore (from Secrets)
+      - name: Prepare Keystore Signing Credentials
+        id: prepare-keystore
+        run: |
+          if [ -n "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" ]; then
+            echo "Decoding release signing keystore from GitHub Secrets..."
+            KEYSTORE_FILE="/tmp/release-keystore.jks"
+            echo "${{ secrets.SIGNING_KEYSTORE_BASE64 }}" | base64 -d > "$KEYSTORE_FILE"
+            echo "KEYSTORE_FILE=$KEYSTORE_FILE" >> $GITHUB_ENV
+            echo "KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+            echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
+            echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
+            echo "Custom release keystore configured."
+          else
+            echo "No custom release keystore secret found. The build will automatically use the standard debug signature fallback for full APK installability."
+          fi
+
+      # Step 11: Execute Gradle APK Build
+      - name: Build Android APK with Gradle
+        working-directory: ${{ env.ANDROID_PROJECT_DIR }}
+        run: |
+          BUILD_TYPE="${{ github.event.inputs.build_type || 'both' }}"
+          echo "Executing Gradle build target: $BUILD_TYPE"
+          
+          if [ "$BUILD_TYPE" = "debug" ]; then
+            ./gradlew assembleDebug --no-daemon --stacktrace --max-workers=2
+          elif [ "$BUILD_TYPE" = "release" ]; then
+            ./gradlew assembleRelease --no-daemon --stacktrace --max-workers=2
+          else
+            ./gradlew assembleDebug assembleRelease --no-daemon --stacktrace --max-workers=2
+          fi
+
+      # Step 12: Collect, Standardize Names, and Compute SHA-256 Checksums
+      - name: Collect & Verify Generated APKs
+        run: |
+          mkdir -p build-artifacts
+          echo "=== DISCOVERING GENERATED APKS ==="
+          find "$ANDROID_PROJECT_DIR/app/build/outputs/apk" -name "*.apk" -type f
+          
+          # Find and copy release APK
+          RELEASE_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk/release" -name "*.apk" -type f | head -n 1 || true)
+          if [ -n "$RELEASE_APK" ] && [ -f "$RELEASE_APK" ]; then
+            cp "$RELEASE_APK" "build-artifacts/Briggade-v1.0.5-release.apk"
+            echo "Copied: build-artifacts/Briggade-v1.0.5-release.apk"
+          fi
+          
+          # Find and copy debug APK
+          DEBUG_APK=$(find "$ANDROID_PROJECT_DIR/app/build/outputs/apk/debug" -name "*.apk" -type f | head -n 1 || true)
+          if [ -n "$DEBUG_APK" ] && [ -f "$DEBUG_APK" ]; then
+            cp "$DEBUG_APK" "build-artifacts/Briggade-v1.0.5-debug.apk"
+            echo "Copied: build-artifacts/Briggade-v1.0.5-debug.apk"
+          fi
+          
+          # Generate Cryptographic Checksums
+          cd build-artifacts
+          sha256sum *.apk > checksums.sha256.txt || true
+          echo "=== APK CHECKSUMS (SHA-256) ==="
+          cat checksums.sha256.txt || true
+          ls -lh
+
+      # Step 13: Upload Artifacts to GitHub Actions
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Briggade-Android-APKs
+          path: build-artifacts/
+          retention-days: 30
+          if-no-files-found: error
+
+      # Step 14: Publish GitHub Release (on tags or manual trigger)
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v') || github.event.inputs.create_release == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build-artifacts/*
+          generate_release_notes: true
+          name: Briggade Vanguard Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
