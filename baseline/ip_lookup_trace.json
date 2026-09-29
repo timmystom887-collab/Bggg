@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "=== Real-time IP Geolocation for 8.8.8.8 ===\n- Country: United States (US)\n- Region/City: Virginia, Ashburn (Zip: 20149)\n- Coordinates: 39.03, -77.5\n- ISP/Org: Google LLC / Google Public DNS\n- ASN: AS15169 Google LLC"
+      }
+    ]
+  },
+  "id": 6
+}

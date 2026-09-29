@@ -1,0 +1,108 @@
+{
+  "jsonrpc": "2.0",
+  "result": {
+    "tools": [
+      {
+        "name": "search_person",
+        "description": "Perform an OSINT search for a person to find their profile, current residence, aliases, relatives, and online footprint using Gemini Search Grounding.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "type": "string",
+              "description": "The full name of the person to search"
+            },
+            "city_state": {
+              "type": "string",
+              "description": "Optional city, state or location context, e.g. Austin, TX"
+            }
+          },
+          "required": [
+            "full_name"
+          ]
+        }
+      },
+      {
+        "name": "reverse_phone",
+        "description": "Perform a reverse phone lookup to find carrier information, phone line type, risk score, and associated names.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "phone": {
+              "type": "string",
+              "description": "The phone number in national or E.164 format"
+            }
+          },
+          "required": [
+            "phone"
+          ]
+        }
+      },
+      {
+        "name": "username_scan",
+        "description": "Check if a username exists across 8 major platforms (GitHub, Reddit, Twitter, LinkedIn, Instagram, Telegram, HackerNews, Keybase) in real-time.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "description": "The username to scan"
+            }
+          },
+          "required": [
+            "username"
+          ]
+        }
+      },
+      {
+        "name": "ip_lookup",
+        "description": "Get real-time details of an IP address including country, region, city, ISP, and threat score.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "ip": {
+              "type": "string",
+              "description": "The IPv4 or IPv6 address to look up"
+            }
+          },
+          "required": [
+            "ip"
+          ]
+        }
+      },
+      {
+        "name": "dns_lookup",
+        "description": "Query live DNS records (A, AAAA, MX, TXT, NS) for a given domain.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "type": "string",
+              "description": "The domain name to query, e.g. google.com"
+            }
+          },
+          "required": [
+            "domain"
+          ]
+        }
+      },
+      {
+        "name": "whois_lookup",
+        "description": "Retrieve WHOIS domain registration details using real-time search grounding.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "type": "string",
+              "description": "The domain name to look up"
+            }
+          },
+          "required": [
+            "domain"
+          ]
+        }
+      }
+    ]
+  },
+  "id": 1
+}

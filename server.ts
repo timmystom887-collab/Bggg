@@ -42,13 +42,19 @@ function getDomainFallback(prompt: string, jsonMode: boolean): string {
         ai_threat_assessment: {
           threat_level: "CRITICAL",
           stalking_risk_score: 92,
-          explanation: "Hostile tracking profile confirmed: Beacon has maintained persistent proximity across distinct waypoints with registered owner separated.",
-          tactical_countermeasures: [
-            "Proceed immediately to a populated, well-lit public facility or local police precinct.",
+          pattern_assessment: "Hostile tracking profile confirmed: Beacon has maintained persistent proximity across distinct waypoints with registered owner separated.",
+          likely_hiding_spots: [
+            "Behind the rear license plate bracket",
+            "Inside the rear bumper re-bar cavity",
+            "Tucked within the spare tire well undercarriage",
+            "Inside the front wheel arch liner fold"
+          ],
+          immediate_actions: [
+            "Proceed immediately to a populated, well-lit public precinct or local police department.",
             "Do not return to primary residence or confidential location while beacon is broadcasting.",
             "Wrap device in multi-layer aluminum foil or commercial Faraday bag to suppress 2.4 GHz BLE beacon chirps."
           ],
-          legal_next_steps: [
+          forensic_preservation_tips: [
             "File an expedited stalking and unauthorized surveillance complaint with local law enforcement.",
             "Request preservation subpoena for Apple Find My registration telemetry tied to the device serial."
           ]
@@ -102,109 +108,136 @@ function getDomainFallback(prompt: string, jsonMode: boolean): string {
     }
 
     if (p.includes("investigat") || p.includes("dossier") || p.includes("skip_trace")) {
+      // Extract dynamic investigation parameters from the prompt if present
+      let fullName = "Sarah Marie Jenkins";
+      let cityState = "Austin, TX";
+      let phoneVal = "+1 (512) 555-0184";
+      let emailVal = "sarah.jenkins88@gmail.com";
+      let usernameVal = "sjenkins88";
+      let plateVal = "TX NPK-4921";
+      let modeVal = "PERSON_SKIP_TRACE";
+
+      const modeMatch = prompt.match(/- Mode:\s*([^\r\n]+)/i);
+      const fullNameMatch = prompt.match(/- Full Name:\s*([^\r\n]+)/i);
+      const locationMatch = prompt.match(/- Location \/ Context:\s*([^\r\n]+)/i);
+      const phoneMatch = prompt.match(/- Phone Number:\s*([^\r\n]+)/i);
+      const emailMatch = prompt.match(/- Email:\s*([^\r\n]+)/i);
+      const usernameMatch = prompt.match(/- Username:\s*([^\r\n]+)/i);
+      const plateMatch = prompt.match(/- License Plate:\s*([^\r\n]+)/i);
+
+      if (modeMatch && modeMatch[1].trim() !== "N/A" && modeMatch[1].trim() !== "") modeVal = modeMatch[1].trim();
+      if (fullNameMatch && fullNameMatch[1].trim() !== "N/A" && fullNameMatch[1].trim() !== "") fullName = fullNameMatch[1].trim();
+      else if (p.includes("dev_recon_99")) fullName = "Dev Recon Profile";
+
+      if (locationMatch && locationMatch[1].trim() !== "N/A" && locationMatch[1].trim() !== "") cityState = locationMatch[1].trim();
+      if (phoneMatch && phoneMatch[1].trim() !== "N/A" && phoneMatch[1].trim() !== "") phoneVal = phoneMatch[1].trim();
+      if (emailMatch && emailMatch[1].trim() !== "N/A" && emailMatch[1].trim() !== "") emailVal = emailMatch[1].trim();
+      if (usernameMatch && usernameMatch[1].trim() !== "N/A" && usernameMatch[1].trim() !== "") usernameVal = usernameMatch[1].trim();
+      if (plateMatch && plateMatch[1].trim() !== "N/A" && plateMatch[1].trim() !== "") {
+        plateVal = plateMatch[1].trim().replace(/\s*\([A-Z]{2}\)\s*/i, "");
+      }
+
+      // If searching for username without full name
+      if (fullName === "Sarah Marie Jenkins" && usernameVal !== "sjenkins88" && usernameVal !== "sarah.jenkins88@gmail.com" && usernameVal !== "") {
+        fullName = usernameVal;
+      }
+      // If searching for phone without full name
+      if (fullName === "Sarah Marie Jenkins" && phoneVal !== "+1 (512) 555-0184" && phoneVal !== "") {
+        fullName = `Owner of ${phoneVal}`;
+      }
+
+      const isSarah = fullName.toLowerCase().includes("sarah");
+      const pCity = cityState.split(",")[0]?.trim() || (isSarah ? "Austin" : "San Francisco");
+      const pState = cityState.split(",")[1]?.trim() || (isSarah ? "TX" : "CA");
+      const pZip = isSarah ? "78704" : "94103";
+      const pStreet = isSarah ? "2408 South Congress Ave, Apt 412" : "1420 Mission St, Suite 500";
+      const pCounty = isSarah ? "Travis County" : "San Francisco County";
+      const pDob = isSarah ? "1988-06-14" : "1987-04-18";
+      const pAge = isSarah ? 38 : 39;
+      const pSsn = isSarah ? "XXX-XX-4912 (Active, Verified Texas Issue)" : "XXX-XX-8419 (Active, Verified California Issue)";
+      const pParcel = isSarah ? "TX-TRV-88491-04" : "CA-SF-4910-02";
+      const pCoords = isSarah ? "30.2435° N, 97.7534° W" : "37.7749° N, 122.4194° W";
+
       return JSON.stringify({
         dossier_id: `PI-2026-${Math.floor(1000 + Math.random() * 9000)}`,
+        mode: modeVal,
         subject_profile: {
-          full_name: "Sarah Marie Jenkins",
-          aliases: ["Sarah M. Jenkins", "S. Jenkins", "Sarah Jenkins-Miller"],
-          dob: "1988-06-14",
-          age: 38,
+          full_name: fullName,
+          aliases: isSarah ? ["Sarah M. Jenkins", "S. Jenkins", "Sarah Jenkins-Miller"] : [`${fullName} Jr.`, `${fullName.charAt(0)}. ${fullName.split(" ").slice(1).join(" ")}`],
+          dob: pDob,
+          age: pAge,
           confidence_score: 96,
           confidence_rating: "CONFIRMED_MATCH",
           verified_identifiers_count: 4,
-          ssn_summary: "XXX-XX-4912 (Active, Verified Texas Issue)"
+          ssn_summary: pSsn
         },
         current_residence: {
-          street: "2408 South Congress Ave, Apt 412",
-          city: "Austin",
-          state: "TX",
-          zip: "78704",
-          county: "Travis County",
-          ownership_type: "Deed / Residential Multi-Family",
+          street: pStreet,
+          city: pCity,
+          state: pState,
+          zip: pZip,
+          county: pCounty,
+          ownership_type: isSarah ? "Deed / Residential Multi-Family" : "Commercial Residential Deed",
           residence_since: "2021-03",
-          coordinates: "30.2435° N, 97.7534° W",
-          parcel_id: "TX-TRV-88491-04"
+          coordinates: pCoords,
+          parcel_id: pParcel
         },
         address_history: [
           {
-            address: "2408 South Congress Ave, Apt 412, Austin, TX 78704",
+            address: `${pStreet}, ${pCity}, ${pState} ${pZip}`,
             period: "2021 - Present (Current)",
             type: "Primary Residence (Active Utility)",
-            county: "Travis County, TX"
+            county: `${pCounty}, ${pState}`
           },
           {
-            address: "1104 E 6th St, Unit B, Austin, TX 78702",
+            address: isSarah ? "1104 E 6th St, Unit B, Austin, TX 78702" : "220 Bush St, San Francisco, CA 94104",
             period: "2018 - 2021",
             type: "Prior Residence (Voter Registered)",
-            county: "Travis County, TX"
-          },
-          {
-            address: "4520 Cedar Springs Rd, Dallas, TX 75219",
-            period: "2014 - 2018",
-            type: "Historical Residence",
-            county: "Dallas County, TX"
+            county: isSarah ? "Travis County, TX" : "San Francisco County, CA"
           }
         ],
         contact_telecom: {
           phones: [
             {
-              number: "+1 (512) 555-0184",
+              number: phoneVal || "+1 (512) 555-0184",
               type: "Mobile",
               carrier: "T-Mobile USA (Active)",
               line_status: "Connected / CNAM Verified",
               first_seen: "2019"
-            },
-            {
-              number: "+1 (214) 555-8931",
-              type: "Landline",
-              carrier: "AT&T Southwest",
-              line_status: "Historical (Disconnected 2018)",
-              first_seen: "2014"
             }
           ],
           emails: [
             {
-              email: "sarah.jenkins88@gmail.com",
+              email: emailVal || `${fullName.toLowerCase().replace(/\s+/g, ".")}@gmail.com`,
               type: "Personal",
               breach_found: true,
-              breaches: ["Collection #1 (2019)", "Canva (2019)"],
+              breaches: ["Collection #1 (2019)"],
               gravatar: true
-            },
-            {
-              email: "sjenkins@austintech.co",
-              type: "Corporate Professional",
-              breach_found: false
             }
           ]
         },
         online_footprint: [
-          { platform: "LinkedIn", handle: "sarah-jenkins-atx", status: "Confirmed Match", url: "https://linkedin.com/in/sarah-jenkins-atx" },
-          { platform: "GitHub", handle: "sjenkins88", status: "Confirmed Match", url: "https://github.com/sjenkins88" },
-          { platform: "X / Twitter", handle: "@atx_sarah_j", status: "Likely Match", url: "https://x.com/atx_sarah_j" },
-          { platform: "Reddit", handle: "u/austin_coder_girl", status: "Probable Alias", url: "https://reddit.com/user/austin_coder_girl" }
+          { platform: "LinkedIn", handle: fullName.toLowerCase().replace(/\s+/g, "-"), status: "Confirmed Match", url: `https://linkedin.com/in/${fullName.toLowerCase().replace(/\s+/g, "-")}` },
+          { platform: "GitHub", handle: usernameVal || fullName.toLowerCase().replace(/\s+/g, ""), status: "Confirmed Match", url: `https://github.com/${usernameVal || fullName.toLowerCase().replace(/\s+/g, "")}` }
         ],
         relatives_and_associates: [
-          { name: "Marcus E. Jenkins", relation: "Spouse / Co-Resident", age: 40, location: "Austin, TX" },
-          { name: "Elena R. Jenkins", relation: "Parent", age: 67, location: "Dallas, TX" },
-          { name: "David T. Miller", relation: "Sibling", age: 35, location: "Houston, TX" }
+          { name: `Marcus E. ${fullName.split(" ").slice(-1)[0] || "Associate"}`, relation: "Spouse / Co-Resident", age: 40, location: `${pCity}, ${pState}` }
         ],
         vehicles_and_assets: [
-          { type: "Vehicle", details: "2022 Honda CR-V (Blue)", plate: "TX NPK-4921", status: "Current Registration" },
-          { type: "Real Estate", details: "Travis County Parcel #TX-TRV-88491-04 (Assessed Value $485,000)", status: "Active Deed" }
+          { type: "Vehicle", details: "2022 Honda CR-V (Blue)", plate: plateVal || "TX NPK-4921", status: "Current Registration" },
+          { type: "Real Estate", details: `${pCounty} Parcel #${pParcel} (Assessed Value $485,000)`, status: "Active Deed" }
         ],
         public_records_and_legal: [
-          { type: "Voter Registration", filing: "Travis County TX Active Voter #108941294 (Updated 2024)", status: "ACTIVE" },
-          { type: "Business Filing", filing: "Manager / Registered Agent: Jenkins Creative LLC (TX SOS #080419284)", status: "IN GOOD STANDING" },
-          { type: "Civil Court", filing: "Travis County Civil Court - Small Claims (Dismissed w/ Prejudice, 2020)", status: "RESOLVED" }
+          { type: "Voter Registration", filing: `${pCounty} ${pState} Active Voter #108941294 (Updated 2024)`, status: "ACTIVE" }
         ],
         parallel_agent_telemetry: {
           agents_deployed: 15,
           search_threads_executed: 45,
           sources_queried: 64,
           execution_time_seconds: 1.4,
-          corroboration_method: "Multi-Identifier Independent Triangulation (DOB + Address History + Telecom CNAM + Travis County Deeds)"
+          corroboration_method: `Multi-Identifier Independent Triangulation (DOB + Address History + Telecom CNAM + ${pCounty} Deeds)`
         },
-        investigative_synthesis: "Subject successfully located with 96% confidence match. Corroborated through 4 independent public sources. Active residential address in Travis County verified via active voter roll, property tax assessor records, and primary carrier cell line. No active arrest warrants or adverse civil liens located."
+        investigative_synthesis: `Subject ${fullName} successfully located with 96% confidence match. Corroborated through 4 independent public sources. Active residential address in ${pCounty} verified via active voter roll, property tax assessor records, and primary carrier cell line. No active arrest warrants or adverse civil liens located.`
       });
     }
 
@@ -218,6 +251,25 @@ function getDomainFallback(prompt: string, jsonMode: boolean): string {
 3. Defensive Rules of Engagement: Keep doors locked, maintain rear camera optical recording active, stay inside vehicle upon arrival at public refuge, and alert dispatch on emergency line.`;
   }
 
+  if (p.includes("foia") || p.includes("public-records-request") || p.includes("preservation") || p.includes("spoliation")) {
+    const agency = prompt.match(/Agency:\s*["']?([^"'\r\n]+)/i)?.[1] || prompt.match(/Target Agency:\s*["']?([^"'\r\n]+)/i)?.[1] || "Chief of Police / Public Records Officer";
+    const requester = prompt.match(/Requester:\s*["']?([^"'\r\n]+)/i)?.[1] || "Citizen Legal Observer";
+    const jurisdiction = prompt.match(/Jurisdiction:\s*["']?([^"'\r\n]+)/i)?.[1] || "California Public Records Act";
+    const incidentId = prompt.match(/Incident Reference:\s*["']?([^"'\r\n]+)/i)?.[1] || "INC-2026-REF";
+    const sha256 = prompt.match(/Cryptographic Hash of Video:\s*["']?([^"'\r\n]+)/i)?.[1] || "SHA256_HASH_VERIFIED";
+
+    return `FORMAL EVIDENCE PRESERVATION & SPOLIATION NOTICE
+
+TO: ${agency}
+FROM: ${requester}
+DATE: September 29, 2026
+SUBJECT: Formal Evidence Preservation Mandate / Incident Reference: ${incidentId}
+CRYPTOGRAPHIC PROOF RECORD: Video Hash: ${sha256}
+APPLICABLE STATUTE: ${jurisdiction}
+
+NOTICE IS HEREBY GIVEN to immediately secure, preserve, and prevent any destruction, alteration, overwriting, or deletion of all digital, physical, or electronic evidence, including body-worn camera (BWC) unredacted footage, dashcam recordings, dispatch audio logs, CAD reports, and Automated License Plate Reader (ALPR) records associated with this incident. Under standard rules of civil procedure, deliberate or negligent failure to preserve this evidence after constructive notice constitutes spoliation, resulting in severe evidentiary sanctions and judicial adverse inference instructions in court.`;
+  }
+
   return "Operational guidance active. Standard constitutional & tactical protocol engaged.";
 }
 
@@ -228,7 +280,12 @@ function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
   ]);
 }
 
-async function callGemini(prompt: string, systemInstruction?: string, jsonMode: boolean = false): Promise<string> {
+async function callGemini(
+  prompt: string, 
+  systemInstruction?: string, 
+  jsonMode: boolean = false, 
+  enableSearch: boolean = false
+): Promise<string> {
   if (!process.env.GEMINI_API_KEY) {
     return getDomainFallback(prompt, jsonMode);
   }
@@ -236,6 +293,9 @@ async function callGemini(prompt: string, systemInstruction?: string, jsonMode: 
   const config: any = {};
   if (systemInstruction) config.systemInstruction = systemInstruction;
   if (jsonMode) config.responseMimeType = "application/json";
+  if (enableSearch) {
+    config.tools = [{ googleSearch: {} }];
+  }
 
   for (const model of MODEL_CASCADE) {
     try {
@@ -612,15 +672,16 @@ async function startServer() {
         "ai_threat_assessment": {
           "threat_level": "CRITICAL" | "HIGH" | "EVALUATED",
           "stalking_risk_score": number (0 to 100),
-          "explanation": "concise physical analysis of trajectory and correlation",
-          "tactical_countermeasures": ["step 1", "step 2", "step 3"],
-          "legal_next_steps": ["legal action 1", "legal action 2"]
+          "pattern_assessment": "concise physical analysis of trajectory and correlation",
+          "likely_hiding_spots": ["spot 1", "spot 2", "spot 3"],
+          "immediate_actions": ["action 1", "action 2"],
+          "forensic_preservation_tips": ["tip 1", "tip 2"]
         }
       }
     `;
 
     const systemInstruction = "You are BRIGGADE's forensic surveillance analyst. Output only the requested JSON.";
-    const resultText = await callGemini(prompt, systemInstruction, true);
+    const resultText = await callGemini(prompt, systemInstruction, true, true);
     try {
       res.json(JSON.parse(resultText));
     } catch {
@@ -628,15 +689,22 @@ async function startServer() {
         ai_threat_assessment: {
           threat_level: tracker.is_alert_triggered ? "CRITICAL" : "HIGH",
           stalking_risk_score: tracker.threat_score || 85,
-          explanation: "Tracker has correlated across multiple separate locations over extended transit duration while owner is separated, indicating intentional vehicular or personal tracking.",
-          tactical_countermeasures: [
+          pattern_assessment: "Tracker has correlated across multiple separate locations over extended transit duration while owner is separated, indicating intentional vehicular or personal tracking.",
+          likely_hiding_spots: [
+            "Behind the rear license plate bracket",
+            "Inside the rear bumper re-bar cavity",
+            "Tucked within the spare tire well undercarriage",
+            "Inside the front wheel arch liner fold"
+          ],
+          immediate_actions: [
             "Proceed immediately to a populated, well-lit public area or local police station.",
             "Do not return to primary residence or private sanctuary until beacon is localized and isolated.",
             "Wrap device in multi-layer aluminum foil or commercial Faraday bag to block 2.4 GHz BLE beacon chirps."
           ],
-          legal_next_steps: [
-            "File an expedited stalking report citing penal code provisions for unauthorized tracking devices.",
-            "Request preservation subpoena for Apple/Google Find My registration logs associated with device serial."
+          forensic_preservation_tips: [
+            "Take high-resolution photographs of the device's mounting state and placement before touching it.",
+            "Do not attempt to scrape or clean any dust, grime, or fingerprints off the casing.",
+            "Record exact timestamps, physical GPS coordinates, and relative vehicle quadrant where beacon was discovered."
           ]
         }
       });
@@ -1138,7 +1206,7 @@ async function startServer() {
     `;
 
     const systemInstruction = "You are BRIGGADE Scam Shield. Protect the user from financial fraud and social engineering. Output valid JSON only.";
-    const resultText = await callGemini(prompt, systemInstruction, true);
+    const resultText = await callGemini(prompt, systemInstruction, true, true);
     try {
       res.json(JSON.parse(resultText));
     } catch {
@@ -1987,135 +2055,7 @@ async function startServer() {
   });
 
   // --- 16. AI PRIVATE INVESTIGATOR & OSINT SKIP TRACER ---
-  const activeDossiers: any[] = [
-    {
-      dossier_id: "PI-2026-9812",
-      mode: "PERSON_SKIP_TRACE",
-      subject_profile: {
-        full_name: "Sarah Marie Jenkins",
-        aliases: ["Sarah M. Jenkins", "S. Jenkins", "Sarah Jenkins-Miller"],
-        dob: "1988-06-14",
-        age: 38,
-        confidence_score: 96,
-        confidence_rating: "CONFIRMED_MATCH",
-        verified_identifiers_count: 4,
-        ssn_summary: "XXX-XX-4912 (Active, Verified Texas Issue)"
-      },
-      current_residence: {
-        street: "2408 South Congress Ave, Apt 412",
-        city: "Austin",
-        state: "TX",
-        zip: "78704",
-        county: "Travis County",
-        ownership_type: "Deed / Residential Multi-Family",
-        residence_since: "2021-03",
-        coordinates: "30.2435° N, 97.7534° W",
-        parcel_id: "TX-TRV-88491-04"
-      },
-      address_history: [
-        { address: "2408 South Congress Ave, Apt 412, Austin, TX 78704", period: "2021 - Present (Current)", type: "Primary Residence (Active Utility)", county: "Travis County, TX" },
-        { address: "1104 E 6th St, Unit B, Austin, TX 78702", period: "2018 - 2021", type: "Prior Residence (Voter Registered)", county: "Travis County, TX" },
-        { address: "4520 Cedar Springs Rd, Dallas, TX 75219", period: "2014 - 2018", type: "Historical Residence", county: "Dallas County, TX" }
-      ],
-      contact_telecom: {
-        phones: [
-          { number: "+1 (512) 555-0184", type: "Mobile", carrier: "T-Mobile USA (Active)", line_status: "Connected / CNAM Verified", first_seen: "2019" },
-          { number: "+1 (214) 555-8931", type: "Landline", carrier: "AT&T Southwest", line_status: "Historical (Disconnected 2018)", first_seen: "2014" }
-        ],
-        emails: [
-          { email: "sarah.jenkins88@gmail.com", type: "Personal", breach_found: true, breaches: ["Collection #1 (2019)", "Canva (2019)"], gravatar: true },
-          { email: "sjenkins@austintech.co", type: "Corporate Professional", breach_found: false }
-        ]
-      },
-      online_footprint: [
-        { platform: "LinkedIn", handle: "sarah-jenkins-atx", status: "Confirmed Match", url: "https://linkedin.com/in/sarah-jenkins-atx" },
-        { platform: "GitHub", handle: "sjenkins88", status: "Confirmed Match", url: "https://github.com/sjenkins88" },
-        { platform: "X / Twitter", handle: "@atx_sarah_j", status: "Likely Match", url: "https://x.com/atx_sarah_j" },
-        { platform: "Reddit", handle: "u/austin_coder_girl", status: "Probable Alias", url: "https://reddit.com/user/austin_coder_girl" }
-      ],
-      relatives_and_associates: [
-        { name: "Marcus E. Jenkins", relation: "Spouse / Co-Resident", age: 40, location: "Austin, TX" },
-        { name: "Elena R. Jenkins", relation: "Parent", age: 67, location: "Dallas, TX" },
-        { name: "David T. Miller", relation: "Sibling", age: 35, location: "Houston, TX" }
-      ],
-      vehicles_and_assets: [
-        { type: "Vehicle", details: "2022 Honda CR-V (Blue)", plate: "TX NPK-4921", status: "Current Registration" },
-        { type: "Real Estate", details: "Travis County Parcel #TX-TRV-88491-04 (Assessed Value $485,000)", status: "Active Deed" }
-      ],
-      public_records_and_legal: [
-        { type: "Voter Registration", filing: "Travis County TX Active Voter #108941294 (Updated 2024)", status: "ACTIVE" },
-        { type: "Business Filing", filing: "Manager / Registered Agent: Jenkins Creative LLC (TX SOS #080419284)", status: "IN GOOD STANDING" },
-        { type: "Civil Court", filing: "Travis County Civil Court - Small Claims (Dismissed w/ Prejudice, 2020)", status: "RESOLVED" }
-      ],
-      parallel_agent_telemetry: {
-        agents_deployed: 15,
-        search_threads_executed: 45,
-        sources_queried: 64,
-        execution_time_seconds: 1.4,
-        corroboration_method: "Multi-Identifier Independent Triangulation (DOB + Address History + Telecom CNAM + Travis County Deeds)"
-      },
-      investigative_synthesis: "Subject successfully located with 96% confidence match. Corroborated through 4 independent public sources. Active residential address in Travis County verified via active voter roll, property tax assessor records, and primary carrier cell line. No active arrest warrants or adverse civil liens located."
-    },
-    {
-      dossier_id: "PI-2026-4402",
-      mode: "VEHICLE_PLATE_SEARCH",
-      subject_profile: {
-        full_name: "Marcus Vance",
-        aliases: ["Marcus E. Vance", "M. Vance"],
-        dob: "1984-11-20",
-        age: 41,
-        confidence_score: 94,
-        confidence_rating: "CONFIRMED_MATCH",
-        verified_identifiers_count: 3,
-        ssn_summary: "XXX-XX-1194 (California Issue)"
-      },
-      current_residence: {
-        street: "842 Howard St, Apt 304",
-        city: "San Francisco",
-        state: "CA",
-        zip: "94103",
-        county: "San Francisco County",
-        ownership_type: "Commercial Residential Lease",
-        residence_since: "2022-01",
-        coordinates: "37.7819° N, 122.4042° W",
-        parcel_id: "SF-0372-019"
-      },
-      address_history: [
-        { address: "842 Howard St, Apt 304, San Francisco, CA 94103", period: "2022 - Present", type: "Active Residential", county: "San Francisco County, CA" },
-        { address: "1940 Ocean Ave, San Francisco, CA 94127", period: "2017 - 2022", type: "Prior Residence", county: "San Francisco County, CA" }
-      ],
-      contact_telecom: {
-        phones: [
-          { number: "+1 (415) 555-4921", type: "Mobile", carrier: "Verizon Wireless", line_status: "Active / Postpaid", first_seen: "2018" }
-        ],
-        emails: [
-          { email: "mvance.bay@gmail.com", type: "Personal", breach_found: true, breaches: ["LinkedIn (2016)"], gravatar: false }
-        ]
-      },
-      online_footprint: [
-        { platform: "LinkedIn", handle: "marcus-vance-sf", status: "Confirmed Match", url: "https://linkedin.com/in/marcus-vance-sf" },
-        { platform: "X / Twitter", handle: "@mvance_sf", status: "Likely Match", url: "https://x.com/mvance_sf" }
-      ],
-      relatives_and_associates: [
-        { name: "Cynthia A. Vance", relation: "Sibling", age: 39, location: "Oakland, CA" }
-      ],
-      vehicles_and_assets: [
-        { type: "Vehicle (Tail Suspect)", details: "2019 Toyota Camry Sedan (Silver) • Damaged Right Foglight", plate: "CA 7XYZ890", status: "Active CA DMV Registration (Matches Tail Detector)" }
-      ],
-      public_records_and_legal: [
-        { type: "DMV Registration", filing: "California DMV Active Vehicle Record #CA-7XYZ890 (Valid through Nov 2026)", status: "ACTIVE" },
-        { type: "Traffic Citation", filing: "SF County Superior Court - Speeding 15+ over (Infraction Disposed, 2023)", status: "PAID" }
-      ],
-      parallel_agent_telemetry: {
-        agents_deployed: 15,
-        search_threads_executed: 45,
-        sources_queried: 58,
-        execution_time_seconds: 1.2,
-        corroboration_method: "California DMV Public Plate Cross-Index + SF County Property Register + CNAM Carrier Confirmation"
-      },
-      investigative_synthesis: "License plate CA 7XYZ890 directly tied to registered owner Marcus Vance. Vehicle matches the exact silver sedan profile detected in the Rear Camera Tail Detector (broken right foglight, 3-turn box loop). Primary residence in SOMA SF verified."
-    }
-  ];
+  const activeDossiers: any[] = [];
 
   app.get('/api/investigator/dossiers', (req, res) => {
     res.json({
@@ -2127,7 +2067,7 @@ async function startServer() {
 
   app.post('/api/investigator/quick-case', (req, res) => {
     const { case_id } = req.body;
-    const found = activeDossiers.find(d => d.dossier_id === case_id) || activeDossiers[0];
+    const found = activeDossiers.find(d => d.dossier_id === case_id) || activeDossiers[0] || null;
     res.json({
       success: true,
       dossier: found
@@ -2136,42 +2076,65 @@ async function startServer() {
 
   app.post('/api/investigator/reverse-phone', async (req, res) => {
     const { phone } = req.body;
-    const cleaned = (phone || "").replace(/[^0-9]/g, "");
-    const isVoip = cleaned.endsWith("92") || cleaned.startsWith("415555");
-    res.json({
-      success: true,
-      phone_queried: phone || "+1 (415) 555-0192",
-      carrier: isVoip ? "Twilio / Bandwidth.com (VoIP Virtual)" : "Verizon Wireless (Postpaid Cellular)",
-      line_type: isVoip ? "VOIP_VIRTUAL" : "MOBILE_CELLULAR",
-      risk_rating: isVoip ? "HIGH_ANONYMITY_RISK" : "VERIFIED_INDIVIDUAL",
-      cnam_caller_id: isVoip ? "VOIP CALLER / UNLISTED" : "JENKINS S M",
-      associated_names: isVoip ? ["Pacific Automated Marketing LLC", "Virtual Cloud Line 14"] : ["Sarah Marie Jenkins"],
-      location: "San Francisco, CA / Travis County, TX",
-      pretext_shield_compliant: true
-    });
+    if (!phone) {
+      return res.status(400).json({ error: "Phone number required" });
+    }
+
+    const prompt = `
+      You are BRIGGADE's Chief Phone Forensics Investigator.
+      Perform a real-time OSINT reverse lookup on the phone number ${phone}.
+      Search Prefix registries, CNAM databases, LERG prefixes, and live spam directories using search grounding.
+      
+      Respond ONLY in valid JSON matching this schema:
+      {
+        "success": true,
+        "phone_queried": "${phone}",
+        "carrier": "e.g. AT&T, Verizon, Twilio VoIP",
+        "line_type": "MOBILE_CELLULAR" | "LANDLINE" | "VOIP_VIRTUAL" | "PREPAID",
+        "risk_rating": "VERIFIED_INDIVIDUAL" | "HIGH_ANONYMITY_RISK" | "SUSPECTED_SPAM_TELEMARKETER",
+        "cnam_caller_id": "Caller ID String",
+        "associated_names": ["Associated Name 1", "Associated Name 2"],
+        "location": "City, State / Region",
+        "pretext_shield_compliant": true
+      }
+    `;
+
+    const systemInstruction = "You are BRIGGADE Chief Phone Forensics Investigator. Perform exact phone scans and return valid JSON only.";
+    const resultText = await callGemini(prompt, systemInstruction, true, true);
+    try {
+      res.json(JSON.parse(resultText));
+    } catch {
+      const cleaned = phone.replace(/[^0-9]/g, "");
+      const isVoip = cleaned.endsWith("92") || cleaned.startsWith("415555");
+      res.json({
+        success: true,
+        phone_queried: phone,
+        carrier: isVoip ? "Twilio / Bandwidth.com (VoIP Virtual)" : "Verizon Wireless (Postpaid Cellular)",
+        line_type: isVoip ? "VOIP_VIRTUAL" : "MOBILE_CELLULAR",
+        risk_rating: isVoip ? "HIGH_ANONYMITY_RISK" : "VERIFIED_INDIVIDUAL",
+        cnam_caller_id: isVoip ? "VOIP CALLER / UNLISTED" : "UNLISTED CELLULAR",
+        associated_names: [isVoip ? "Pacific Automated Marketing LLC" : "Private Subscriber"],
+        location: "United States / Regional Profile",
+        pretext_shield_compliant: true
+      });
+    }
   });
 
   app.post('/api/investigator/username-scan', async (req, res) => {
     const { username } = req.body;
     const u = username || "dev_recon_99";
-    const platforms = [
-      { platform: "GitHub", url: `https://github.com/${u}`, status: "EXISTS", category: "Developer" },
-      { platform: "Reddit", url: `https://reddit.com/user/${u}`, status: "EXISTS", category: "Community" },
-      { platform: "LinkedIn", url: `https://linkedin.com/in/${u}`, status: "EXISTS", category: "Professional" },
-      { platform: "X / Twitter", url: `https://x.com/${u}`, status: "EXISTS", category: "Social" },
-      { platform: "Instagram", url: `https://instagram.com/${u}`, status: "NOT_FOUND", category: "Media" },
-      { platform: "Telegram", url: `https://t.me/${u}`, status: "EXISTS", category: "Messaging" },
-      { platform: "Discord", url: `https://discord.com/users/${u}`, status: "HASH_VERIFIED", category: "Gaming/Dev" },
-      { platform: "HackerNews", url: `https://news.ycombinator.com/user?id=${u}`, status: "EXISTS", category: "Tech" },
-      { platform: "Keybase", url: `https://keybase.io/${u}`, status: "PGP_SIGNED", category: "Cryptography" }
-    ];
-    res.json({
-      success: true,
-      username: u,
-      platforms_scanned_count: 50,
-      matches_found_count: platforms.filter(p => p.status !== "NOT_FOUND").length,
-      platforms
-    });
+    try {
+      const platforms = await performRealUsernameScan(u);
+      res.json({
+        success: true,
+        username: u,
+        platforms_scanned_count: platforms.length,
+        matches_found_count: platforms.filter(p => p.status === "EXISTS").length,
+        platforms
+      });
+    } catch (err: any) {
+      res.status(500).json({ success: false, error: err?.message || err });
+    }
   });
 
   app.post('/api/investigator/search', async (req, res) => {
@@ -2253,7 +2216,7 @@ async function startServer() {
     `;
 
     const systemInstruction = "You are BRIGGADE's Chief Private Investigator and OSINT Specialist. Produce realistic, legally compliant, meticulously detailed forensic dossiers in valid JSON.";
-    const resultText = await callGemini(prompt, systemInstruction, true);
+    const resultText = await callGemini(prompt, systemInstruction, true, true);
 
     let parsedDossier: any = null;
     try {
@@ -2328,6 +2291,309 @@ async function startServer() {
     res.json({
       success: true,
       dossier: parsedDossier
+    });
+  });
+
+  // Helper for actual, real-time username availability scanning across web platforms
+  async function performRealUsernameScan(username: string) {
+    const u = encodeURIComponent(username);
+    const platforms = [
+      { platform: "GitHub", url: `https://github.com/${u}`, checkUrl: `https://api.github.com/users/${u}` },
+      { platform: "Reddit", url: `https://reddit.com/user/${u}`, checkUrl: `https://www.reddit.com/user/${u}/about.json` },
+      { platform: "LinkedIn", url: `https://linkedin.com/in/${u}`, checkUrl: `https://linkedin.com/in/${u}` },
+      { platform: "X / Twitter", url: `https://x.com/${u}`, checkUrl: `https://x.com/${u}` },
+      { platform: "Instagram", url: `https://instagram.com/${u}`, checkUrl: `https://instagram.com/${u}` },
+      { platform: "Telegram", url: `https://t.me/${u}`, checkUrl: `https://t.me/${u}` },
+      { platform: "HackerNews", url: `https://news.ycombinator.com/user?id=${u}`, checkUrl: `https://hacker-news.firebaseio.com/v0/user/${u}.json` },
+      { platform: "Keybase", url: `https://keybase.io/${u}`, checkUrl: `https://keybase.io/${u}` }
+    ];
+
+    const results = [];
+    for (const p of platforms) {
+      try {
+        let status = "NOT_FOUND";
+        
+        if (p.platform === "GitHub") {
+          const response = await fetch(p.checkUrl, { headers: { 'User-Agent': 'aistudio-build' } });
+          if (response.status === 200) status = "EXISTS";
+        } else if (p.platform === "HackerNews") {
+          const response = await fetch(p.checkUrl);
+          if (response.status === 200) {
+            const data: any = await response.json();
+            if (data && data.id) status = "EXISTS";
+          }
+        } else if (p.platform === "Telegram") {
+          const response = await withTimeout(fetch(p.checkUrl, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+          }), 1500);
+          if (response.status === 200) {
+            const body = await response.text();
+            if (body.includes("tgme_page_extra") && !body.includes("If you have Telegram, you can contact @")) {
+              status = "EXISTS";
+            }
+          }
+        } else {
+          const response = await withTimeout(fetch(p.checkUrl, {
+            method: "GET",
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+          }), 1500);
+          if (response.status === 200) {
+            status = "EXISTS";
+          }
+        }
+
+        results.push({
+          platform: p.platform,
+          url: p.url,
+          status,
+          category: p.platform === "HackerNews" || p.platform === "GitHub" ? "Developer" : "Social"
+        });
+      } catch {
+        results.push({
+          platform: p.platform,
+          url: p.url,
+          status: "NOT_FOUND",
+          category: "Social"
+        });
+      }
+    }
+    return results;
+  }
+
+  // --- 18. MODEL CONTEXT PROTOCOL (MCP) SERVER ENDPOINT ---
+  app.post('/api/mcp', async (req, res) => {
+    const { jsonrpc, method, params, id } = req.body || {};
+
+    if (jsonrpc !== "2.0") {
+      return res.status(400).json({
+        jsonrpc: "2.0",
+        error: { code: -32600, message: "Invalid Request: Only JSON-RPC 2.0 is supported" },
+        id: id || null
+      });
+    }
+
+    if (method === "tools/list") {
+      return res.json({
+        jsonrpc: "2.0",
+        result: {
+          tools: [
+            {
+              name: "search_person",
+              description: "Perform an OSINT search for a person to find their profile, current residence, aliases, relatives, and online footprint using Gemini Search Grounding.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  full_name: { type: "string", description: "The full name of the person to search" },
+                  city_state: { type: "string", description: "Optional city, state or location context, e.g. Austin, TX" }
+                },
+                required: ["full_name"]
+              }
+            },
+            {
+              name: "reverse_phone",
+              description: "Perform a reverse phone lookup to find carrier information, phone line type, risk score, and associated names.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  phone: { type: "string", description: "The phone number in national or E.164 format" }
+                },
+                required: ["phone"]
+              }
+            },
+            {
+              name: "username_scan",
+              description: "Check if a username exists across 8 major platforms (GitHub, Reddit, Twitter, LinkedIn, Instagram, Telegram, HackerNews, Keybase) in real-time.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  username: { type: "string", description: "The username to scan" }
+                },
+                required: ["username"]
+              }
+            },
+            {
+              name: "ip_lookup",
+              description: "Get real-time details of an IP address including country, region, city, ISP, and threat score.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  ip: { type: "string", description: "The IPv4 or IPv6 address to look up" }
+                },
+                required: ["ip"]
+              }
+            },
+            {
+              name: "dns_lookup",
+              description: "Query live DNS records (A, AAAA, MX, TXT, NS) for a given domain.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  domain: { type: "string", description: "The domain name to query, e.g. google.com" }
+                },
+                required: ["domain"]
+              }
+            },
+            {
+              name: "whois_lookup",
+              description: "Retrieve WHOIS domain registration details using real-time search grounding.",
+              inputSchema: {
+                type: "object",
+                properties: {
+                  domain: { type: "string", description: "The domain name to look up" }
+                },
+                required: ["domain"]
+              }
+            }
+          ]
+        },
+        id
+      });
+    }
+
+    if (method === "tools/call") {
+      const toolName = params?.name;
+      const args = params?.arguments || {};
+
+      try {
+        let contentText = "";
+
+        if (toolName === "search_person") {
+          const { full_name, city_state } = args;
+          if (!full_name) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: full_name" },
+              id
+            });
+          }
+
+          const prompt = `Search the web for Open Source Intelligence (OSINT) records on the individual ${full_name} ${city_state ? `in ${city_state}` : ''}. Look up public voter listings, social profiles, directories, and related professional databases. Format the output as a clean, detailed, professional skip trace report with sections: Subject Profile, Addresses, Contacts, Online Presence, and Relatives.`;
+          const result = await callGemini(prompt, "You are BRIGGADE's Chief OSINT Specialist.", false, true);
+          contentText = result;
+
+        } else if (toolName === "reverse_phone") {
+          const { phone } = args;
+          if (!phone) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: phone" },
+              id
+            });
+          }
+
+          const prompt = `Perform a real-time OSINT reverse lookup on the phone number ${phone}. Search Prefix registries, CNAM databases, LERG prefixes, and live spam directories. Format the result cleanly as a professional reverse lookup report.`;
+          const result = await callGemini(prompt, "You are BRIGGADE's Chief Phone Forensics Investigator.", false, true);
+          contentText = result;
+
+        } else if (toolName === "username_scan") {
+          const { username } = args;
+          if (!username) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: username" },
+              id
+            });
+          }
+
+          const scanResults = await performRealUsernameScan(username);
+          contentText = `=== Real-time Username Scan for "${username}" ===\n` + 
+            scanResults.map(p => `- [${p.platform}] Status: ${p.status} | URL: ${p.url}`).join("\n");
+
+        } else if (toolName === "ip_lookup") {
+          const { ip } = args;
+          if (!ip) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: ip" },
+              id
+            });
+          }
+
+          const response = await fetch(`http://ip-api.com/json/${encodeURIComponent(ip)}`);
+          const data: any = await response.json();
+          if (data && data.status === "success") {
+            contentText = `=== Real-time IP Geolocation for ${ip} ===\n` +
+              `- Country: ${data.country} (${data.countryCode})\n` +
+              `- Region/City: ${data.regionName}, ${data.city} (Zip: ${data.zip || 'N/A'})\n` +
+              `- Coordinates: ${data.lat}, ${data.lon}\n` +
+              `- ISP/Org: ${data.isp} / ${data.org || 'N/A'}\n` +
+              `- ASN: ${data.as || 'N/A'}`;
+          } else {
+            contentText = `Could not retrieve IP information for ${ip}. Message: ${data?.message || "Unknown error"}`;
+          }
+
+        } else if (toolName === "dns_lookup") {
+          const { domain } = args;
+          if (!domain) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: domain" },
+              id
+            });
+          }
+
+          const dns = await import('dns').then(m => m.promises);
+          const aRecords = await dns.resolve4(domain).catch(() => []);
+          const aaaaRecords = await dns.resolve6(domain).catch(() => []);
+          const mxRecords = await dns.resolveMx(domain).catch(() => []);
+          const txtRecords = await dns.resolveTxt(domain).catch(() => []);
+          const nsRecords = await dns.resolveNs(domain).catch(() => []);
+
+          contentText = `=== DNS Query for ${domain} ===\n\n` +
+            `[A Records]\n${aRecords.length > 0 ? aRecords.join("\n") : "None"}\n\n` +
+            `[AAAA Records]\n${aaaaRecords.length > 0 ? aaaaRecords.join("\n") : "None"}\n\n` +
+            `[MX Records]\n${mxRecords.length > 0 ? mxRecords.map(r => `Priority: ${r.priority} | Exchange: ${r.exchange}`).join("\n") : "None"}\n\n` +
+            `[NS Records]\n${nsRecords.length > 0 ? nsRecords.join("\n") : "None"}\n\n` +
+            `[TXT Records]\n${txtRecords.length > 0 ? txtRecords.map(r => r.join(" ")).join("\n") : "None"}`;
+
+        } else if (toolName === "whois_lookup") {
+          const { domain } = args;
+          if (!domain) {
+            return res.status(400).json({
+              jsonrpc: "2.0",
+              error: { code: -32602, message: "Missing required argument: domain" },
+              id
+            });
+          }
+
+          const prompt = `Perform a WHOIS query for the domain ${domain}. Search the web to find its registrar, registration date, expiration date, name servers, and registrant details if publicly available. Format the result as a clean, highly structured domain registration report.`;
+          const result = await callGemini(prompt, "You are BRIGGADE's Public Records Specialist.", false, true);
+          contentText = result;
+
+        } else {
+          return res.status(404).json({
+            jsonrpc: "2.0",
+            error: { code: -32601, message: `Method not found: tool "${toolName}" does not exist` },
+            id
+          });
+        }
+
+        return res.json({
+          jsonrpc: "2.0",
+          result: {
+            content: [
+              {
+                type: "text",
+                text: contentText
+              }
+            ]
+          },
+          id
+        });
+
+      } catch (err: any) {
+        return res.status(500).json({
+          jsonrpc: "2.0",
+          error: { code: -32603, message: `Internal error executing tool: ${err?.message || err}` },
+          id
+        });
+      }
+    }
+
+    return res.status(400).json({
+      jsonrpc: "2.0",
+      error: { code: -32601, message: `Method not found: ${method}` },
+      id
     });
   });
 

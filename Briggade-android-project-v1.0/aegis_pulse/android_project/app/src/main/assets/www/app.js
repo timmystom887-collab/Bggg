@@ -1046,8 +1046,9 @@ window.openObserveModal = openObserveModal;
 let manualBearingOffset = 0;
 
 function launchAirTagFinder() {
-  const airtags = trackersList.filter(t => (t.device_type || "").toLowerCase().includes("airtag") || t.is_alert_triggered);
-  const target = airtags[0] || trackersList[0] || { device_id: "AIRTAG_78A2" };
+  const list = (typeof globalTrackers !== "undefined" && Array.isArray(globalTrackers)) ? globalTrackers : [];
+  const airtags = list.filter(t => (t.device_type || "").toLowerCase().includes("airtag") || t.is_alert_triggered);
+  const target = airtags[0] || list[0] || { device_id: "AIRTAG_78A2" };
   openObserveModal(target.device_id);
 }
 window.launchAirTagFinder = launchAirTagFinder;

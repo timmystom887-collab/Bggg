@@ -30,6 +30,7 @@ permissions:
 env:
   ANDROID_PROJECT_DIR: Briggade-android-project-v1.0/aegis_pulse/android_project
   GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false"
+  ANDROID_HOME: /usr/local/lib/android/sdk
 
 jobs:
   build-apk:
@@ -49,12 +50,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       # Step 3: Install Node dependencies
       - name: Install Web Dependencies
         run: |
-          npm ci || npm install
+          npm ci 2>/dev/null || npm install --legacy-peer-deps || npm install
 
       # Step 4: Compile Production Web Assets
       - name: Build Web Application Bundle
@@ -92,10 +92,18 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      # Step 7: Setup Android SDK
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        continue-on-error: true
+      # Step 7: Setup Android SDK Environment
+      - name: Setup Android SDK Environment
+        run: |
+          if [ ! -d "$ANDROID_HOME" ]; then
+            for candidate in "/usr/local/lib/android/sdk" "$HOME/Android/Sdk" "$HOME/Library/Android/sdk" "/opt/android-sdk"; do
+              if [ -d "$candidate" ]; then
+                echo "ANDROID_HOME=$candidate" >> $GITHUB_ENV
+                echo "Auto-detected Android SDK at $candidate"
+                break
+              fi
+            done
+          fi
 
       # Step 8: Auto-Accept Android SDK Licenses
       - name: Accept Android SDK Licenses

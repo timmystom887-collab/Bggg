@@ -1558,22 +1558,22 @@ android.permission.READ_SMS</textarea>
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
             <div id="piFieldFullName">
               <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Full Legal Name / Subject:</label>
-              <input type="text" id="piInputFullName" class="text-input" placeholder="e.g. Sarah Marie Jenkins" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Sarah Marie Jenkins">
+              <input type="text" id="piInputFullName" class="text-input" placeholder="e.g. Sarah Marie Jenkins" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldCityState">
               <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Last Known City, State or County:</label>
-              <input type="text" id="piInputCityState" class="text-input" placeholder="e.g. Austin, TX or Travis County" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Austin, TX">
+              <input type="text" id="piInputCityState" class="text-input" placeholder="e.g. Austin, TX or Travis County" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldPhone">
               <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Phone Number (Optional / Reverse):</label>
-              <input type="text" id="piInputPhone" class="text-input" placeholder="e.g. +1 (512) 555-0184" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="+1 (512) 555-0184">
+              <input type="text" id="piInputPhone" class="text-input" placeholder="e.g. +1 (512) 555-0184" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldUsername">
               <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Social Handle / Username / Email:</label>
-              <input type="text" id="piInputUsername" class="text-input" placeholder="e.g. sarah.jenkins88@gmail.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="sarah.jenkins88@gmail.com">
+              <input type="text" id="piInputUsername" class="text-input" placeholder="e.g. sarah.jenkins88@gmail.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldPlate" style="display:none;">
@@ -1584,7 +1584,7 @@ android.permission.READ_SMS</textarea>
 
           <div style="margin-top:10px;">
             <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Investigative Objective / Witness Context:</label>
-            <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Locating witness for traffic encounter deposition / verifying suspect vehicle owner" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="Civil witness location / skip trace verification">
+            <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Locating witness for traffic encounter deposition / verifying suspect vehicle owner" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
           </div>
 
           <!-- Quick Case Scenarios & Submit -->
@@ -1642,9 +1642,18 @@ android.permission.READ_SMS</textarea>
           <button class="modal-close" onclick="closeObserveModal()">&times;</button>
         </div>
         <div class="modal-body" id="observeModalBody">
-          <div class="observe-device-badge">
-            <span id="observeDeviceName">Apple AirTag (6C:29:95:4F:A1:B8)</span>
-            <span class="badge badge-crimson" id="observeTransportMode">Automotive (Vehicle Tracking)</span>
+          <div class="observe-device-badge" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 14px; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); border-radius:10px; margin-bottom:12px; width:100%;">
+            <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start; flex:1; min-width:240px;">
+              <label style="font-size:10px; text-transform:uppercase; color:#94a3b8; font-weight:800; letter-spacing:0.8px;">Active Tracking Target</label>
+              <select id="observeTargetSelector" onchange="changeObserveTarget(this.value)" style="background:#0f172a; color:#f8fafc; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:13px; font-weight:600; cursor:pointer; width:100%; outline:none; transition:border-color 0.15s;" onfocus="this.style.borderColor='#38bdf8'" onblur="this.style.borderColor='#334155'">
+                <!-- Options populated dynamically -->
+              </select>
+              <span id="observeDeviceName" style="display:none;"></span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;">
+              <label style="font-size:10px; text-transform:uppercase; color:#94a3b8; font-weight:800; letter-spacing:0.8px;">Threat Level</label>
+              <span class="badge badge-crimson" id="observeTransportMode">Automotive (Vehicle Tracking)</span>
+            </div>
           </div>
 
           <!-- Hot/Cold Meter Display -->

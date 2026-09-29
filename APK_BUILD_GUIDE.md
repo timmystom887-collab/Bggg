@@ -47,6 +47,8 @@ GitHub Actions will automatically:
 | **11** | **JVM Option Quoting / ClassNotFoundException** | Embedded quotes in `DEFAULT_JVM_OPTS='"-Xmx1024m"...'` caused Java to treat `"-Xmx1024m"` as the main class name. | Corrected `DEFAULT_JVM_OPTS` to `-Xmx1024m -Dfile.encoding=UTF-8` and updated invocation to `-classpath "$WRAPPER_JAR" org.gradle.wrapper.GradleWrapperMain`. |
 | **12** | **AGP 8.4 Minimum Gradle Version Mismatch** | Android Gradle Plugin 8.4.0 requires **Gradle 8.6+**; wrapper previously pointed to 8.4. | Upgraded `gradle-wrapper.properties` to **Gradle 8.7** with verified v8.7.0 wrapper JAR. |
 | **13** | **Gemini Token Quota Exceeded (429 / 25M Tokens)** | `gemini-3.8-flash` quota limits can throw `resource_exhausted` during peak usage. | Prioritized `gemini-flash-latest` and `gemini-3.1-flash-lite` in the model cascade with sub-second fallback to offline forensic profiles. |
+| **14** | **GitHub Actions Lockfile Cache Error** | `actions/setup-node@v4` with `cache: 'npm'` failed when `package-lock.json` was not tracked (`Dependencies lock file is not found`). | Committed pristine `package-lock.json` and updated workflow `setup-node` step to install reliably without requiring strict cache keys. |
+| **15** | **AirTag Finder ReferenceError** | `launchAirTagFinder()` referenced undeclared `trackersList` instead of `globalTrackers`. | Updated `launchAirTagFinder()` in `app.js` to reference `globalTrackers` with array safe-guards and synchronized across all asset bundles. |
 
 ---
 
