@@ -3,16 +3,15 @@
   "is_scam": true,
   "category": "Bank Impersonation",
   "detected_threats": [
-    "Urgent call-to-action",
-    "Suspicious URL (phishing domain)",
-    "Threat of account suspension",
-    "Unsolicited request for credentials"
+    "Urgency/Fear-based language",
+    "Suspicious URL (unverified-bank-secure.com)",
+    "Request for credential entry"
   ],
   "recommendations": [
-    "Do not click the provided link",
-    "Navigate to your bank's official website or app independently",
+    "Do not click the link",
+    "Navigate to your bank's official website or app separately to verify account status",
     "Delete the message immediately"
   ],
   "countermeasure_action": "Forward to 7726 (SPAM) and block the sender",
-  "ai_assessment": "This message uses classic phishing tactics, specifically fear-based social engineering designed to bypass critical thinking by creating a false sense of urgency regarding account access. The link provided points to a deceptive domain meant to steal sensitive login credentials."
+  "ai_assessment": "This message uses classic phishing tactics, specifically creating a false sense of urgency to bypass critical thinking and force the user to click a deceptive link designed to harvest banking credentials."
 }

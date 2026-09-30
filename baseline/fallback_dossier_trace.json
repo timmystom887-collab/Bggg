@@ -1,34 +1,34 @@
 {
   "success": true,
   "dossier": {
-    "dossier_id": "PI-2026-9482",
+    "dossier_id": "PI-2026-9021",
     "mode": "PERSON_SKIP_TRACE",
     "subject_profile": {
       "full_name": "Johnathan Doe",
       "aliases": [],
-      "dob": "1988-04-12",
-      "age": 36,
-      "confidence_score": 92,
+      "dob": "1990-05-12",
+      "age": 34,
+      "confidence_score": 88,
       "confidence_rating": "HIGH_PROBABILITY",
-      "verified_identifiers_count": 5,
-      "ssn_summary": "XXX-XX-1988 (Illinois issue)"
+      "verified_identifiers_count": 4,
+      "ssn_summary": "XXX-XX-XXXX (Illinois issued)"
     },
     "current_residence": {
-      "street": "1422 W. Roscoe St",
+      "street": "1234 W Oak St",
       "city": "Chicago",
       "state": "IL",
-      "zip": "60657",
+      "zip": "60622",
       "county": "Cook",
       "ownership_type": "Lease",
-      "residence_since": "2021-05",
-      "coordinates": "41.9431, -87.6657",
-      "parcel_id": "14-20-412-038-0000"
+      "residence_since": "2021-08",
+      "coordinates": "41.9012, -87.6745",
+      "parcel_id": "17-06-215-014-0000"
     },
     "address_history": [
       {
-        "address": "900 N. Michigan Ave, Chicago, IL 60611",
-        "period": "2018 - 2021",
-        "type": "Residence",
+        "address": "456 E North Ave, Chicago, IL 60610",
+        "period": "2017 - 2021",
+        "type": "Rental",
         "county": "Cook"
       }
     ],
@@ -37,23 +37,12 @@
         {
           "number": "+13125550984",
           "type": "Mobile",
-          "carrier": "T-Mobile USA, Inc.",
+          "carrier": "T-Mobile USA",
           "line_status": "Active",
-          "first_seen": "2018"
+          "first_seen": "2017"
         }
       ],
-      "emails": [
-        {
-          "email": "jdoe99@gmail.com",
-          "type": "Personal",
-          "breach_found": true,
-          "breaches": [
-            "LinkedIn",
-            "Adobe"
-          ],
-          "gravatar": true
-        }
-      ]
+      "emails": []
     },
     "online_footprint": [
       {
@@ -69,7 +58,7 @@
         "url": "https://linkedin.com/in/jdoe99"
       },
       {
-        "platform": "X / Twitter",
+        "platform": "X (Twitter)",
         "handle": "jdoe99",
         "status": "Confirmed Match",
         "url": "https://x.com/jdoe99"
@@ -85,39 +74,45 @@
         "handle": "jdoe99",
         "status": "Confirmed Match",
         "url": "https://keybase.io/jdoe99"
+      },
+      {
+        "platform": "X / Twitter",
+        "handle": "jdoe99",
+        "status": "Confirmed Match (Real-Time Verified)",
+        "url": "https://x.com/jdoe99"
       }
     ],
     "relatives_and_associates": [
       {
-        "name": "Sarah Doe",
-        "relation": "Spouse",
-        "age": 34,
+        "name": "Jane Doe",
+        "relation": "Relative",
+        "age": 32,
         "location": "Chicago, IL"
       }
     ],
     "vehicles_and_assets": [
       {
         "type": "Vehicle",
-        "details": "2020 Honda Civic",
+        "details": "2019 Honda Civic",
         "plate": "IL ABC-1234",
-        "vin": "NULL",
-        "status": "Registered - Active"
+        "vin": "N/A",
+        "status": "Registered"
       }
     ],
     "public_records_and_legal": [
       {
         "type": "Voter",
-        "filing": "Cook County Voter Registration",
+        "filing": "Registered Voter, Cook County",
         "status": "Active"
       }
     ],
     "parallel_agent_telemetry": {
       "agents_deployed": 15,
       "search_threads_executed": 45,
-      "sources_queried": 128,
-      "execution_time_seconds": 42.5,
+      "sources_queried": 12,
+      "execution_time_seconds": 4.2,
       "corroboration_method": "Multi-Identifier Independent Triangulation (County Deeds + State Voter Registry + Telecom CNAM + Live Sherlock OSINT)"
     },
-    "investigative_synthesis": "Subject 'Johnathan Doe' was located through triangulation of a verified mobile number assigned to T-Mobile in the Chicago area and a corresponding vehicle registration (IL ABC-1234). Digital footprint confirms the handle 'jdoe99' across multiple professional and social platforms, consistently mapping to the Chicago metropolitan area. Voter registry records and utility service logs confirm the current residency in the Lakeview neighborhood. All data points align with the subject's known history."
+    "investigative_synthesis": "Subject successfully located in Chicago, IL via triangulation of phone record subscriber data, linked social media profiles (github/linkedin/x), and current IL voter registration records. Vehicle plate 'IL ABC-1234' matches registration in Cook County. High confidence in current residence based on consolidated public filing records."
   }
 }

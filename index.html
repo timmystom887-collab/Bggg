@@ -1531,7 +1531,6 @@
         </div>
         <div class="header-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
           <button class="btn btn-sm btn-outline" onclick="openDossierArchiveModal()">📁 Dossier Archive (<span id="piDossierCountBadge">2</span>)</button>
-          <button class="btn btn-sm btn-primary" onclick="loadPiQuickCase('PI-2026-9812')">🧪 Load Sample Case: Sarah Jenkins</button>
         </div>
       </div>
 
@@ -1606,13 +1605,11 @@
           </div>
 
           <!-- Advanced Forensic Identifiers (Comprehensive Custom Inputs) -->
-          <div style="margin-top:12px; border-top:1px dashed rgba(255,255,255,0.08); padding-top:12px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
-              <span style="font-size:12px; font-weight:700; color:#38bdf8; display:flex; align-items:center; gap:6px;">
-                ⚙️ Advanced Forensic Identifiers &amp; Asset Parameters (Custom Triangulation)
-              </span>
-            </div>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+          <details style="margin-top:12px; border-top:1px dashed rgba(255,255,255,0.08); padding-top:12px;">
+            <summary style="cursor:pointer; color:#38bdf8; font-size:12px; font-weight:700; outline:none; user-select:none; margin-bottom:8px;">
+              ⚙️ Show Advanced Forensic Identifiers &amp; Asset Parameters (Optional)
+            </summary>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; margin-top:8px;">
               <div>
                 <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Exact DOB or Birth Year:</label>
                 <input type="text" id="piInputDob" class="text-input" placeholder="e.g. 1988-06-14 or 1988" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
@@ -1654,16 +1651,11 @@
                 <input type="text" id="piInputSecEmail" class="text-input" placeholder="e.g. sjenkins@acmetech.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
               </div>
             </div>
-          </div>
+          </details>
 
-          <!-- Quick Case Scenarios & Submit -->
+          <!-- Quick Actions & Submit -->
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
             <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-              <span style="font-size:11px; color:#94a3b8; font-weight:700;">PRESETS:</span>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-9812')">Sarah Jenkins (Austin, TX)</button>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-4402')">🚗 CA Plate 7XYZ890 (Tail Suspect)</button>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiPhonePreset('+1 (415) 555-0192')">📞 +1-415-555-0192 (VoIP)</button>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiUsernamePreset('dev_recon_99')">🌐 dev_recon_99</button>
               <button type="button" class="btn btn-xs btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="clearPiForm()">🧹 Clear All Fields</button>
             </div>
 

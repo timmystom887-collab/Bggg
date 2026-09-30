@@ -4781,21 +4781,17 @@ async function initPrivateInvestigatorModule(forceRefresh = false) {
     if (countBadge) countBadge.textContent = piDossiersList.length;
 
     if (!currentPiDossier || forceRefresh) {
-      if (piDossiersList.length > 0) {
-        renderPiDossier(piDossiersList[0]);
-      } else {
-        const container = document.getElementById("piDossierContainer");
-        if (container) {
-          container.innerHTML = `
-            <div class="glass-card" style="text-align:center; padding:3rem 2rem; border:1px dashed rgba(255,255,255,0.12); margin-top:20px; border-radius:12px;">
-              <div style="font-size:3rem; margin-bottom:1rem; filter:grayscale(0.3);">🔍</div>
-              <h3 style="color:#f8fafc; font-size:18px; font-weight:700; margin-bottom:8px;">Awaiting Target Intelligence</h3>
-              <p style="color:#94a3b8; font-size:13px; max-width:440px; margin:0 auto 1.5rem auto; line-height:1.5;">
-                Enter a subject's name, phone, email, username, or vehicle license plate above to initiate a live, search-grounded OSINT skip trace investigation.
-              </p>
-            </div>
-          `;
-        }
+      const container = document.getElementById("piDossierContainer");
+      if (container) {
+        container.innerHTML = `
+          <div class="glass-card" style="text-align:center; padding:3rem 2rem; border:1px dashed rgba(255,255,255,0.12); margin-top:20px; border-radius:12px;">
+            <div style="font-size:3rem; margin-bottom:1rem; filter:grayscale(0.3);">🔍</div>
+            <h3 style="color:#f8fafc; font-size:18px; font-weight:700; margin-bottom:8px;">Awaiting Target Intelligence</h3>
+            <p style="color:#94a3b8; font-size:13px; max-width:440px; margin:0 auto 1.5rem auto; line-height:1.5;">
+              Enter a subject's name, phone, email, username, or vehicle license plate above to initiate a live, search-grounded OSINT skip trace investigation.
+            </p>
+          </div>
+        `;
       }
     }
   } catch (err) {
