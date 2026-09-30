@@ -101,6 +101,71 @@
             "domain"
           ]
         }
+      },
+      {
+        "name": "search_people_directories",
+        "description": "Query open public people search engines and public record directories (TruePeopleSearch, Whitepages, FastPeopleSearch, That'sThem, Spokeo, Radaris) using Search Grounding.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "type": "string",
+              "description": "Legal full name of the subject"
+            },
+            "city_state": {
+              "type": "string",
+              "description": "City and State or County jurisdiction (e.g. Austin, TX)"
+            },
+            "age_or_dob": {
+              "type": "string",
+              "description": "Optional approximate age or birth year"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Optional phone number"
+            }
+          },
+          "required": [
+            "full_name"
+          ]
+        }
+      },
+      {
+        "name": "cross_reference_breaches",
+        "description": "Cross-reference single identities or bulk/batch CSV lists of usernames, emails, phones, and subject names against known public breach database telemetry to calculate Evidentiary Credibility Scores (0-100%) and verify skip-trace authenticity.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "subject_name": {
+              "type": "string",
+              "description": "Subject legal or full name (for single mode)"
+            },
+            "username": {
+              "type": "string",
+              "description": "Discovered handle/username from scan"
+            },
+            "email": {
+              "type": "string",
+              "description": "Discovered email address"
+            },
+            "phone": {
+              "type": "string",
+              "description": "Associated phone number"
+            },
+            "city_state": {
+              "type": "string",
+              "description": "Geographic residence context"
+            },
+            "targets_csv": {
+              "type": "string",
+              "description": "Multi-line CSV or comma-separated list of targets (e.g. 'Marcus Vance, marcus.vance, mvance@techcorp.com\\nSarah Jenkins, sarah.jenkins88, sarah@austinenergy.org') for bulk batch verification"
+            },
+            "batch_mode": {
+              "type": "boolean",
+              "description": "Set to true to execute bulk multi-target verification"
+            }
+          }
+        }
       }
     ]
   },

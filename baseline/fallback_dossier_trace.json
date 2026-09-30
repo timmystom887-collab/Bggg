@@ -1,34 +1,34 @@
 {
   "success": true,
   "dossier": {
-    "dossier_id": "PI-2026-8892",
+    "dossier_id": "PI-2026-9482",
     "mode": "PERSON_SKIP_TRACE",
     "subject_profile": {
       "full_name": "Johnathan Doe",
       "aliases": [],
-      "dob": "1991-05-14",
-      "age": 34,
-      "confidence_score": 88,
+      "dob": "1988-04-12",
+      "age": 36,
+      "confidence_score": 92,
       "confidence_rating": "HIGH_PROBABILITY",
-      "verified_identifiers_count": 4,
-      "ssn_summary": "XXX-XX-8492 (Illinois issue)"
+      "verified_identifiers_count": 5,
+      "ssn_summary": "XXX-XX-1988 (Illinois issue)"
     },
     "current_residence": {
-      "street": "1242 W Randolph St, Apt 3B",
+      "street": "1422 W. Roscoe St",
       "city": "Chicago",
       "state": "IL",
-      "zip": "60607",
+      "zip": "60657",
       "county": "Cook",
       "ownership_type": "Lease",
-      "residence_since": "2022-09",
-      "coordinates": "41.8845, -87.6582",
-      "parcel_id": "17-16-123-045-1004"
+      "residence_since": "2021-05",
+      "coordinates": "41.9431, -87.6657",
+      "parcel_id": "14-20-412-038-0000"
     },
     "address_history": [
       {
-        "address": "4500 N Hermitage Ave, Chicago, IL 60640",
-        "period": "2018 - 2022",
-        "type": "Residential",
+        "address": "900 N. Michigan Ave, Chicago, IL 60611",
+        "period": "2018 - 2021",
+        "type": "Residence",
         "county": "Cook"
       }
     ],
@@ -37,18 +37,19 @@
         {
           "number": "+13125550984",
           "type": "Mobile",
-          "carrier": "T-Mobile USA",
+          "carrier": "T-Mobile USA, Inc.",
           "line_status": "Active",
-          "first_seen": "2019"
+          "first_seen": "2018"
         }
       ],
       "emails": [
         {
-          "email": "jdoe99.chi@email.com",
+          "email": "jdoe99@gmail.com",
           "type": "Personal",
           "breach_found": true,
           "breaches": [
-            "LinkedIn 2021 Data Leak"
+            "LinkedIn",
+            "Adobe"
           ],
           "gravatar": true
         }
@@ -56,33 +57,51 @@
     },
     "online_footprint": [
       {
+        "platform": "GitHub",
+        "handle": "jdoe99",
+        "status": "Confirmed Match",
+        "url": "https://github.com/jdoe99"
+      },
+      {
+        "platform": "LinkedIn",
+        "handle": "jdoe99",
+        "status": "Confirmed Match",
+        "url": "https://linkedin.com/in/jdoe99"
+      },
+      {
+        "platform": "X / Twitter",
+        "handle": "jdoe99",
+        "status": "Confirmed Match",
+        "url": "https://x.com/jdoe99"
+      },
+      {
         "platform": "Instagram",
         "handle": "jdoe99",
         "status": "Confirmed Match",
         "url": "https://instagram.com/jdoe99"
       },
       {
-        "platform": "GitHub",
+        "platform": "Keybase",
         "handle": "jdoe99",
-        "status": "Likely Match",
-        "url": "https://github.com/jdoe99"
+        "status": "Confirmed Match",
+        "url": "https://keybase.io/jdoe99"
       }
     ],
     "relatives_and_associates": [
       {
         "name": "Sarah Doe",
         "relation": "Spouse",
-        "age": 32,
+        "age": 34,
         "location": "Chicago, IL"
       }
     ],
     "vehicles_and_assets": [
       {
         "type": "Vehicle",
-        "details": "2019 Honda Civic Silver",
+        "details": "2020 Honda Civic",
         "plate": "IL ABC-1234",
-        "vin": "1HGFC2F74KHXXXXXX",
-        "status": "Active Registration"
+        "vin": "NULL",
+        "status": "Registered - Active"
       }
     ],
     "public_records_and_legal": [
@@ -95,10 +114,10 @@
     "parallel_agent_telemetry": {
       "agents_deployed": 15,
       "search_threads_executed": 45,
-      "sources_queried": 12,
-      "execution_time_seconds": 18.4,
-      "corroboration_method": "Multi-Identifier Independent Triangulation"
+      "sources_queried": 128,
+      "execution_time_seconds": 42.5,
+      "corroboration_method": "Multi-Identifier Independent Triangulation (County Deeds + State Voter Registry + Telecom CNAM + Live Sherlock OSINT)"
     },
-    "investigative_synthesis": "Subject identified through tri-factor verification: active mobile subscription, consistent IL vehicle registration plate, and historical voter registry records. Geographic footprint locked to Chicago through real-time address validation and social media handle consistency."
+    "investigative_synthesis": "Subject 'Johnathan Doe' was located through triangulation of a verified mobile number assigned to T-Mobile in the Chicago area and a corresponding vehicle registration (IL ABC-1234). Digital footprint confirms the handle 'jdoe99' across multiple professional and social platforms, consistently mapping to the Chicago metropolitan area. Voter registry records and utility service logs confirm the current residency in the Lakeview neighborhood. All data points align with the subject's known history."
   }
 }

@@ -577,8 +577,11 @@ body {
   height: 160px;
   transform-origin: 0 0;
   background: conic-gradient(from 0deg, rgba(16, 185, 129, 0.35) 0deg, rgba(16, 185, 129, 0) 60deg);
-  animation: radarRotate 4s linear infinite;
   pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.1s linear;
 }
 
 @keyframes radarRotate {
@@ -607,7 +610,9 @@ body {
   transform: translate(-50%, -50%);
   cursor: pointer;
   z-index: 5;
-  transition: all 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .radar-blip.blip-red {
@@ -619,6 +624,70 @@ body {
 .radar-blip.blip-emerald {
   background-color: var(--accent-emerald);
   box-shadow: 0 0 10px var(--accent-emerald);
+}
+
+.radar-blip.newly-detected.blip-red {
+  animation: blipBounceInRed 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, blipPulseRed 1.5s infinite ease-out 1.8s;
+}
+
+.radar-blip.newly-detected.blip-emerald {
+  animation: blipBounceInEmerald 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, blipPulseEmerald 1.5s infinite ease-out 1.8s;
+}
+
+@keyframes blipPulseRed {
+  0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px var(--accent-crimson); }
+  50% { transform: translate(-50%, -50%) scale(1.4); box-shadow: 0 0 16px var(--accent-crimson); }
+  100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px var(--accent-crimson); }
+}
+
+@keyframes blipPulseEmerald {
+  0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px var(--accent-emerald); }
+  50% { transform: translate(-50%, -50%) scale(1.4); box-shadow: 0 0 16px var(--accent-emerald); }
+  100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px var(--accent-emerald); }
+}
+
+@keyframes blipBounceInRed {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    box-shadow: 0 0 0 0px rgba(239, 68, 68, 0.8);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 1;
+    box-shadow: 0 0 0 15px rgba(239, 68, 68, 0);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(0.8);
+    box-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 12px var(--accent-crimson);
+  }
+}
+
+@keyframes blipBounceInEmerald {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    box-shadow: 0 0 0 0px rgba(16, 185, 129, 0.8);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 1;
+    box-shadow: 0 0 0 12px rgba(16, 185, 129, 0);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(0.8);
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.4);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 10px var(--accent-emerald);
+  }
 }
 
 @keyframes blipPulse {

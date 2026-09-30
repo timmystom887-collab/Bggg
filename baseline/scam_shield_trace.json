@@ -3,15 +3,16 @@
   "is_scam": true,
   "category": "Bank Impersonation",
   "detected_threats": [
-    "Urgent language to incite panic",
-    "Malicious phishing URL",
-    "Impersonation of financial institution"
+    "Urgent call-to-action",
+    "Suspicious URL (phishing domain)",
+    "Threat of account suspension",
+    "Unsolicited request for credentials"
   ],
   "recommendations": [
-    "Do not click the link",
-    "Contact your bank directly via their official phone number on the back of your debit card",
+    "Do not click the provided link",
+    "Navigate to your bank's official website or app independently",
     "Delete the message immediately"
   ],
   "countermeasure_action": "Forward to 7726 (SPAM) and block the sender",
-  "ai_assessment": "This message employs 'false urgency' to trigger an emotional response, compelling the victim to act impulsively without verifying the source. The URL is a classic credential harvesting tactic designed to steal banking login information."
+  "ai_assessment": "This message uses classic phishing tactics, specifically fear-based social engineering designed to bypass critical thinking by creating a false sense of urgency regarding account access. The link provided points to a deceptive domain meant to steal sensitive login credentials."
 }

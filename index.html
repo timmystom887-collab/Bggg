@@ -222,9 +222,12 @@
 <div class="grid-2-col">
         <!-- Radar Visualization Card -->
         <div class="glass-card radar-card">
-          <div class="card-header">
+          <div class="card-header" style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
             <h3>BLE Anti-Tracking Proximity Radar</h3>
-            <span class="badge badge-emerald">DULT v1.2 Protocol</span>
+            <div style="display:flex; gap:6px; align-items:center;">
+              <button class="btn btn-xs btn-outline" style="border-color:#c084fc; color:#e9d5ff;" onclick="exportTrackerTrajectory('AIRTAG_78A2')" title="Export the current trajectory of the active stalker device to a map interface">🗺️ Map Stalker Trajectory</button>
+              <span class="badge badge-emerald">DULT v1.2 Protocol</span>
+            </div>
           </div>
           <div class="radar-viewport">
             <div class="radar-sweep"></div>
@@ -1698,6 +1701,62 @@
       <div id="piDossierContainer">
         <!-- Rendered dynamically -->
       </div>
+
+      <!-- DIRECT OSINT MCP SERVER TOOLS WORKBENCH & JSON-RPC 2.0 TERMINAL -->
+      <div class="card mt-4 mb-4" style="border-left:4px solid #8b5cf6; background:rgba(15,23,42,0.95);">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:20px;">⚡</span>
+              <h3 style="margin:0; font-size:1.2rem; color:#f8fafc;">Model Context Protocol (MCP) OSINT Tool Suite</h3>
+            </div>
+            <p style="font-size:12px; color:#94a3b8; margin:4px 0 0 0;">Standard JSON-RPC 2.0 OSINT Microservices: Execute individual intelligence probes in real-time</p>
+          </div>
+          <div style="display:flex; gap:6px; align-items:center;">
+            <span class="badge badge-indigo" style="font-family:monospace;">ENDPOINT: /api/mcp (JSON-RPC 2.0)</span>
+          </div>
+        </div>
+
+        <!-- MCP Tool Selection Tabs -->
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin:14px 0 10px 0; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.08);">
+          <button class="chip-btn active mcp-tool-tab-btn" id="mcpTab_cross_reference_breaches" onclick="selectMcpWorkbenchTool('cross_reference_breaches')">🛡️ cross_reference_breaches (Credibility)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_search_people_directories" onclick="selectMcpWorkbenchTool('search_people_directories')">📂 search_people_directories (Whitepages/TPS)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_username_scan" onclick="selectMcpWorkbenchTool('username_scan')">🌐 username_scan (8-Platform)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_reverse_phone" onclick="selectMcpWorkbenchTool('reverse_phone')">📞 reverse_phone (Telecom/CNAM)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_search_person" onclick="selectMcpWorkbenchTool('search_person')">👤 search_person (Open Records)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_ip_lookup" onclick="selectMcpWorkbenchTool('ip_lookup')">📍 ip_lookup (Geo & ASN)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_dns_lookup" onclick="selectMcpWorkbenchTool('dns_lookup')">🔎 dns_lookup (Zone Records)</button>
+          <button class="chip-btn mcp-tool-tab-btn" id="mcpTab_whois_lookup" onclick="selectMcpWorkbenchTool('whois_lookup')">📜 whois_lookup (Domain Registry)</button>
+        </div>
+
+        <!-- Interactive Tool Form & Runner -->
+        <div style="background:rgba(0,0,0,0.3); border-radius:8px; padding:16px; border:1px solid #334155;">
+          <div id="mcpToolConfigArea">
+            <!-- Rendered dynamically by selectMcpWorkbenchTool -->
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.08);">
+            <div id="mcpToolPresets" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+              <!-- Presets rendered dynamically -->
+            </div>
+            <button class="btn btn-primary btn-sm" id="btnExecuteMcpTool" onclick="executeSelectedMcpTool()" style="background:#8b5cf6; font-weight:700;">
+              <span>⚡ Execute MCP JSON-RPC 2.0 Tool</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Live MCP Terminal Output Box -->
+        <div style="margin-top:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <strong style="color:#c4b5fd; font-size:12px; text-transform:uppercase; letter-spacing:0.5px;">📟 Live JSON-RPC 2.0 Response &amp; Evidentiary Payload:</strong>
+            <button class="btn btn-xs btn-outline" onclick="clearMcpTerminal()">Clear Terminal</button>
+          </div>
+          <pre id="mcpTerminalOutput" style="background:#020617; border:1px solid #1e293b; border-radius:8px; padding:14px; font-family:'JetBrains Mono', monospace; font-size:12px; color:#38bdf8; min-height:120px; max-height:360px; overflow-y:auto; white-space:pre-wrap; margin:0; line-height:1.5;">// MCP JSON-RPC 2.0 Terminal Ready.
+// Select a tool above and click "Execute MCP JSON-RPC 2.0 Tool" to inspect real-time responses.</pre>
+          <!-- Dynamic Breach Corroboration & Data Inspector Container -->
+          <div id="mcpBreachActionContainer" style="margin-top:10px; display:none;"></div>
+        </div>
+      </div>
     </section>
     <div class="modal-backdrop" id="observeModal" style="display: none;">
       <div class="modal-dialog modal-observe">
@@ -1948,6 +2007,9 @@
     </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
   <script src="native_bridge.js"></script>
   <script src="app.js"></script>
 
