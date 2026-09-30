@@ -17,6 +17,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem("briggade_theme");
+        if (savedTheme === "light") {
+          document.documentElement.setAttribute("data-theme", "light");
+        } else {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="app-container">
@@ -31,6 +43,10 @@
       </div>
 
       <div class="header-status">
+        <button type="button" class="btn btn-outline btn-sm theme-toggle-btn" id="themeToggleBtn" onclick="toggleAppTheme()" title="Switch between High-Contrast Outdoor Mode and Tactical Dark Mode" aria-label="Toggle theme">
+          <span id="themeToggleIcon" style="font-size:14px;">☀️</span>
+          <span id="themeToggleText" style="font-weight:600;">Outdoor Mode</span>
+        </button>
 
         <a href="/download/Briggade.apk" class="btn btn-emerald btn-sm download-apk-btn" download="Briggade.apk">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -394,19 +410,15 @@
           <div class="apk-form-grid">
             <div class="form-group">
               <label>Package Name</label>
-              <input type="text" id="apkPackageName" value="com.quickreader.pdf.viewer" class="text-input">
+              <input type="text" id="apkPackageName" placeholder="e.g. com.example.app" class="text-input" value="">
             </div>
             <div class="form-group">
               <label>Application Label</label>
-              <input type="text" id="apkAppName" value="Ultra Fast PDF Pro" class="text-input">
+              <input type="text" id="apkAppName" placeholder="e.g. Photo Editor Pro" class="text-input" value="">
             </div>
             <div class="form-group full-width">
               <label>Requested Android Permissions (one per line)</label>
-              <textarea id="apkPermissionsInput" rows="5" class="code-textarea">android.permission.INTERNET
-android.permission.BIND_ACCESSIBILITY_SERVICE
-android.permission.SYSTEM_ALERT_WINDOW
-android.permission.RECEIVE_SMS
-android.permission.READ_SMS</textarea>
+              <textarea id="apkPermissionsInput" rows="5" class="code-textarea" placeholder="e.g.&#10;android.permission.CAMERA&#10;android.permission.ACCESS_FINE_LOCATION"></textarea>
             </div>
           </div>
           <div class="apk-actions">
@@ -676,7 +688,7 @@ android.permission.READ_SMS</textarea>
 
           <div class="form-group mt-2">
             <label>Meeting Title / Topic</label>
-            <input type="text" id="meetingTitleInput" class="text-input" value="Q3 Product & Security Architecture Review" placeholder="Enter meeting title...">
+            <input type="text" id="meetingTitleInput" class="text-input" value="" placeholder="e.g. Weekly Strategy Review, Legal Deposition, Team Standup...">
           </div>
 
           <!-- Strict Bluetooth Headphone Microphone Enforcement Banner -->
@@ -838,7 +850,7 @@ android.permission.READ_SMS</textarea>
 
           <div class="form-group">
             <label>Ambient Noise Profile</label>
-            <input type="text" id="noiseProfileInput" class="text-input" value="Noisy restaurant with clattering plates and background chatter" placeholder="e.g. Busy airport terminal, lecture hall with echo...">
+            <input type="text" id="noiseProfileInput" class="text-input" value="" placeholder="e.g. Busy airport terminal, lecture hall with echo, or select a scenario below...">
           </div>
 
           <div style="display:flex; gap:0.4rem; flex-wrap:wrap;" class="mt-2">
@@ -1383,47 +1395,16 @@ android.permission.READ_SMS</textarea>
           </div>
 
           <!-- Active Target Card -->
-          <div id="activeTailTargetBox" style="margin:12px 0; background:rgba(239,68,68,0.08); border:1px solid #ef4444; border-radius:10px; padding:14px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span class="pulsing-dot-red"></span>
-                <strong style="color:#ef4444; font-size:15px;" id="tailTargetName">Silver Sedan (Toyota Camry)</strong>
-              </div>
-              <span class="badge badge-crimson" id="tailTargetThreatScore">THREAT: 92/100</span>
-            </div>
-
-            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-top:12px; font-size:12px;">
-              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
-                <div style="color:#94a3b8; font-size:11px;">EST. DISTANCE</div>
-                <div style="color:#38bdf8; font-weight:700; font-size:14px;" id="tailDistanceValue">18.5 meters</div>
-              </div>
-              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
-                <div style="color:#94a3b8; font-size:11px;">TRAILING DURATION</div>
-                <div style="color:#f59e0b; font-weight:700; font-size:14px;" id="tailDurationValue">02m:45s</div>
-              </div>
-              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
-                <div style="color:#94a3b8; font-size:11px;">CORRELATED TURNS</div>
-                <div style="color:#ef4444; font-weight:700; font-size:14px;" id="tailTurnsValue">3 of 3 Turns</div>
-              </div>
-              <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
-                <div style="color:#94a3b8; font-size:11px;">LICENSE PLATE OCR</div>
-                <div style="color:#a7f3d0; font-weight:700; font-size:14px;" id="tailPlateValue">CA 7XYZ890</div>
-              </div>
-            </div>
-
-            <!-- Consecutive Maneuvers Log -->
-            <div style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:6px; padding:10px;">
-              <div style="font-size:11px; color:#94a3b8; font-weight:700; text-transform:uppercase;">Correlation Maneuvers Log:</div>
-              <div id="tailTurnsLogList" style="margin-top:6px; font-size:12px; color:#cbd5e1; display:flex; flex-direction:column; gap:4px;">
-                <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
-                  <span>Right on Market St</span> <span style="color:#94a3b8; font-family:monospace;">2m ago</span>
-                </div>
-                <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
-                  <span>Right on 10th St</span> <span style="color:#94a3b8; font-family:monospace;">1m ago</span>
-                </div>
-                <div style="padding:4px 8px; background:rgba(239,68,68,0.2); border-radius:4px; display:flex; justify-content:space-between; color:#fca5a5;">
-                  <strong>Right on Mission St (Box Loop Confirmed)</strong> <span style="font-family:monospace;">Just now</span>
-                </div>
+          <div id="activeTailTargetBox" style="margin:12px 0;">
+            <div class="glass-card" style="text-align:center; padding:2rem 1.5rem; border:1px dashed rgba(255,255,255,0.12); border-radius:10px;">
+              <div style="font-size:2.5rem; margin-bottom:0.75rem;">🚗</div>
+              <h4 style="color:#f8fafc; font-size:16px; font-weight:700; margin-bottom:6px;">No Trailing Vehicle Detected</h4>
+              <p style="color:#94a3b8; font-size:13px; max-width:380px; margin:0 auto 1.25rem auto; line-height:1.5;">
+                Rear optical radar is in standby. Mount device pointing rearwards and activate detector or test a simulated tail encounter below.
+              </p>
+              <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-primary btn-sm" onclick="startRearCameraTailDetector()">Activate Rear Camera</button>
+                <button class="btn btn-outline btn-sm" onclick="simulateVehicularTail()">🧪 Test Active Tail Scenario</button>
               </div>
             </div>
           </div>

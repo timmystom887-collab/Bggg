@@ -3,7 +3,66 @@
  * Connects Web UI to AegisPulse REST endpoints and Gemini Intelligence.
  */
 
+// =================== THEME SWITCHER (HIGH-CONTRAST OUTDOOR / TACTICAL DARK) ===================
+function getSavedTheme() {
+  try {
+    return localStorage.getItem("briggade_theme") || "dark";
+  } catch (e) {
+    return "dark";
+  }
+}
+
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  document.documentElement.setAttribute("data-theme", isLight ? "light" : "dark");
+  if (document.body) {
+    document.body.setAttribute("data-theme", isLight ? "light" : "dark");
+  }
+  
+  const icon = document.getElementById("themeToggleIcon");
+  const text = document.getElementById("themeToggleText");
+  const btn = document.getElementById("themeToggleBtn");
+  
+  if (icon) icon.textContent = isLight ? "🌙" : "☀️";
+  if (text) text.textContent = isLight ? "Tactical Dark" : "Outdoor Mode";
+  if (btn) {
+    btn.setAttribute("aria-pressed", isLight ? "true" : "false");
+    btn.title = isLight ? "Switch to Tactical Dark Mode" : "Switch to High-Contrast Outdoor Mode";
+  }
+  
+  window.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
+}
+window.applyTheme = applyTheme;
+
+function toggleAppTheme() {
+  const current = document.documentElement.getAttribute("data-theme") || getSavedTheme();
+  const next = current === "light" ? "dark" : "light";
+  try {
+    localStorage.setItem("briggade_theme", next);
+  } catch (e) {}
+  applyTheme(next);
+}
+window.toggleAppTheme = toggleAppTheme;
+
+function initThemeSwitcher() {
+  const saved = getSavedTheme();
+  applyTheme(saved);
+  const btn = document.getElementById("themeToggleBtn");
+  if (btn && !btn.dataset.themeBound) {
+    btn.dataset.themeBound = "true";
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleAppTheme();
+    });
+  }
+}
+window.initThemeSwitcher = initThemeSwitcher;
+
+// Immediate application to prevent visual flicker
+initThemeSwitcher();
+
 document.addEventListener("DOMContentLoaded", () => {
+  initThemeSwitcher();
   initTabs();
   initTrackersEngine();
   initAndroidSecurity();
@@ -539,6 +598,13 @@ async function loadAndroidOverview() {
 }
 
 async function scanCustomManifest(pkg, app, perms, sideloaded) {
+  if (!pkg && !app && (!perms || perms.length === 0)) {
+    loadApkPreset("bankbot");
+    pkg = document.getElementById("apkPackageName").value;
+    app = document.getElementById("apkAppName").value;
+    perms = document.getElementById("apkPermissionsInput").value.split("\n").map(p => p.trim()).filter(Boolean);
+  }
+
   const resultsArea = document.getElementById("apkScanResultsArea");
   if (resultsArea) resultsArea.innerHTML = `<div class="loading-spinner">Evaluating permission topology & synergies...</div>`;
 
@@ -613,9 +679,16 @@ async function runGeminiApkAudit() {
   if (card) card.style.display = "block";
   if (content) content.innerHTML = `<div class="loading-spinner">✨ Gemini is disassembling privilege interactions, exploit vectors, and sandbox integrity...</div>`;
 
-  const pkg = document.getElementById("apkPackageName").value;
-  const app = document.getElementById("apkAppName").value;
-  const perms = document.getElementById("apkPermissionsInput").value.split("\n").map(p => p.trim()).filter(Boolean);
+  let pkg = (document.getElementById("apkPackageName")?.value || "").trim();
+  let app = (document.getElementById("apkAppName")?.value || "").trim();
+  let perms = document.getElementById("apkPermissionsInput")?.value?.split("\n").map(p => p.trim()).filter(Boolean) || [];
+
+  if (!pkg && !app && perms.length === 0) {
+    loadApkPreset("bankbot");
+    pkg = document.getElementById("apkPackageName").value;
+    app = document.getElementById("apkAppName").value;
+    perms = document.getElementById("apkPermissionsInput").value.split("\n").map(p => p.trim()).filter(Boolean);
+  }
 
   try {
     const res = await fetch("/api/android/gemini-audit", {
@@ -1615,7 +1688,8 @@ async function toggleMeetingRecording() {
     alert("⚠️ BLUETOOTH HEADPHONE MICROPHONE REQUIRED!\n\nRecording with the phone's internal microphone is strictly blocked.\n\nPlease turn on or connect your Bluetooth headphones to use their built-in microphone for meeting capture.");
     return;
   }
-  const title = document.getElementById("meetingTitleInput").value;
+  const titleInput = document.getElementById("meetingTitleInput");
+  const title = (titleInput?.value || "").trim() || ("Meeting Session - " + new Date().toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }));
   const btn = document.getElementById("toggleMeetingRecordBtn");
   const icon = document.getElementById("recordBtnIcon");
   const text = document.getElementById("recordBtnText");
@@ -1988,7 +2062,7 @@ function setNoiseScenario(text) {
 window.setNoiseScenario = setNoiseScenario;
 
 async function runGeminiDspTuning() {
-  const profile = document.getElementById("noiseProfileInput").value;
+  const profile = (document.getElementById("noiseProfileInput")?.value || "").trim() || "Dynamic ambient noise reduction & speech clarity boost";
   const resultsBox = document.getElementById("geminiDspTuningResults");
 
   if (resultsBox) {
@@ -4175,43 +4249,50 @@ function startTailHudAnimation() {
 
     // Target bounding box around trailing vehicle in center-rear
     const target = tailDetectionTargets[0];
-    const isHostile = target && target.threat_level === "CONFIRMED_TAIL";
-    const boxColor = isHostile ? "#ef4444" : "#f59e0b";
+    if (target) {
+      const isHostile = target.threat_level === "CONFIRMED_TAIL";
+      const boxColor = isHostile ? "#ef4444" : "#f59e0b";
 
-    // Dynamic pulsating target box
-    const now = Date.now();
-    const pulse = Math.sin(now / 200) * 3;
-    const bx = w * 0.38 + pulse;
-    const by = h * 0.44;
-    const bw = w * 0.24 - (pulse * 2);
-    const bh = h * 0.32;
+      // Dynamic pulsating target box
+      const now = Date.now();
+      const pulse = Math.sin(now / 200) * 3;
+      const bx = w * 0.38 + pulse;
+      const by = h * 0.44;
+      const bw = w * 0.24 - (pulse * 2);
+      const bh = h * 0.32;
 
-    // Corner brackets
-    ctx.strokeStyle = boxColor;
-    ctx.lineWidth = 2.5;
-    const cLen = 14;
+      // Corner brackets
+      ctx.strokeStyle = boxColor;
+      ctx.lineWidth = 2.5;
+      const cLen = 14;
 
-    // Top Left
-    ctx.beginPath(); ctx.moveTo(bx, by + cLen); ctx.lineTo(bx, by); ctx.lineTo(bx + cLen, by); ctx.stroke();
-    // Top Right
-    ctx.beginPath(); ctx.moveTo(bx + bw - cLen, by); ctx.lineTo(bx + bw, by); ctx.lineTo(bx + bw, by + cLen); ctx.stroke();
-    // Bottom Left
-    ctx.beginPath(); ctx.moveTo(bx, by + bh - cLen); ctx.lineTo(bx, by + bh); ctx.lineTo(bx + cLen, by + bh); ctx.stroke();
-    // Bottom Right
-    ctx.beginPath(); ctx.moveTo(bx + bw - cLen, by + bh); ctx.lineTo(bx + bw, by + bh); ctx.lineTo(bx + bw, by + bh - cLen); ctx.stroke();
+      // Top Left
+      ctx.beginPath(); ctx.moveTo(bx, by + cLen); ctx.lineTo(bx, by); ctx.lineTo(bx + cLen, by); ctx.stroke();
+      // Top Right
+      ctx.beginPath(); ctx.moveTo(bx + bw - cLen, by); ctx.lineTo(bx + bw, by); ctx.lineTo(bx + bw, by + cLen); ctx.stroke();
+      // Bottom Left
+      ctx.beginPath(); ctx.moveTo(bx, by + bh - cLen); ctx.lineTo(bx, by + bh); ctx.lineTo(bx + cLen, by + bh); ctx.stroke();
+      // Bottom Right
+      ctx.beginPath(); ctx.moveTo(bx + bw - cLen, by + bh); ctx.lineTo(bx + bw, by + bh); ctx.lineTo(bx + bw, by + bh - cLen); ctx.stroke();
 
-    // Target Label & Distance
-    ctx.fillStyle = boxColor;
-    ctx.font = "bold 11px monospace";
-    ctx.fillText(isHostile ? "🚨 [TARGET LOCK: VEHICULAR TAIL]" : "⚠️ [TRAILING VEHICLE DETECTED]", bx, by - 8);
+      // Target Label & Distance
+      ctx.fillStyle = boxColor;
+      ctx.font = "bold 11px monospace";
+      ctx.fillText(isHostile ? "🚨 [TARGET LOCK: VEHICULAR TAIL]" : "⚠️ [TRAILING VEHICLE DETECTED]", bx, by - 8);
 
-    // Vehicle details in HUD
-    ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
-    ctx.fillRect(bx, by + bh + 4, bw, 20);
-    ctx.fillStyle = "#38bdf8";
-    ctx.font = "10px monospace";
-    const distText = target ? `${target.distance_meters}m • ${target.license_plate || 'CA 7XYZ890'}` : "18.5m • CA 7XYZ890";
-    ctx.fillText(distText, bx + 6, by + bh + 18);
+      // Vehicle details in HUD
+      ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+      ctx.fillRect(bx, by + bh + 4, bw, 20);
+      ctx.fillStyle = "#38bdf8";
+      ctx.font = "10px monospace";
+      const distText = `${target.distance_meters}m • ${target.license_plate || 'UNREGISTERED'}`;
+      ctx.fillText(distText, bx + 6, by + bh + 18);
+    } else {
+      // Clear sector indicator
+      ctx.fillStyle = "rgba(16, 185, 129, 0.85)";
+      ctx.font = "bold 11px monospace";
+      ctx.fillText("✓ REAR PERSPECTIVE: SECTOR CLEAR (NO TAIL)", w * 0.28, h * 0.48);
+    }
 
     tailHudAnimationId = requestAnimationFrame(renderLoop);
   }
@@ -4224,38 +4305,72 @@ async function loadTailTargets() {
     const res = await fetch("/api/tail-detector/status");
     const data = await res.json();
     tailDetectionTargets = data.targets_detected || [];
+    const container = document.getElementById("activeTailTargetBox");
+    if (!container) return;
+
     const t = tailDetectionTargets[0];
     if (t) {
-      const nameEl = document.getElementById("tailTargetName");
-      const scoreEl = document.getElementById("tailTargetThreatScore");
-      const distEl = document.getElementById("tailDistanceValue");
-      const durEl = document.getElementById("tailDurationValue");
-      const turnsEl = document.getElementById("tailTurnsValue");
-      const plateEl = document.getElementById("tailPlateValue");
+      const isMalware = t.threat_score >= 80;
+      const m = Math.floor((t.duration_seconds || 0) / 60).toString().padStart(2, "0");
+      const s = ((t.duration_seconds || 0) % 60).toString().padStart(2, "0");
+      const turnLogs = (t.turn_history || []).map(th => `
+        <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
+          <span>${escapeHtml(th.turn)}</span> <span style="color:#94a3b8; font-family:monospace;">${escapeHtml(th.time)}</span>
+        </div>
+      `).join("");
 
-      if (nameEl) nameEl.textContent = t.vehicle_type;
-      if (scoreEl) {
-        scoreEl.textContent = `THREAT: ${t.threat_score}/100`;
-        scoreEl.className = `badge ${t.threat_score >= 80 ? 'badge-crimson' : 'badge-amber'}`;
-      }
-      if (distEl) distEl.textContent = `${t.distance_meters} meters`;
-      if (durEl) {
-        const m = Math.floor(t.duration_seconds / 60).toString().padStart(2, "0");
-        const s = (t.duration_seconds % 60).toString().padStart(2, "0");
-        durEl.textContent = `${m}m:${s}s`;
-      }
-      if (turnsEl) turnsEl.textContent = `${t.correlation_turns} of 3 Turns`;
-      if (plateEl) plateEl.textContent = t.license_plate || "UNREGISTERED";
-
-      // Render turns log
-      const turnsList = document.getElementById("tailTurnsLogList");
-      if (turnsList && t.turn_history) {
-        turnsList.innerHTML = t.turn_history.map(th => `
-          <div style="padding:4px 8px; background:rgba(255,255,255,0.04); border-radius:4px; display:flex; justify-content:space-between;">
-            <span>${escapeHtml(th.turn)}</span> <span style="color:#94a3b8; font-family:monospace;">${escapeHtml(th.time)}</span>
+      container.innerHTML = `
+        <div style="background:rgba(239,68,68,0.08); border:1px solid #ef4444; border-radius:10px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="pulsing-dot-red"></span>
+              <strong style="color:#ef4444; font-size:15px;" id="tailTargetName">${escapeHtml(t.vehicle_type)}</strong>
+            </div>
+            <span class="badge ${isMalware ? 'badge-crimson' : 'badge-amber'}" id="tailTargetThreatScore">THREAT: ${t.threat_score}/100</span>
           </div>
-        `).join("");
-      }
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-top:12px; font-size:12px;">
+            <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+              <div style="color:#94a3b8; font-size:11px;">EST. DISTANCE</div>
+              <div style="color:#38bdf8; font-weight:700; font-size:14px;" id="tailDistanceValue">${t.distance_meters} meters</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+              <div style="color:#94a3b8; font-size:11px;">TRAILING DURATION</div>
+              <div style="color:#f59e0b; font-weight:700; font-size:14px;" id="tailDurationValue">${m}m:${s}s</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+              <div style="color:#94a3b8; font-size:11px;">CORRELATED TURNS</div>
+              <div style="color:#ef4444; font-weight:700; font-size:14px;" id="tailTurnsValue">${t.correlation_turns || 0} of 3 Turns</div>
+            </div>
+            <div style="background:rgba(0,0,0,0.3); padding:8px; border-radius:6px;">
+              <div style="color:#94a3b8; font-size:11px;">LICENSE PLATE OCR</div>
+              <div style="color:#a7f3d0; font-weight:700; font-size:14px;" id="tailPlateValue">${escapeHtml(t.license_plate || "UNREGISTERED")}</div>
+            </div>
+          </div>
+
+          <!-- Consecutive Maneuvers Log -->
+          <div style="margin-top:12px; background:rgba(0,0,0,0.3); border-radius:6px; padding:10px;">
+            <div style="font-size:11px; color:#94a3b8; font-weight:700; text-transform:uppercase;">Correlation Maneuvers Log:</div>
+            <div id="tailTurnsLogList" style="margin-top:6px; font-size:12px; color:#cbd5e1; display:flex; flex-direction:column; gap:4px;">
+              ${turnLogs || '<div style="color:#94a3b8; font-size:11px;">No turns logged yet. Use "Log Right/Left Turn" buttons above as you navigate.</div>'}
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      container.innerHTML = `
+        <div class="glass-card" style="text-align:center; padding:2rem 1.5rem; border:1px dashed rgba(255,255,255,0.12); border-radius:10px;">
+          <div style="font-size:2.5rem; margin-bottom:0.75rem;">🚗</div>
+          <h4 style="color:#f8fafc; font-size:16px; font-weight:700; margin-bottom:6px;">No Trailing Vehicle Detected</h4>
+          <p style="color:#94a3b8; font-size:13px; max-width:380px; margin:0 auto 1.25rem auto; line-height:1.5;">
+            Rear optical radar is currently clear. Mount device pointing rearwards and activate detector or test a simulated tail encounter below.
+          </p>
+          <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" onclick="startRearCameraTailDetector()">Activate Rear Camera</button>
+            <button class="btn btn-outline btn-sm" onclick="simulateVehicularTail()">🧪 Test Active Tail Scenario</button>
+          </div>
+        </div>
+      `;
     }
   } catch (err) {
     console.error("Failed to load tail targets:", err);
@@ -4416,7 +4531,7 @@ const PI_PARALLEL_AGENTS = [
   { id: 15, name: "Triangulation Corroborator", icon: "🛡️", cat: "Evidence Synthesis" }
 ];
 
-async function initPrivateInvestigatorModule() {
+async function initPrivateInvestigatorModule(forceRefresh = false) {
   try {
     const res = await fetch("/api/investigator/dossiers");
     const data = await res.json();
@@ -4424,22 +4539,22 @@ async function initPrivateInvestigatorModule() {
     const countBadge = document.getElementById("piDossierCountBadge");
     if (countBadge) countBadge.textContent = piDossiersList.length;
 
-    if (piDossiersList.length > 0) {
-      if (!currentPiDossier) {
+    if (!currentPiDossier || forceRefresh) {
+      if (piDossiersList.length > 0) {
         renderPiDossier(piDossiersList[0]);
-      }
-    } else {
-      const container = document.getElementById("piDossierContainer");
-      if (container) {
-        container.innerHTML = `
-          <div class="glass-card" style="text-align:center; padding:3rem 2rem; border:1px dashed rgba(255,255,255,0.12); margin-top:20px; border-radius:12px;">
-            <div style="font-size:3rem; margin-bottom:1rem; filter:grayscale(0.3);">🔍</div>
-            <h3 style="color:#f8fafc; font-size:18px; font-weight:700; margin-bottom:8px;">Awaiting Target Intelligence</h3>
-            <p style="color:#94a3b8; font-size:13px; max-width:440px; margin:0 auto 1.5rem auto; line-height:1.5;">
-              Enter a subject's name, phone, email, username, or vehicle license plate above to initiate a live, search-grounded OSINT skip trace investigation.
-            </p>
-          </div>
-        `;
+      } else {
+        const container = document.getElementById("piDossierContainer");
+        if (container) {
+          container.innerHTML = `
+            <div class="glass-card" style="text-align:center; padding:3rem 2rem; border:1px dashed rgba(255,255,255,0.12); margin-top:20px; border-radius:12px;">
+              <div style="font-size:3rem; margin-bottom:1rem; filter:grayscale(0.3);">🔍</div>
+              <h3 style="color:#f8fafc; font-size:18px; font-weight:700; margin-bottom:8px;">Awaiting Target Intelligence</h3>
+              <p style="color:#94a3b8; font-size:13px; max-width:440px; margin:0 auto 1.5rem auto; line-height:1.5;">
+                Enter a subject's name, phone, email, username, or vehicle license plate above to initiate a live, search-grounded OSINT skip trace investigation.
+              </p>
+            </div>
+          `;
+        }
       }
     }
   } catch (err) {
@@ -4500,6 +4615,28 @@ function setPiMode(mode) {
 window.setPiMode = setPiMode;
 
 async function loadPiQuickCase(caseId) {
+  if (caseId === 'PI-2026-9812') {
+    setPiMode('PERSON_SKIP_TRACE');
+    const nameInput = document.getElementById("piInputFullName");
+    const cityInput = document.getElementById("piInputCityState");
+    const phoneInput = document.getElementById("piInputPhone");
+    const userInput = document.getElementById("piInputUsername");
+    if (nameInput) nameInput.value = "Sarah Marie Jenkins";
+    if (cityInput) cityInput.value = "Austin, TX";
+    if (phoneInput) phoneInput.value = "+1 (512) 555-0184";
+    if (userInput) userInput.value = "sarah.jenkins88@gmail.com";
+    launchPiInvestigation();
+    return;
+  }
+  if (caseId === 'PI-2026-4402') {
+    setPiMode('VEHICLE_PLATE');
+    const plateInput = document.getElementById("piInputPlate");
+    const notesInput = document.getElementById("piInputNotes");
+    if (plateInput) plateInput.value = "CA 7XYZ890";
+    if (notesInput) notesInput.value = "Tail surveillance suspect vehicle owner identification";
+    launchPiInvestigation();
+    return;
+  }
   try {
     const res = await fetch("/api/investigator/quick-case", {
       method: "POST",
@@ -4508,6 +4645,7 @@ async function loadPiQuickCase(caseId) {
     });
     const data = await res.json();
     if (data.dossier) {
+      currentPiDossier = data.dossier;
       renderPiDossier(data.dossier);
       const container = document.getElementById("piDossierContainer");
       if (container) container.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -4625,8 +4763,15 @@ async function launchPiInvestigation() {
 
     setTimeout(() => {
       if (visualizer) visualizer.style.display = "none";
-      renderPiDossier(data.dossier);
-      initPrivateInvestigatorModule();
+      if (data && data.dossier) {
+        currentPiDossier = data.dossier;
+        if (!piDossiersList.some(d => d.dossier_id === data.dossier.dossier_id)) {
+          piDossiersList.unshift(data.dossier);
+          const countBadge = document.getElementById("piDossierCountBadge");
+          if (countBadge) countBadge.textContent = piDossiersList.length;
+        }
+        renderPiDossier(data.dossier);
+      }
       const container = document.getElementById("piDossierContainer");
       if (container) container.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 600);
