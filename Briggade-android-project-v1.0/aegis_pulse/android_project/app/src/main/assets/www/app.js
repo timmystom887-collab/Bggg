@@ -4147,19 +4147,6 @@ async function startRearCameraTailDetector() {
     tailAnalyzeInterval = setInterval(analyzeTailFrame, 1800);
 
     fetch("/api/tail-detector/start", { method: "POST" }).catch(console.error);
-
-    // Auto-initialize a target if none exists so the radar actively starts tracking immediately
-    const vehicle = document.getElementById("tailInputVehicle")?.value?.trim() || "Silver Toyota Camry (Suspicious Tail)";
-    const plate = document.getElementById("tailInputPlate")?.value?.trim() || "CA 7XYZ890";
-    await fetch("/api/tail-detector/log-sighting", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        vehicle_type: vehicle,
-        license_plate: plate
-      })
-    }).catch(console.error);
-
     await loadTailTargets();
   } catch (err) {
     console.warn("Rear camera hardware fallback:", err);
@@ -4175,22 +4162,45 @@ async function startRearCameraTailDetector() {
     if (tailAnalyzeInterval) clearInterval(tailAnalyzeInterval);
     tailAnalyzeInterval = setInterval(analyzeTailFrame, 1800);
 
-    // Auto-initialize a target if none exists so the radar actively starts tracking immediately
-    const vehicle = document.getElementById("tailInputVehicle")?.value?.trim() || "Silver Toyota Camry (Suspicious Tail)";
-    const plate = document.getElementById("tailInputPlate")?.value?.trim() || "CA 7XYZ890";
-    await fetch("/api/tail-detector/log-sighting", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        vehicle_type: vehicle,
-        license_plate: plate
-      })
-    }).catch(console.error);
-
     await loadTailTargets();
   }
 }
 window.startRearCameraTailDetector = startRearCameraTailDetector;
+
+async function trackCustomTailVehicle() {
+  const vehicle = document.getElementById("tailInputVehicle")?.value?.trim() || "Observed Trailing Vehicle";
+  const plate = document.getElementById("tailInputPlate")?.value?.trim() || "UNREGISTERED";
+  try {
+    const res = await fetch("/api/tail-detector/log-sighting", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vehicle_type: vehicle,
+        license_plate: plate,
+        distance_meters: 22.0
+      })
+    });
+    const data = await res.json();
+    alert(`🎯 Target Locked in Rear Optical HUD:\n\nVehicle: ${data.target.vehicle_type}\nLicense Plate: ${data.target.license_plate}\nThreat Score: ${data.target.threat_score}/100\n\nOptical Radar is now actively tracking this target.`);
+    await loadTailTargets();
+  } catch (err) {
+    alert("Error tracking target: " + err.message);
+  }
+}
+window.trackCustomTailVehicle = trackCustomTailVehicle;
+
+async function clearTailTargets() {
+  try {
+    const res = await fetch("/api/tail-detector/clear", { method: "POST" });
+    const data = await res.json();
+    tailDetectionTargets = [];
+    await loadTailTargets();
+    alert("🧹 Tail Radar Cleared. Rear optical sector is clear (no tail).");
+  } catch (err) {
+    alert("Error clearing radar: " + err.message);
+  }
+}
+window.clearTailTargets = clearTailTargets;
 
 function stopRearCameraTailDetector() {
   tailDetectorActive = false;
@@ -4731,8 +4741,28 @@ function loadPiUsernamePreset(u) {
 }
 window.loadPiUsernamePreset = loadPiUsernamePreset;
 
+function clearPiForm() {
+  const ids = [
+    "piInputFullName", "piInputStreet", "piInputCityState", "piInputPhone",
+    "piInputUsername", "piInputPlate", "piInputNotes", "piInputDob",
+    "piInputAgeRange", "piInputAliases", "piInputVehicleModel", "piInputVin",
+    "piInputAssociates", "piInputEmployer", "piInputSsn", "piInputSecPhone",
+    "piInputSecEmail"
+  ];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+  const container = document.getElementById("piDossierContainer");
+  if (container) container.innerHTML = "";
+  const viz = document.getElementById("piAgentVisualizer");
+  if (viz) viz.style.display = "none";
+}
+window.clearPiForm = clearPiForm;
+
 async function launchPiInvestigation() {
   const fName = document.getElementById("piInputFullName")?.value?.trim();
+  const street = document.getElementById("piInputStreet")?.value?.trim();
   const cityState = document.getElementById("piInputCityState")?.value?.trim();
   const phone = document.getElementById("piInputPhone")?.value?.trim();
   const username = document.getElementById("piInputUsername")?.value?.trim();
@@ -4740,10 +4770,16 @@ async function launchPiInvestigation() {
   const notes = document.getElementById("piInputNotes")?.value?.trim();
 
   // Advanced Forensic Fields
+  const dob = document.getElementById("piInputDob")?.value?.trim();
   const ageRange = document.getElementById("piInputAgeRange")?.value?.trim();
+  const aliases = document.getElementById("piInputAliases")?.value?.trim();
+  const vehicleModel = document.getElementById("piInputVehicleModel")?.value?.trim();
+  const vin = document.getElementById("piInputVin")?.value?.trim();
   const knownAssociates = document.getElementById("piInputAssociates")?.value?.trim();
   const employerProfession = document.getElementById("piInputEmployer")?.value?.trim();
   const ssnSegment = document.getElementById("piInputSsn")?.value?.trim();
+  const secPhone = document.getElementById("piInputSecPhone")?.value?.trim();
+  const secEmail = document.getElementById("piInputSecEmail")?.value?.trim();
 
   const visualizer = document.getElementById("piAgentVisualizer");
   const pBar = document.getElementById("piProgressBar");
@@ -4810,16 +4846,23 @@ async function launchPiInvestigation() {
       body: JSON.stringify({
         mode: currentPiMode,
         full_name: fName,
+        street_address: street,
         city_state: cityState,
         phone: phone,
-        email: username && username.includes("@") ? username : null,
+        email: username && username.includes("@") ? username : (secEmail || null),
         username: username && !username.includes("@") ? username : null,
         plate: plate,
         notes: notes,
+        dob: dob,
         age_range: ageRange,
+        aliases: aliases,
+        vehicle_model: vehicleModel,
+        vin: vin,
         known_associates: knownAssociates,
         employer_profession: employerProfession,
-        ssn_segment: ssnSegment
+        ssn_segment: ssnSegment,
+        secondary_phone: secPhone,
+        secondary_email: secEmail
       })
     });
 
@@ -5054,7 +5097,10 @@ function renderPiDossier(d) {
                 <strong style="color:#f8fafc; font-size:13px;">${escapeHtml(v.details)}</strong>
                 ${v.plate ? `<span class="badge badge-amber" style="font-family:monospace; font-weight:700;">${escapeHtml(v.plate)}</span>` : ''}
               </div>
-              <div style="color:#10b981; font-size:11px; margin-top:4px;">Status: ${escapeHtml(v.status)}</div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px; font-size:11px;">
+                <span style="color:#10b981;">Status: ${escapeHtml(v.status)}</span>
+                ${v.vin ? `<span style="color:#94a3b8; font-family:monospace;">VIN: ${escapeHtml(v.vin)}</span>` : ''}
+              </div>
             </div>
           `).join("")}
         </div>

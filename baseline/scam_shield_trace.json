@@ -1,16 +1,17 @@
 {
-  "risk_score": 95,
+  "risk_score": 98,
   "is_scam": true,
-  "category": "Urgent Financial / Authority Impersonation",
+  "category": "Bank Impersonation",
   "detected_threats": [
-    "Artificial urgency creating panic",
-    "Unverified external redirection link",
-    "Threat of legal action or account suspension"
+    "Urgent language to incite panic",
+    "Malicious phishing URL",
+    "Impersonation of financial institution"
   ],
   "recommendations": [
-    "Do not tap or open any linked URLs.",
-    "Forward verbatim SMS to 7726 (SPAM) for carrier-level blacklisting."
+    "Do not click the link",
+    "Contact your bank directly via their official phone number on the back of your debit card",
+    "Delete the message immediately"
   ],
-  "countermeasure_action": "Forward to 7726 and immediately block caller.",
-  "ai_assessment": "Message exhibits classic smishing social engineering patterns designed to bypass rational skepticism via manufactured urgency."
+  "countermeasure_action": "Forward to 7726 (SPAM) and block the sender",
+  "ai_assessment": "This message employs 'false urgency' to trigger an emotional response, compelling the victim to act impulsively without verifying the source. The URL is a classic credential harvesting tactic designed to steal banking login information."
 }

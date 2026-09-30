@@ -1364,7 +1364,11 @@
                 <input type="text" id="tailInputLocation" class="text-input" placeholder="e.g. Market St & 8th Avenue, SF" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:12px;" value="">
               </div>
             </div>
-            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:8px;">
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button class="btn btn-xs btn-primary" onclick="trackCustomTailVehicle()">🎯 Lock / Track This Target</button>
+                <button class="btn btn-xs btn-outline" onclick="clearTailTargets()">🧹 Clear Radar</button>
+              </div>
               <button class="btn btn-xs btn-outline" onclick="autoDetectCoordinates()">🌐 Auto-Detect GPS</button>
             </div>
           </div>
@@ -1412,7 +1416,10 @@
               <h3>🎯 Detected Trailing Vehicles &amp; Turn Correlation</h3>
               <p style="font-size:12px; color:#94a3b8; margin:2px 0 0 0;">Statistical multi-maneuver tracking &amp; license plate records</p>
             </div>
-            <button class="btn btn-xs btn-outline" onclick="loadTailTargets()">🔄 Refresh Telemetry</button>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-xs btn-outline" onclick="clearTailTargets()">🧹 Clear Radar</button>
+              <button class="btn btn-xs btn-outline" onclick="loadTailTargets()">🔄 Refresh Telemetry</button>
+            </div>
           </div>
 
           <!-- Active Target Card -->
@@ -1557,10 +1564,16 @@
         </div>
 
         <form id="piSearchForm" onsubmit="event.preventDefault(); launchPiInvestigation();" style="margin-top:12px;">
+          <!-- Primary Identification Fields -->
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
             <div id="piFieldFullName">
               <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Full Legal Name / Subject:</label>
               <input type="text" id="piInputFullName" class="text-input" placeholder="e.g. Sarah Marie Jenkins" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
+            </div>
+
+            <div id="piFieldStreet">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Last Known Street Address (Optional):</label>
+              <input type="text" id="piInputStreet" class="text-input" placeholder="e.g. 2408 South Congress Ave, Apt 412" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldCityState">
@@ -1569,49 +1582,73 @@
             </div>
 
             <div id="piFieldPhone">
-              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Phone Number (Optional / Reverse):</label>
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Primary Phone Number:</label>
               <input type="text" id="piInputPhone" class="text-input" placeholder="e.g. +1 (512) 555-0184" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
             <div id="piFieldUsername">
-              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Social Handle / Username / Email:</label>
-              <input type="text" id="piInputUsername" class="text-input" placeholder="e.g. sarah.jenkins88@gmail.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Social Handle / Username / Online ID:</label>
+              <input type="text" id="piInputUsername" class="text-input" placeholder="e.g. sarah.jenkins88" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
             </div>
 
-            <div id="piFieldPlate" style="display:none;">
-              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">License Plate &amp; State:</label>
-              <input type="text" id="piInputPlate" class="text-input" placeholder="e.g. CA 7XYZ890" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+            <div id="piFieldPlate">
+              <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Observed License Plate:</label>
+              <input type="text" id="piInputPlate" class="text-input" placeholder="e.g. TX NPK-4921 or CA 7XYZ890" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
             </div>
           </div>
 
           <div style="margin-top:10px;">
             <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Investigative Objective / Witness Context:</label>
-            <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Locating witness for traffic encounter deposition / verifying suspect vehicle owner" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
+            <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Civil skip trace / witness location for deposition / verifying property ownership" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
           </div>
 
-          <!-- Advanced Forensic Identifiers (Additional Fields) -->
+          <!-- Advanced Forensic Identifiers (Comprehensive Custom Inputs) -->
           <div style="margin-top:12px; border-top:1px dashed rgba(255,255,255,0.08); padding-top:12px;">
             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
               <span style="font-size:12px; font-weight:700; color:#38bdf8; display:flex; align-items:center; gap:6px;">
-                ⚙️ Advanced Forensic Identifiers (Optional / Enhanced Match Corroboration)
+                ⚙️ Advanced Forensic Identifiers &amp; Asset Parameters (Custom Triangulation)
               </span>
             </div>
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
               <div>
-                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Age Range / DOB Estimate:</label>
-                <input type="text" id="piInputAgeRange" class="text-input" placeholder="e.g. 30-35 years, or DOB 1991" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Exact DOB or Birth Year:</label>
+                <input type="text" id="piInputDob" class="text-input" placeholder="e.g. 1988-06-14 or 1988" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
               </div>
               <div>
-                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Known Associates / Spouses / Entities:</label>
-                <input type="text" id="piInputAssociates" class="text-input" placeholder="e.g. spouse, business partners" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Age Range / Estimated Age:</label>
+                <input type="text" id="piInputAgeRange" class="text-input" placeholder="e.g. 35-40 years" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
               </div>
               <div>
-                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Employer / Profession / Business:</label>
-                <input type="text" id="piInputEmployer" class="text-input" placeholder="e.g. Acme Corp, Consultant" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Aliases / Former Names / Maiden Name:</label>
+                <input type="text" id="piInputAliases" class="text-input" placeholder="e.g. Sarah Miller, S. Jenkins" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Vehicle Year, Make, Model, Color:</label>
+                <input type="text" id="piInputVehicleModel" class="text-input" placeholder="e.g. 2022 Blue Honda CR-V" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">VIN (Vehicle Identification Number):</label>
+                <input type="text" id="piInputVin" class="text-input" placeholder="e.g. 1HGCR2F83HA123456" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Known Associates / Spouses / Kin:</label>
+                <input type="text" id="piInputAssociates" class="text-input" placeholder="e.g. Marcus Jenkins, Elena Vance" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Employer / Business Entity / Industry:</label>
+                <input type="text" id="piInputEmployer" class="text-input" placeholder="e.g. Acme Tech Solutions LLC, Consultant" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
               </div>
               <div>
                 <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">SSN Segment / Tax ID:</label>
-                <input type="text" id="piInputSsn" class="text-input" placeholder="e.g. Last 4 digits: 4321" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+                <input type="text" id="piInputSsn" class="text-input" placeholder="e.g. Last 4 digits: 4912" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Secondary / Alternate Phone:</label>
+                <input type="text" id="piInputSecPhone" class="text-input" placeholder="e.g. +1 (512) 555-0199" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Secondary / Corporate Email:</label>
+                <input type="text" id="piInputSecEmail" class="text-input" placeholder="e.g. sjenkins@acmetech.com" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
               </div>
             </div>
           </div>
@@ -1622,8 +1659,9 @@
               <span style="font-size:11px; color:#94a3b8; font-weight:700;">PRESETS:</span>
               <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-9812')">Sarah Jenkins (Austin, TX)</button>
               <button type="button" class="btn btn-xs btn-outline" onclick="loadPiQuickCase('PI-2026-4402')">🚗 CA Plate 7XYZ890 (Tail Suspect)</button>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiPhonePreset('+1 (415) 555-0192')">📞 +1-415-555-0192 (VoIP Line)</button>
-              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiUsernamePreset('dev_recon_99')">🌐 dev_recon_99 (Handle)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiPhonePreset('+1 (415) 555-0192')">📞 +1-415-555-0192 (VoIP)</button>
+              <button type="button" class="btn btn-xs btn-outline" onclick="loadPiUsernamePreset('dev_recon_99')">🌐 dev_recon_99</button>
+              <button type="button" class="btn btn-xs btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="clearPiForm()">🧹 Clear All Fields</button>
             </div>
 
             <button type="submit" class="btn btn-primary" id="btnLaunchPiSearch" style="background:#0284c7; font-weight:700;">

@@ -1,63 +1,54 @@
 {
   "success": true,
   "dossier": {
-    "dossier_id": "PI-2026-3709",
+    "dossier_id": "PI-2026-8892",
     "mode": "PERSON_SKIP_TRACE",
     "subject_profile": {
       "full_name": "Johnathan Doe",
-      "aliases": [
-        "Johnathan Doe Jr.",
-        "J. Doe"
-      ],
-      "dob": "1987-04-18",
-      "age": 39,
-      "confidence_score": 96,
-      "confidence_rating": "CONFIRMED_MATCH",
+      "aliases": [],
+      "dob": "1991-05-14",
+      "age": 34,
+      "confidence_score": 88,
+      "confidence_rating": "HIGH_PROBABILITY",
       "verified_identifiers_count": 4,
-      "ssn_summary": "XXX-XX-8419 (Active, Verified California Issue)"
+      "ssn_summary": "XXX-XX-8492 (Illinois issue)"
     },
     "current_residence": {
-      "street": "1420 Mission St, Suite 500",
+      "street": "1242 W Randolph St, Apt 3B",
       "city": "Chicago",
       "state": "IL",
-      "zip": "94103",
-      "county": "San Francisco County",
-      "ownership_type": "Commercial Residential Deed",
-      "residence_since": "2021-03",
-      "coordinates": "37.7749° N, 122.4194° W",
-      "parcel_id": "CA-SF-4910-02"
+      "zip": "60607",
+      "county": "Cook",
+      "ownership_type": "Lease",
+      "residence_since": "2022-09",
+      "coordinates": "41.8845, -87.6582",
+      "parcel_id": "17-16-123-045-1004"
     },
     "address_history": [
       {
-        "address": "1420 Mission St, Suite 500, Chicago, IL 94103",
-        "period": "2021 - Present (Current)",
-        "type": "Primary Residence (Active Utility)",
-        "county": "San Francisco County, IL"
-      },
-      {
-        "address": "220 Bush St, San Francisco, CA 94104",
-        "period": "2018 - 2021",
-        "type": "Prior Residence (Voter Registered)",
-        "county": "San Francisco County, CA"
+        "address": "4500 N Hermitage Ave, Chicago, IL 60640",
+        "period": "2018 - 2022",
+        "type": "Residential",
+        "county": "Cook"
       }
     ],
     "contact_telecom": {
       "phones": [
         {
-          "number": "+1 (312) 555-0984",
+          "number": "+13125550984",
           "type": "Mobile",
-          "carrier": "T-Mobile USA (Active)",
-          "line_status": "Connected / CNAM Verified",
+          "carrier": "T-Mobile USA",
+          "line_status": "Active",
           "first_seen": "2019"
         }
       ],
       "emails": [
         {
-          "email": "sarah.jenkins88@gmail.com",
+          "email": "jdoe99.chi@email.com",
           "type": "Personal",
           "breach_found": true,
           "breaches": [
-            "Collection #1 (2019)"
+            "LinkedIn 2021 Data Leak"
           ],
           "gravatar": true
         }
@@ -65,53 +56,49 @@
     },
     "online_footprint": [
       {
-        "platform": "LinkedIn",
-        "handle": "johnathan-doe",
+        "platform": "Instagram",
+        "handle": "jdoe99",
         "status": "Confirmed Match",
-        "url": "https://linkedin.com/in/johnathan-doe"
+        "url": "https://instagram.com/jdoe99"
       },
       {
         "platform": "GitHub",
         "handle": "jdoe99",
-        "status": "Confirmed Match",
+        "status": "Likely Match",
         "url": "https://github.com/jdoe99"
       }
     ],
     "relatives_and_associates": [
       {
-        "name": "Marcus E. Doe",
-        "relation": "Spouse / Co-Resident",
-        "age": 40,
+        "name": "Sarah Doe",
+        "relation": "Spouse",
+        "age": 32,
         "location": "Chicago, IL"
       }
     ],
     "vehicles_and_assets": [
       {
         "type": "Vehicle",
-        "details": "2022 Honda CR-V (Blue)",
+        "details": "2019 Honda Civic Silver",
         "plate": "IL ABC-1234",
-        "status": "Current Registration"
-      },
-      {
-        "type": "Real Estate",
-        "details": "San Francisco County Parcel #CA-SF-4910-02 (Assessed Value $485,000)",
-        "status": "Active Deed"
+        "vin": "1HGFC2F74KHXXXXXX",
+        "status": "Active Registration"
       }
     ],
     "public_records_and_legal": [
       {
-        "type": "Voter Registration",
-        "filing": "San Francisco County IL Active Voter #108941294 (Updated 2024)",
-        "status": "ACTIVE"
+        "type": "Voter",
+        "filing": "Cook County Voter Registration",
+        "status": "Active"
       }
     ],
     "parallel_agent_telemetry": {
       "agents_deployed": 15,
       "search_threads_executed": 45,
-      "sources_queried": 64,
-      "execution_time_seconds": 1.4,
-      "corroboration_method": "Multi-Identifier Independent Triangulation (DOB + Address History + Telecom CNAM + San Francisco County Deeds)"
+      "sources_queried": 12,
+      "execution_time_seconds": 18.4,
+      "corroboration_method": "Multi-Identifier Independent Triangulation"
     },
-    "investigative_synthesis": "Subject Johnathan Doe successfully located with 96% confidence match. Corroborated through 4 independent public sources. Active residential address in San Francisco County verified via active voter roll, property tax assessor records, and primary carrier cell line. No active arrest warrants or adverse civil liens located."
+    "investigative_synthesis": "Subject identified through tri-factor verification: active mobile subscription, consistent IL vehicle registration plate, and historical voter registry records. Geographic footprint locked to Chicago through real-time address validation and social media handle consistency."
   }
 }
