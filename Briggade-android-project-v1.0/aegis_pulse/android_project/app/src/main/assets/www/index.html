@@ -1348,6 +1348,27 @@
             <span class="badge badge-crimson" id="tailThreatStatusBadge">STANDBY</span>
           </div>
 
+          <!-- Sleek Configuration Inputs for Dynamic Tail Testing -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:12px; margin-top:10px;">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:10px;">
+              <div>
+                <label style="display:block; font-size:11px; color:#94a3b8; margin-bottom:4px; font-weight:600;">Observe Vehicle Type/Color:</label>
+                <input type="text" id="tailInputVehicle" class="text-input" placeholder="e.g. Silver Toyota Camry" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:12px;" value="">
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; color:#94a3b8; margin-bottom:4px; font-weight:600;">Observed License Plate:</label>
+                <input type="text" id="tailInputPlate" class="text-input" placeholder="e.g. CA 7XYZ890" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:12px;" value="">
+              </div>
+              <div>
+                <label style="display:block; font-size:11px; color:#94a3b8; margin-bottom:4px; font-weight:600;">Your Current Location/Address:</label>
+                <input type="text" id="tailInputLocation" class="text-input" placeholder="e.g. Market St & 8th Avenue, SF" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:6px 10px; border-radius:6px; font-size:12px;" value="">
+              </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:8px;">
+              <button class="btn btn-xs btn-outline" onclick="autoDetectCoordinates()">🌐 Auto-Detect GPS</button>
+            </div>
+          </div>
+
           <!-- Video Container with Dynamic HUD Canvas -->
           <div id="tailCameraContainer" style="position:relative; width:100%; height:320px; background:#000; border-radius:10px; overflow:hidden; border:2px solid #334155; margin:12px 0;">
             <video id="tailCameraVideo" autoplay playsinline muted style="width:100%; height:100%; object-fit:cover; display:block;"></video>
@@ -1566,6 +1587,33 @@
           <div style="margin-top:10px;">
             <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Investigative Objective / Witness Context:</label>
             <input type="text" id="piInputNotes" class="text-input" placeholder="e.g. Locating witness for traffic encounter deposition / verifying suspect vehicle owner" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;" value="">
+          </div>
+
+          <!-- Advanced Forensic Identifiers (Additional Fields) -->
+          <div style="margin-top:12px; border-top:1px dashed rgba(255,255,255,0.08); padding-top:12px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:700; color:#38bdf8; display:flex; align-items:center; gap:6px;">
+                ⚙️ Advanced Forensic Identifiers (Optional / Enhanced Match Corroboration)
+              </span>
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Age Range / DOB Estimate:</label>
+                <input type="text" id="piInputAgeRange" class="text-input" placeholder="e.g. 30-35 years, or DOB 1991" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Known Associates / Spouses / Entities:</label>
+                <input type="text" id="piInputAssociates" class="text-input" placeholder="e.g. spouse, business partners" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">Employer / Profession / Business:</label>
+                <input type="text" id="piInputEmployer" class="text-input" placeholder="e.g. Acme Corp, Consultant" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+              <div>
+                <label style="display:block; font-size:12px; color:#cbd5e1; margin-bottom:4px; font-weight:600;">SSN Segment / Tax ID:</label>
+                <input type="text" id="piInputSsn" class="text-input" placeholder="e.g. Last 4 digits: 4321" style="width:100%; background:#0f172a; color:#fff; border:1px solid #334155; padding:8px 12px; border-radius:6px; font-size:13px;">
+              </div>
+            </div>
           </div>
 
           <!-- Quick Case Scenarios & Submit -->

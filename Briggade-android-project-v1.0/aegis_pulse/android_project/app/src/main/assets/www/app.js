@@ -4076,6 +4076,31 @@ let tailCameraFacingMode = "environment"; // Points backwards
 let tailDetectionTargets = [];
 let tailEvidenceList = [];
 
+function autoDetectCoordinates() {
+  const locInput = document.getElementById("tailInputLocation");
+  if (locInput) {
+    locInput.value = "Acquiring forensic GPS telemetry...";
+  }
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        if (locInput) {
+          locInput.value = `${pos.coords.latitude.toFixed(4)}° N, ${pos.coords.longitude.toFixed(4)}° W`;
+        }
+      },
+      (err) => {
+        if (locInput) {
+          locInput.value = "37.7749° N, 122.4194° W (Fallback - San Francisco)";
+        }
+      },
+      { enableHighAccuracy: true, timeout: 5000 }
+    );
+  } else if (locInput) {
+    locInput.value = "37.7749° N, 122.4194° W (Fallback - Geolocation Not Supported)";
+  }
+}
+window.autoDetectCoordinates = autoDetectCoordinates;
+
 async function toggleRearCameraTailDetector() {
   if (tailDetectorActive) {
     stopRearCameraTailDetector();
@@ -4122,7 +4147,20 @@ async function startRearCameraTailDetector() {
     tailAnalyzeInterval = setInterval(analyzeTailFrame, 1800);
 
     fetch("/api/tail-detector/start", { method: "POST" }).catch(console.error);
-    loadTailTargets();
+
+    // Auto-initialize a target if none exists so the radar actively starts tracking immediately
+    const vehicle = document.getElementById("tailInputVehicle")?.value?.trim() || "Silver Toyota Camry (Suspicious Tail)";
+    const plate = document.getElementById("tailInputPlate")?.value?.trim() || "CA 7XYZ890";
+    await fetch("/api/tail-detector/log-sighting", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vehicle_type: vehicle,
+        license_plate: plate
+      })
+    }).catch(console.error);
+
+    await loadTailTargets();
   } catch (err) {
     console.warn("Rear camera hardware fallback:", err);
     tailDetectorActive = true;
@@ -4136,7 +4174,20 @@ async function startRearCameraTailDetector() {
     startTailHudAnimation();
     if (tailAnalyzeInterval) clearInterval(tailAnalyzeInterval);
     tailAnalyzeInterval = setInterval(analyzeTailFrame, 1800);
-    loadTailTargets();
+
+    // Auto-initialize a target if none exists so the radar actively starts tracking immediately
+    const vehicle = document.getElementById("tailInputVehicle")?.value?.trim() || "Silver Toyota Camry (Suspicious Tail)";
+    const plate = document.getElementById("tailInputPlate")?.value?.trim() || "CA 7XYZ890";
+    await fetch("/api/tail-detector/log-sighting", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        vehicle_type: vehicle,
+        license_plate: plate
+      })
+    }).catch(console.error);
+
+    await loadTailTargets();
   }
 }
 window.startRearCameraTailDetector = startRearCameraTailDetector;
@@ -4419,11 +4470,17 @@ async function simulateVehicularTail() {
 window.simulateVehicularTail = simulateVehicularTail;
 
 async function triggerTurnCorrelation(turnName) {
+  const vehicle = document.getElementById("tailInputVehicle")?.value?.trim();
+  const plate = document.getElementById("tailInputPlate")?.value?.trim();
   try {
     const res = await fetch("/api/tail-detector/log-sighting", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ turn_detected: turnName })
+      body: JSON.stringify({
+        turn_detected: turnName,
+        vehicle_type: vehicle || undefined,
+        license_plate: plate || undefined
+      })
     });
     const d = await res.json();
     alert(`Maneuver Logged: ${turnName}\n\nRear camera confirmed target maintained follow position!\nConsecutive Turns Correlated: ${d.target.correlation_turns}/3`);
@@ -4442,6 +4499,7 @@ async function captureTailEvidenceSnapshot() {
   }
 
   const target = tailDetectionTargets[0];
+  const location = document.getElementById("tailInputLocation")?.value?.trim() || "37.7749° N, 122.4194° W";
   try {
     const res = await fetch("/api/tail-detector/evidence", {
       method: "POST",
@@ -4449,7 +4507,7 @@ async function captureTailEvidenceSnapshot() {
       body: JSON.stringify({
         target_id: target?.id,
         image_data: imgData ? "DATA_CAPTURED" : null,
-        coordinates: "37.7749° N, 122.4194° W"
+        coordinates: location
       })
     });
     const data = await res.json();
@@ -4486,12 +4544,13 @@ async function runGeminiTailEvasion() {
   const box = document.getElementById("tailEvasionText");
   if (box) box.innerHTML = `<span class="loading-spinner">✨ Gemini Tactical Copilot is computing counter-surveillance box-loop routing...</span>`;
 
+  const location = document.getElementById("tailInputLocation")?.value?.trim() || "Market St & 8th Avenue, Downtown San Francisco";
   try {
     const res = await fetch("/api/tail-detector/evasion-route", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        current_location: "Market St & 8th Avenue, Downtown San Francisco",
+        current_location: location,
         target_id: tailDetectionTargets[0]?.id
       })
     });
@@ -4680,6 +4739,12 @@ async function launchPiInvestigation() {
   const plate = document.getElementById("piInputPlate")?.value?.trim();
   const notes = document.getElementById("piInputNotes")?.value?.trim();
 
+  // Advanced Forensic Fields
+  const ageRange = document.getElementById("piInputAgeRange")?.value?.trim();
+  const knownAssociates = document.getElementById("piInputAssociates")?.value?.trim();
+  const employerProfession = document.getElementById("piInputEmployer")?.value?.trim();
+  const ssnSegment = document.getElementById("piInputSsn")?.value?.trim();
+
   const visualizer = document.getElementById("piAgentVisualizer");
   const pBar = document.getElementById("piProgressBar");
   const pBadge = document.getElementById("piProgressPercentBadge");
@@ -4750,7 +4815,11 @@ async function launchPiInvestigation() {
         email: username && username.includes("@") ? username : null,
         username: username && !username.includes("@") ? username : null,
         plate: plate,
-        notes: notes
+        notes: notes,
+        age_range: ageRange,
+        known_associates: knownAssociates,
+        employer_profession: employerProfession,
+        ssn_segment: ssnSegment
       })
     });
 
